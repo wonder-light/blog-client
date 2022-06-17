@@ -14,5 +14,12 @@ module.exports = {
                 "plugin:cypress/recommended"
             ]
         }
-    ]
+    ],
+    settings: {
+        "import/resolver": {
+            alias: [
+                ["@", "./src"]
+            ]
+        },
+    },
 };
