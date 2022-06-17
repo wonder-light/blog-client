@@ -1,6 +1,11 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router';
-import HelloWorld from '@/components/HelloWorld.vue';</script>
+import HelloWorld from '@/components/HelloWorld.vue';
+import { getCurrentInstance } from "vue";
+
+const {proxy, appContext} = getCurrentInstance();
+console.log(import.meta.env, proxy, appContext);
+</script>
 
 <template>
     <header>
