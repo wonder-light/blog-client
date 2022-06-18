@@ -13,5 +13,6 @@
     </div>
 </template>
 
+<!-- 留言板 -->
 <script setup>
 import CommentArea from "@/components/comment/CommentArea.vue";</script>

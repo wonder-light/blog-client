@@ -63,6 +63,7 @@
     </Card>
 </template>
 
+<!-- 仓库卡片 -->
 <script setup>
 import moment from "moment";
 import Card from "@/components/Card.vue";

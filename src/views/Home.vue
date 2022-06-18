@@ -124,6 +124,7 @@
     </div>
 </template>
 
+<!-- 首页 -->
 <script setup>
 import moment from 'moment';
 import Weather from "@/components/Weather.vue";

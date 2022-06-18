@@ -2,7 +2,8 @@
     <div></div>
 </template>
 
-<script element-loading-text="">
+<!-- 中转路由 -->
+<script setup>
 import { useRoute, useRouter } from "vue-router";
 
 let route = useRoute();

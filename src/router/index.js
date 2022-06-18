@@ -7,13 +7,13 @@ const router = createRouter({
             //首页
             path: '/',
             name: 'home',
-            component: () => import('@/views/Home/Home.vue'),
+            component: () => import('@/views/Home.vue'),
             children: [
                 {
                     //仓库
                     path: '/warehouse',
                     name: 'warehouse',
-                    component: () => import('@/views/warehouse/Warehouse.vue'),
+                    component: () => import('@/views/Warehouse.vue'),
                 },
                 {
                     //相册
@@ -53,19 +53,19 @@ const router = createRouter({
                     //归档
                     path: '/archive',
                     name: 'archive',
-                    component: () => import('@/views/archive/Archive.vue'),
+                    component: () => import('@/views/Archive.vue'),
                 },
                 {
                     //关于我
                     path: '/about',
                     name: 'about',
-                    component: () => import('@/views/AboutView.vue'),
+                    component: () => import('@/views/About.vue'),
                 },
                 {
                     //留言板
                     path: '/guestbook',
                     name: 'guestbook',
-                    component: () => import('@/views/guestbook/GuestBook.vue'),
+                    component: () => import('@/views/GuestBook.vue'),
                 },
             ]
         },
@@ -93,7 +93,7 @@ const router = createRouter({
             //中转路由
             path: '/transit',
             name: 'transit',
-            component: () => import('@/views/nav/Transit.vue'),
+            component: () => import('@/views/Transit.vue'),
         },
     ]
 });

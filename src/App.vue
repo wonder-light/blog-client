@@ -16,7 +16,7 @@
 import moment from "moment";
 import { RouterView } from 'vue-router';
 import { ref } from "vue";
-import HomeNav from "@/views/nav/HomeNav.vue";
+import HomeNav from "@/views/HomeNav.vue";
 import SakuraEffect from "@/components/SakuraEffect.vue";
 
 //显示加载背景

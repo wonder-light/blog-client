@@ -70,10 +70,11 @@
     </div>
 </template>
 
+<!-- 导航 -->
 <script setup>
-import HomePanelHeader from "@/views/nav/HomePanelHeader.vue";
-import HomePanelCom from "@/views/nav/HomePanelCom.vue";
-import HomePanelMana from "@/views/nav/HomePanelMana.vue";
+import HomePanelHeader from "@/components/nav/HomePanelHeader.vue";
+import HomePanelCom from "@/components/nav/HomePanelCom.vue";
+import HomePanelMana from "@/components/nav/HomePanelMana.vue";
 import { onUnmounted, provide, ref } from "vue";
 
 //主页导航

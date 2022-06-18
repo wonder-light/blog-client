@@ -11,6 +11,7 @@
     </div>
 </template>
 
+<!-- 关于我 -->
 <script setup>
 import { getCurrentInstance, ref } from "vue";
 import CommentArea from "@/components/comment/CommentArea.vue";

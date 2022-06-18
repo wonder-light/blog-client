@@ -21,8 +21,9 @@
     </div>
 </template>
 
+<!-- 仓库 -->
 <script setup>
-import WarehouseCard from "@/views/warehouse/WarehouseCard.vue";
+import WarehouseCard from "@/components/WarehouseCard.vue";
 import { useCounterStore } from "@/stores/counter";
 import { getCurrentInstance } from "vue";
 import { storeToRefs } from "pinia/dist/pinia";
