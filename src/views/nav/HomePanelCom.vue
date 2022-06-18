@@ -14,7 +14,7 @@
                     </svg>
                     <p>分类</p>
                 </template>
-                <el-menu-item v-for="type in $store.state.types" :index="type.id.toString()">
+                <el-menu-item v-for="type in types" :key="type.id.toString()">
                     <div class="side-pane-types">
                         <p>{{ type.name }}</p>
                         <span>{{ type.articleNumber }}</span>
@@ -101,21 +101,15 @@
     </div>
 </template>
 
-<script>
-import { Vue } from "vue-class-component";
+<script setup>
+import { storeToRefs } from "pinia/dist/pinia";
+import { useCounterStore } from "@/stores/counter";
 
-export default class HomePanelCom extends Vue {
-    mounted() {
-    
-    }
-    
-    //打开网页
-    OpenWebPage(url, target = '_blank') {
-        window.open(url, target);
-    }
-};
+const {types} = storeToRefs(useCounterStore());
+
+//打开网页
+function OpenWebPage(url, target = '_blank') {
+    window.open(url, target);
+}
+
 </script>
-
-<style scoped>
-
-</style>

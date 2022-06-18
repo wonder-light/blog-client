@@ -50,15 +50,15 @@
                     <div>
                         <span>
                             <small style="color: #98a6ad">
-                                {{ functions.GetNearestDate(comment.date) }}
+                                {{ proxy.functions.GetNearestDate(comment.date) }}
                             </small>
                         </span>
                     </div>
                 </div>
-                <div :id="contentId" class="comment-main"/>
+                <div :id="contentId" class="comment-main" v-html="props.comment.content"/>
             </div>
         </div>
-        <div v-if="this.areaId === IdHandle" class="comment-editor">
+        <div v-if="areaId === IdHandle" class="comment-editor">
             <editor ref="editor" :reply="true" type="comment" @cancel="CancelComment" @submit="SubmitComment"/>
         </div>
         <div class="comment-reply">
@@ -68,8 +68,8 @@
 </template>
 
 <script setup>
-import Editor from "@/components/Editor";
-import { getCurrentInstance, inject, onMounted } from "vue";
+import Editor from "@/components/Editor.vue";
+import { getCurrentInstance, inject, ref } from "vue";
 
 let props = defineProps({
     //评论
@@ -77,26 +77,17 @@ let props = defineProps({
     //父评论
     parent: {type: Object, default: null},
 });
-const {setAreaId} = inject('areaId');
-const properties = getCurrentInstance().appContext.config.globalProperties;
+const {areaId, setAreaId} = inject('areaId');
+const proxy = getCurrentInstance().proxy;
 
 //内容ID
-let contentId = $ref('');
+let contentId = ref(proxy.functions.NewEditorId());
 //自身ID
-let IdHandle = $ref('');
-//用户
-let user = null;
+let IdHandle = ref(proxy.functions.NewEditorId());
 //点赞
-let like = $ref(false);
+let like = ref(false);
 //点赞定时
 let likeTime = null;
-
-contentId = properties.functions.NewEditorId();
-IdHandle = properties.functions.NewEditorId();
-
-onMounted(() => {
-    document.getElementById(this.contentId).innerHTML = props.comment.content;
-});
 
 //打开博客
 function Open() {
@@ -124,7 +115,7 @@ function CancelComment() {
 
 //点赞
 function ClickLike(newLike) {
-    like = newLike;
+    like.value = newLike;
     if (likeTime != null) {
         clearTimeout(likeTime);
     }

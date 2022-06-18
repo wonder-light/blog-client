@@ -1,6 +1,6 @@
 let env = {
-    baseURL: 'https://serverblog.nianian.cn:8050',
-    isDevelopment: process.env.NODE_ENV !== 'production',
+    serverUrl: import.meta.env.VITE_Server_Url,
+    isDev: Boolean(import.meta.env.VITE_Is_Development),
 };
 
 export default env;

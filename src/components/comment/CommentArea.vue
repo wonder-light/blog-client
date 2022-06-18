@@ -52,10 +52,12 @@
 </template>
 
 <script setup>
-import Comment from "@/components/comment/Comment";
-import Editor from "@/components/Editor";
+import Comment from "@/components/comment/Comment.vue";
+import Editor from "@/components/Editor.vue";
 import { ElMessage } from "element-plus";
-import { getCurrentInstance, provide, watch } from "vue";
+import { getCurrentInstance, provide, ref, watch } from "vue";
+import { useCounterStore } from "@/stores/counter";
+import { storeToRefs } from "pinia/dist/pinia";
 
 const props = defineProps({
     //关闭评论
@@ -65,30 +67,30 @@ const props = defineProps({
 });
 
 //待显示的评论区ID
-let areaId = $ref('id12234526152100');
-let setAreaId = (id) => areaId = id;
+let areaId = ref('id12234526152100');
+let setAreaId = (id) => areaId.value = id;
 provide('areaId', {areaId, setAreaId});
+
+const {proxy} = getCurrentInstance();
+
 //自身ID
-let IdHandle = $ref('');
+let IdHandle = ref(proxy.functions.NewEditorId());
 //显示更多的回复评论
-let showMoreReply = $ref(false);
+let showMoreReply = ref(false);
 //加载中
-let isLoad = $ref(false);
+let isLoad = ref(false);
 //评论集合
-let comments = $ref([]);
+let comments = ref([]);
 //评论数量
-let commentNumber = $ref(-1);
+let commentNumber = ref(-1);
 //当前选择查看的父评论
-let selectComment = $ref(null);
+let selectComment = ref(null);
 //当前选择的页
-let currentPage = $ref(1);
+let currentPage = ref(1);
+//store中的用户
+const {user} = storeToRefs(useCounterStore());
 
-const instance = getCurrentInstance();
-const properties = instance.appContext.config.globalProperties;
-const _this = instance.proxy;
-
-IdHandle = properties.functions.NewEditorId();
-areaId.value = IdHandle;
+areaId.value = IdHandle.value;
 watch(areaId, (newId) => {
     if (newId == null || newId.trim().length <= 0) {
         areaId.value = this.IdHandle;
@@ -98,7 +100,7 @@ watch(areaId, (newId) => {
 if (props.closeComment === false) {
     CurrentChange(1);
 }
-window.commentArea = _this;
+window.commentArea = {SubmitComment};
 
 
 //加载子评论
@@ -108,7 +110,7 @@ function LoadChildrenComment() {
         return;
     }
     isLoad = true;
-    properties.axios.get('/comment', {
+    proxy.axios.get('/comment', {
         params: {start: info.start, number: 20, rootParentId: info.id}
     }).then(response => {
         for (let comment of response.data.comments) {
@@ -123,19 +125,19 @@ function LoadChildrenComment() {
 
 //分页改变时，加载评论 (父评论)
 function CurrentChange(value) {
-    if (commentNumber === comments.length) {
+    if (commentNumber.value === comments.value.length) {
         return;
     }
     let start = value * 10 - 10;
-    if (comments[start] == null || comments[start + 9] == null) {
-        properties.axios.get('/comment', {
+    if (comments.value[start] == null || comments.value[start + 9] == null) {
+        proxy.axios.get('/comment', {
             params: {
                 start, number: 10, targetId: props.targetId <= 0 ? null : props.targetId
             }
         }).then(response => {
             commentNumber = response.data.count;
             for (let info of response.data.comments) {
-                comments[start++] = info;
+                comments.value[start++] = info;
             }
         }).catch(() => {
             ElMessage({showClose: true, message: '评论加载失败', center: true, grouping: true, type: 'error'});
@@ -164,14 +166,14 @@ function SubmitComment(editorId, reply = null, root = null) {
         parentId: reply?.id,
         rootParentId: root?.id,
         targetId: props.targetId <= 0 ? null : props.targetId,
-        userId: _this.$store.state.user.id,
+        userId: user.id,
         content: tinymce.get(editorId).getContent(),
     };
     
-    properties.axios.post('/comment', simpleComment).then(response => {
+    proxy.axios.post('/comment', simpleComment).then(response => {
         if (reply == null) {
-            this.comments.unshift(response.data);
-            this.commentNumber++;
+            comments.value.unshift(response.data);
+            commentNumber.value++;
         }
         else {
             root.children.unshift(response.data);

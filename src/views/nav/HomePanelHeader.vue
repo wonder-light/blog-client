@@ -101,13 +101,6 @@
     </div>
 </template>
 
-<script>
-import { Vue } from "vue-class-component";
+<script setup>
 
-export default class HomePanelHeader extends Vue {
-};
 </script>
-
-<style scoped>
-
-</style>

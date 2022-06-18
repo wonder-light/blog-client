@@ -48,7 +48,7 @@
                     p-id="2659">
                 </path>
             </svg>
-            <small>{{ require('moment')(repository.updated_at).format('Y-M-D') }}</small>
+            <small>{{ moment(repository.updated_at).format('Y-M-D') }}</small>
         </span>
         <el-button class="warehouse-card-visit" round @click="OpenWebPage(repository.html_url)">
             <svg class="icon" height="200" p-id="10740" t="1649981520109"
@@ -63,37 +63,28 @@
     </Card>
 </template>
 
-<script>
-import { Options, Vue } from "vue-class-component";
-import Card from "@/components/Card";
+<script setup>
+import moment from "moment";
+import Card from "@/components/Card.vue";
 
-@Options({
-    components: {Card},
-    props: {
-        //存储库
-        repository: {type: Object, default: null},
-    }
-})
+defineProps({
+    //存储库
+    repository: {type: Object, default: null},
+});
 
-export default class WarehouseCard extends Vue {
-    //卡片颜色
-    colors = [
-        '#2a9dc9', '#ca4905', '#ad8609',
-        '#1bab65', '#5ca603', '#16c397',
-        '#0e87c0', '#3e5abb', '#b300be',
-    ];
-    
-    created() {
-        if (this.repository == null) {
-            throw "在WarehouseCard中 repository存储库为null";
-        }
-    }
-    
-    //打开网页
-    OpenWebPage(url, target = '_blank') {
-        window.open(url, target);
-    }
-};
+
+//卡片颜色
+let colors = [
+    '#2a9dc9', '#ca4905', '#ad8609',
+    '#1bab65', '#5ca603', '#16c397',
+    '#0e87c0', '#3e5abb', '#b300be',
+];
+
+//打开网页
+function OpenWebPage(url, target = '_blank') {
+    window.open(url, target);
+}
+
 </script>
 
 <style scoped>

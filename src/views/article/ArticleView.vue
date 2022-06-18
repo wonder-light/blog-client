@@ -10,7 +10,7 @@
                             fill="currentColor">
                         </path>
                     </svg>
-                    {{ $store.state.blogger.name }}
+                    {{ store.blogger.name }}
                 </span>
                 <span>
                     <svg data-v-ba633cb8="" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path
@@ -63,7 +63,7 @@
             </div>
             <el-collapse v-if="article.tags.length > 0" class="article-views-header-tags">
                 <el-collapse-item name="1" title="标签">
-                    <span v-for="item in article.tags"
+                    <span v-for="item in article.tags" :key="item"
                           :style="{'background-color': colors[functions.RandomNumber(0, colors.length-1)]}">
                         {{ item.name }}
                     </span>
@@ -72,7 +72,7 @@
             <el-image :src="article.cover" alt="" fit="cover"/>
         </el-card>
         <el-card shadow="hover">
-            <div :id="IdHandle" style="text-align: initial;padding-bottom: 20px;"/>
+            <div :id="IdHandle" style="text-align: initial;padding-bottom: 20px;" v-html="article.content"/>
         </el-card>
         <el-card shadow="hover">
             <article-simple-view v-if="last != null || next != null"
@@ -102,7 +102,8 @@
                     <span>相关推荐</span>
                 </div>
                 <article-simple-view style="height: 200px;margin-top: 15px">
-                    <article-simple-view-item v-for="item in articleRecommends" :id="item.id" :src="item.cover">
+                    <article-simple-view-item v-for="item in articleRecommends" :id="item.id" :key="item"
+                                              :src="item.cover">
                         <div class="recommend-article">
                             <div>{{ item.title }}</div>
                         </div>
@@ -116,102 +117,93 @@
     </div>
 </template>
 
-<script>
-import { Options, Vue } from "vue-class-component";
-import ArticleSimpleView from "@/components/articleSimpleView/ArticleSimpleView";
-import ArticleSimpleViewItem from "@/components/articleSimpleView/ArticleSimpleViewItem";
-import CommentArea from "@/components/comment/CommentArea";
+<script setup>
+import { getCurrentInstance, ref } from "vue";
+import CommentArea from "@/components/comment/CommentArea.vue";
+import ArticleSimpleView from "@/components/articleSimpleView/ArticleSimpleView.vue";
+import ArticleSimpleViewItem from "@/components/articleSimpleView/ArticleSimpleViewItem.vue";
+import { useCounterStore } from "@/stores/counter";
 
-@Options({
-    components: {CommentArea, ArticleSimpleViewItem, ArticleSimpleView}
-})
 
-export default class ArticleView extends Vue {
-    //文本内容ID
-    IdHandle = '';
-    //文章
-    article = null;
-    //上一篇
-    last = null;
-    //下一篇
-    next = null;
-    //推荐文章
-    articleRecommends = [];
-    //字数
-    wordNumber = 0;
-    
-    colors = ['#ff5b00', '#e6af00', '#7fbf03', '#0be617',
-        '#00ffc2', '#00abff', '#2428ff', '#f31eff'];
-    
-    created() {
-        this.IdHandle = this.functions.NewEditorId();
-        let id = Number(this.$route.params.id);
-        //获取文章,包括推荐文章
-        this.article = this.$store.getters.getArticle(id, false, true);
-        //相关推荐
-        this.articleRecommends = this.$store.state.articleRecommends;
-        if (this.article == null) {
-            //获取没有的文章
-            this.axios.get('/article/' + id).then(response => {
-                this.article = response.data;
-                let elem = document.getElementById(this.IdHandle);
-                elem.innerHTML = this.article.content;
-                this.GetLastAndNext();
-            }).catch(() => {
-                this.$router.back();
-            });
-        }
-        else {
-            this.GetLastAndNext();
-        }
-        if (this.articleRecommends.length <= 0) {
-            //获取推荐文章信息
-            this.axios.get('/article/recommend').then(response => {
-                store.commit('setArticleRecommends', response.data);
-                this.articleRecommends = response.data;
-                this.RandomSelection();
-            });
-        }
-        else {
-            this.RandomSelection();
-        }
-    }
-    
-    mounted() {
-        if (this.article != null) {
-            let elem = document.getElementById(this.IdHandle);
-            elem.innerHTML = this.article.content;
-        }
-    }
-    
-    //获取上一篇和下一篇文章
-    GetLastAndNext() {
-        if (this.article == null) return;
-        this.$store.commit('addArticle', this.article);
-        this.axios.get(`/article/${this.article.id}/ln`).then(response => {
-            this.last = response.data.last;
-            this.next = response.data.next;
-        });
-        //添加文章浏览量
-        this.axios.post(`/article/${this.article.id}/views`).then(() => {
-            this.article.views += 1;
+const store = useCounterStore();
+const {proxy} = getCurrentInstance();
+
+//文本内容ID
+let IdHandle = ref(proxy.functions.NewEditorId());
+//文章
+let article = ref(null);
+//上一篇
+let last = ref(null);
+//下一篇
+let next = ref(null);
+//推荐文章
+let articleRecommends = ref([]);
+//字数
+let wordNumber = ref(0);
+
+let colors = ['#ff5b00', '#e6af00', '#7fbf03', '#0be617', '#00ffc2', '#00abff', '#2428ff', '#f31eff'];
+
+
+created();
+
+function created() {
+    let id = Number(proxy.$route.params.id);
+    //获取文章,包括推荐文章
+    article.value = store.getArticle(id, false, true);
+    //相关推荐
+    articleRecommends.value = store.articleRecommends;
+    if (article.value == null) {
+        //获取没有的文章
+        proxy.axios.get('/article/' + id).then(response => {
+            article.value = response.data;
+            GetLastAndNext();
+        }).catch(() => {
+            proxy.$router.back();
         });
     }
-    
-    //随机选择三个推荐文章
-    RandomSelection() {
-        let length = this.articleRecommends.length;
-        if (length < 3) return;
-        let numbers: number[] = [];
-        while (numbers.length < 3) {
-            let v = Math.floor(Math.random() * length);
-            if (numbers.includes(v) === false) {
-                numbers.push(v);
-            }
-        }
-        this.articleRecommends = numbers.map(T => this.articleRecommends[T]);
+    else {
+        GetLastAndNext();
     }
-};
+    if (articleRecommends.value.length <= 0) {
+        //获取推荐文章信息
+        proxy.axios.get('/article/recommend').then(response => {
+            store.setArticleRecommends(response.data);
+            articleRecommends.value = response.data;
+            RandomSelection();
+        });
+    }
+    else {
+        RandomSelection();
+    }
+}
+
+//获取上一篇和下一篇文章
+function GetLastAndNext() {
+    if (article.value == null) return;
+    store.addArticle(article.value);
+    proxy.axios.get(`/article/${article.value.id}/ln`).then(response => {
+        last.value = response.data.last;
+        next.value = response.data.next;
+    });
+    //添加文章浏览量
+    proxy.axios.post(`/article/${article.value.id}/views`).then(() => {
+        article.value.views += 1;
+    });
+}
+
+//随机选择三个推荐文章
+function RandomSelection() {
+    let length = articleRecommends.value.length;
+    if (length < 3) return;
+    let numbers = [];
+    while (numbers.length < 3) {
+        let v = Math.floor(Math.random() * length);
+        if (numbers.includes(v) === false) {
+            numbers.push(v);
+        }
+    }
+    articleRecommends.value = numbers.map(T => articleRecommends[T]);
+}
 </script>
 
 <style scoped>

@@ -3,7 +3,7 @@
         <el-card shadow="hover">
             <h1 class="about-header">关于我</h1>
             <el-image :src="article?.cover" alt="" fit="cover" style="margin-bottom: 20px"/>
-            <div :id="IdHandle" style="text-align: initial"/>
+            <div :id="IdHandle" style="text-align: initial" v-html="article.content"/>
         </el-card>
         <el-card shadow="hover">
             <CommentArea v-if="article != null" :close-comment="article.closeComment" :target-id="article.id"/>
@@ -11,49 +11,29 @@
     </div>
 </template>
 
-<script>
-import { Options, Vue } from "vue-class-component";
-import CommentArea from "@/components/comment/CommentArea";
-import Editor from "@/components/Editor";
+<script setup>
+import { getCurrentInstance, ref } from "vue";
+import CommentArea from "@/components/comment/CommentArea.vue";
 
-@Options({
-    components: {Editor, CommentArea}
-})
+let {proxy} = getCurrentInstance();
 
-//关于我
-export default class About extends Vue {
-    //显示的内容ID
-    IdHandle = '';
-    //文章
-    article = null;
-    
-    beforeCreate() {
-        //设置ID
-        this.IdHandle = this.functions.NewEditorId();
-        
-        let baseUrRL = this.env.baseURL;
-        this.axios.get('/article/1651294869000').then(response => {
-            this.article = response.data;
-            if (this.article == null) {
-                this.article = {cover: baseUrRL + '/files/image/background/mmexport1650128636119.jpg'};
-            }
-            else {
-                this.SetContent(this.article.content);
-            }
-        }).catch(() => {
-            this.article = {cover: baseUrRL + '/files/image/background/mmexport1650128636119.jpg'};
-        });
-    }
-    
-    SetContent(content: string = '') {
-        let elem = document.getElementById(this.IdHandle);
-        if (elem != null) {
-            elem.innerHTML = content;
+//显示的内容ID
+let IdHandle = ref(proxy.functions.NewEditorId());
+//文章
+let article = ref(null);
+
+beforeCreate();
+
+function beforeCreate() {
+    let baseUrRL = proxy.env.baseURL;
+    proxy.axios.get('/article/1651294869000').then(response => {
+        article.value = response.data;
+        if (article.value == null) {
+            article.value = {cover: baseUrRL + '/files/image/background/mmexport1650128636119.jpg'};
         }
-    }
-};
+    }).catch(() => {
+        article.value = {cover: baseUrRL + '/files/image/background/mmexport1650128636119.jpg'};
+    });
+}
+
 </script>
-
-<style scoped>
-
-</style>

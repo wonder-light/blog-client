@@ -1,19 +1,16 @@
 <template>
-
+    <div></div>
 </template>
 
-<script>
-import { Vue } from "vue-class-component";
+<script element-loading-text="">
+import { useRoute, useRouter } from "vue-router";
 
-//中转路由
-export default class Transit extends Vue {
-    created() {
-        let path = this.$route.query.path;
-        if (path != null) {
-            this.$router.push(path);
-        }
-    }
-};
+let route = useRoute();
+let router = useRouter();
+let path = route.query.path;
+if (path != null) {
+    router.push(path);
+}
 </script>
 
 <style scoped>

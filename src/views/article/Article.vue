@@ -3,6 +3,7 @@
     <div v-if="$route.path === '/article'" class="article">
         <div>
             <ArticleItem v-for="(article, index) in articles.slice((currentPage -1)*10, currentPage*10)"
+                         :key="article.id"
                          :article="article" :large="index % 2 !== 0" :mode="false"/>
         </div>
         <div>
@@ -13,44 +14,39 @@
     </div>
 </template>
 
-<script>
-import { Options, Vue } from "vue-class-component";
-import ArticleItem from "@/components/ArticleItem";
+<script setup>
+import ArticleItem from "@/components/ArticleItem.vue";
+import { getCurrentInstance, ref } from "vue";
+import { useCounterStore } from "@/stores/counter";
+import { storeToRefs } from "pinia/dist/pinia";
 
-@Options({
-    components: {ArticleItem}
-})
+const {blogInfo} = storeToRefs(useCounterStore());
+const {proxy} = getCurrentInstance();
 
-//文章
-export default class Article extends Vue {
-    //可以显示的文章集合，与 $store.state.articles 是同一个引用
-    articles = [];
-    //文章总数量
-    articleNumber = 0;
-    //当前分页
-    currentPage = 1;
-    
-    created() {
-        this.articleNumber = this.$store.state.blogInfo?.articleCount ?? -1;
-        this.check();
+//可以显示的文章集合，与 $store.state.articles 是同一个引用
+let articles = ref([]);
+//文章总数量
+let articleNumber = ref(blogInfo?.articleCount ?? -1);
+//当前分页
+let currentPage = ref(1);
+
+check();
+
+function check() {
+    if (articles.value.length === articleNumber.value) {
+        return;
     }
-    
-    check() {
-        if (this.articles.length === this.articleNumber) {
-            return;
-        }
-        let start = this.currentPage * 10 - 10;
-        if (this.articles[start] == null) {
-            this.axios.get('/article', {
-                params: {start, number: 10, mode: 0}
-            }).then(response => {
-                for (let e of response.data) {
-                    this.articles[start++] = e;
-                }
-            });
-        }
+    let start = currentPage.value * 10 - 10;
+    if (articles.value[start] == null) {
+        proxy.axios.get('/article', {
+            params: {start, number: 10, mode: 0}
+        }).then(response => {
+            for (let e of response.data) {
+                articles.value[start++] = e;
+            }
+        });
     }
-};
+}
 </script>
 
 <style lang="stylus">

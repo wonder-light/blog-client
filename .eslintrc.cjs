@@ -31,8 +31,13 @@ module.exports = {
         'no-unused-vars': 1,
         'vue/multi-word-component-names': 0,
     },
-    "globals": {
+    
+    globals: {
         "$ref": true,
         "tinymce": true,
     },
+    parserOptions: {
+        //parser: "babel-eslint",
+        sourceType: "module"
+    }
 };

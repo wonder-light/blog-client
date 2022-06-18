@@ -14,7 +14,7 @@
                 <div class="home-content-main">
                     <router-view/>
                     <div v-if="$route.path === '/'" class="home-content-display">
-                        <ArticleItem v-for="item in $store.state.articleRecommends" :article="item"
+                        <ArticleItem v-for="item in articleRecommends" :key="item.id" :article="item"
                                      class="display-item"/>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
                                     <span
                                         :style="{'background-color': colors[functions.RandomNumber(0, colors.length-1)]}"
                                         class="home-blog-info-value">
-                                        {{ require('moment')().diff(blogInfo?.startTime ?? Date.now(), 'day') + '天' }}
+                                        {{ moment().diff(blogInfo?.startTime ?? Date.now(), 'day') + '天' }}
                                     </span>
                                 </li>
                                 <li>
@@ -83,7 +83,7 @@
                                     <span
                                         :style="{'background-color': colors[functions.RandomNumber(0, colors.length-1)]}"
                                         class="home-blog-info-value">
-                                        {{ require('moment')(blogInfo?.updateTime ?? Date.now()).fromNow() }}
+                                        {{ moment(blogInfo?.updateTime ?? Date.now()).fromNow() }}
                                     </span>
                                 </li>
                             </ul>
@@ -92,7 +92,7 @@
                             <template #header>
                                 <p class="home-card-header">标签云</p>
                             </template>
-                            <TagCloud :tag-list="$store.state.tags"/>
+                            <TagCloud :tag-list="tags"/>
                         </el-card>
                     </div>
                 </transition>
@@ -124,49 +124,39 @@
     </div>
 </template>
 
-<script>
-import { Options, Vue } from "vue-class-component";
-import Weather from "@/components/Weather";
-import ArticleItem from "@/components/ArticleItem";
-import TagCloud from "@/components/TagCloud";
-import SakuraEffect from "@/components/SakuraEffect";
+<script setup>
+import moment from 'moment';
+import Weather from "@/components/Weather.vue";
+import ArticleItem from "@/components/ArticleItem.vue";
+import TagCloud from "@/components/TagCloud.vue";
+import { ref } from "vue";
+import { storeToRefs } from "pinia/dist/pinia";
+import { useCounterStore } from "@/stores/counter";
 
-@Options({
-    components: {SakuraEffect, TagCloud, ArticleItem, Weather}
-})
+//显示卡片
+let showCard = ref(true);
+//颜色
+let colors = ['#ff5b00', '#e6af00', '#7fbf03', '#0be617',
+    '#00ffc2', '#00abff', '#2428ff', '#f31eff'];
+//向右箭头的偏移高度
+let offsetHeight = ref(window.innerHeight / 2);
+//博客信息
+const {blogInfo, articleRecommends, tags} = storeToRefs(useCounterStore());
 
-//主页
-export default class Home extends Vue {
-    //显示卡片
-    showCard = true;
-    //颜色
-    colors = ['#ff5b00', '#e6af00', '#7fbf03', '#0be617',
-        '#00ffc2', '#00abff', '#2428ff', '#f31eff'];
-    //向右箭头的偏移高度
-    offsetHeight = 200;
-    //博客信息
-    blogInfo = null;
-    
-    created() {
-        this.offsetHeight = window.innerHeight / 2;
-        this.blogInfo = this.$store.state.blogInfo;
-    }
-    
-    //滚动到内容视图
-    scrollToContent() {
-        let maxSpeed = 10;
-        let top = document.documentElement.scrollTop;
-        //系数
-        let coefficient = maxSpeed / (window.innerHeight + 10/*防止到达不了*/ - top);
-        let time = 0;
-        let timer = setInterval(() => {
-            top = top + maxSpeed * Math.cos(coefficient * time);
-            document.documentElement.scrollTop = top;
-            if (top >= window.innerHeight) {
-                clearInterval(timer);
-            }
-            time += 1;
-        }, 0);
-    }
-};
+//滚动到内容视图
+function scrollToContent() {
+    let maxSpeed = 10;
+    let top = document.documentElement.scrollTop;
+    //系数
+    let coefficient = maxSpeed / (window.innerHeight + 10/*防止到达不了*/ - top);
+    let time = 0;
+    let timer = setInterval(() => {
+        top = top + maxSpeed * Math.cos(coefficient * time);
+        document.documentElement.scrollTop = top;
+        if (top >= window.innerHeight) {
+            clearInterval(timer);
+        }
+        time += 1;
+    }, 0);
+}
 </script>

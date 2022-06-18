@@ -53,7 +53,7 @@
                 <!-- 主要内内容 -->
                 <!-- 头像、说明 -->
                 <div class="side-pane-up">
-                    <el-avatar :src="env.baseURL + '/files/image/misc/52162943041122439531598791307246.jpg'" alt="头像"
+                    <el-avatar :src="env.serverUrl + '/files/image/misc/52162943041122439531598791307246.jpg'" alt="头像"
                                fit="cover"/>
                     <p>念</p>
                     <p>路曼曼其修远兮</p>
@@ -70,49 +70,40 @@
     </div>
 </template>
 
-<script>
-import { Options, Vue } from "vue-class-component";
-import HomePanelHeader from "@/views/nav/HomePanelHeader";
-import HomePanelCom from "@/views/nav/HomePanelCom";
-import HomePanelMana from "@/views/nav/HomePanelMana";
-
-@Options({
-    components: {HomePanelMana, HomePanelCom, HomePanelHeader}
-})
+<script setup>
+import HomePanelHeader from "@/views/nav/HomePanelHeader.vue";
+import HomePanelCom from "@/views/nav/HomePanelCom.vue";
+import HomePanelMana from "@/views/nav/HomePanelMana.vue";
+import { onUnmounted, provide, ref } from "vue";
 
 //主页导航
-export default class HomeNav extends Vue {
-    //true：显示导航菜单面板
-    showMenuPane = false;
-    //true: 完全显示菜单之后
-    showAfter = false;
-    // 改变迷你按钮的样式
-    // true: class为mini-menu-button, false: class为 mini-menu-button mini-menu-button-edge
-    miniEdge = false;
-    
-    mounted() {
-        window.addEventListener('scroll', this.scrollToTop);
+//true：显示导航菜单面板
+let showMenuPane = ref(false);
+//true: 完全显示菜单之后
+let showAfter = ref(false);
+// 改变迷你按钮的样式
+// true: class为mini-menu-button, false: class为 mini-menu-button mini-menu-button-edge
+let miniEdge = ref(false);
+
+provide('ClickBackground', ClickBackground);
+
+window.addEventListener('scroll', scrollToTop);
+onUnmounted(() => window.removeEventListener('scroll', scrollToTop));
+
+//监听滚动事件
+function scrollToTop() {
+    //改变 mini 菜单 的样式
+    miniEdge.value = document.documentElement.scrollTop >= window.innerHeight - 80;
+}
+
+//点击除面板之外的其它地方时关闭面板
+function ClickBackground() {
+    if (showAfter.value) {
+        showMenuPane.value = false;
+        showAfter.value = false;
     }
-    
-    unmounted() {
-        window.removeEventListener('scroll', this.scrollToTop);
-    }
-    
-    //监听滚动事件
-    scrollToTop() {
-        //改变 mini 菜单 的样式
-        this.miniEdge = document.documentElement.scrollTop >= window.innerHeight - 80;
-    }
-    
-    //点击除面板之外的其它地方时关闭面板
-    ClickBackground() {
-        if (this.showAfter) {
-            this.showMenuPane = false;
-            this.showAfter = false;
-        }
-    }
-    
-};
+}
+
 </script>
 
 <style lang="stylus">

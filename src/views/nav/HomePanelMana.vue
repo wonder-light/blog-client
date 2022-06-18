@@ -41,22 +41,16 @@
     </div>
 </template>
 
-<script>
-import { Vue } from "vue-class-component";
+<script setup>
+import { inject } from "vue";
+import { useRouter } from "vue-router";
 
-export default class HomePanelMana extends Vue {
-    
-    mounted() {
-    }
-    
-    //用户登陆
-    Login() {
-        this.$router.push('/user/login');
-        this.ClickBackground();
-    }
-};
+let router = useRouter();
+let ClickBackground = inject('ClickBackground');
+
+//用户登陆
+function Login() {
+    router.push('/user/login');
+    ClickBackground();
+}
 </script>
-
-<style scoped>
-
-</style>

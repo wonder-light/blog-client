@@ -6,11 +6,7 @@
     </div>
 </template>
 
-<script>
-import { Vue } from "vue-class-component";
-
-export default class User extends Vue {
-};
+<script setup>
 </script>
 
 <style scoped>

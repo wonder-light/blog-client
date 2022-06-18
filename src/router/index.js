@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import axios from "@/assets/js/axios";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,7 +7,7 @@ const router = createRouter({
             //首页
             path: '/',
             name: 'home',
-            component: () => import('@/views/HomeView.vue'),
+            component: () => import('@/views/Home/Home.vue'),
             children: [
                 {
                     //仓库
@@ -99,53 +98,9 @@ const router = createRouter({
     ]
 });
 
+
 router.beforeEach(() => {
     return true;
 });
 
 export default router;
-
-async function InitData(store) {
-    if (!store) return false;
-    let isBad = false;
-    axios.get(`/user/simple/1650659236945`).then(response => {
-        store.commit('setBlogger', response.data);
-    }).catch((e) => {
-        //超时 e.code === 'ECONNABORTED'
-        if (e.code === 'ECONNABORTED') {
-            isBad = true;
-        }
-    });
-    
-    if (isBad) return;
-    
-    //获取博客信息
-    axios.get('/blog/info').then(response => {
-        store.commit('setBlogInfo', response.data);
-    }).catch(() => isBad = true);
-    
-    //标签
-    axios.get(`/tag`).then(response => {
-        store.commit('setTags', response.data ?? []);
-    }).catch(() => isBad = true);
-    
-    //分类
-    axios.get(`/type`).then(response => {
-        store.commit('setTypes', response.data ?? []);
-    }).catch(() => isBad = true);
-    
-    //获取推荐文章信息
-    axios.get('/article/recommend').then(response => {
-        store.commit('setArticleRecommends', response.data);
-    }).catch(() => isBad = true);
-    
-    //获取游客信息
-    //获取游客token
-    let touristId = localStorage.getItem('touristId') ?? '0';
-    await axios.get('/user/simple/' + touristId).then(response => {
-        store.commit('setUser', response.data);
-    }).catch(() => {
-        isBad = true;
-        store.commit('setUser', {id: 0, name: '', email: '', blog: '', avatar: '', mode: -1});
-    });
-}

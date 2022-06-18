@@ -45,164 +45,151 @@
     </div>
 </template>
 
-<script>
-import { Vue } from "vue-class-component";
-import { reactive } from "vue";
+<script setup>
+import { ElMessage } from "element-plus";
+import { getCurrentInstance, reactive, ref } from "vue";
 
-//登陆界面
-export default class Login extends Vue {
-    //激活的标签页
-    activeName = '验证码登陆';
+const {proxy} = getCurrentInstance();
+
+//激活的标签页
+let activeName = ref('验证码登陆');
+//验证码 登陆
+let code = reactive({email: '', code: ''});
+//账户密码登陆
+let auth = reactive({email: '', password: ''});
+//email 的验证码
+let emailCode = reactive({
+    //验证码
+    code: null,
+    //冷却时间
+    cd: 0,
+    //销毁验证码的时间
+    destroyTime: 5000,
+    destroyHandle: null,
+});
+//验证码的规则
+let codeRules = reactive({
+    email: [{validator: checkEmail, trigger: 'blur'}],
+    code: [{required: true, message: '请输入验证码', trigger: 'blur'}],
+});
+//密码登陆的验证规则
+let authRules = reactive({
+    email: [{validator: checkEmail, trigger: 'blur'}],
+    password: [{validator: checkPassword, trigger: 'blur'}],
+});
+
+//验证邮箱
+function checkEmail(rule, value, callback) {
+    //邮箱 正则验证
+    let emailVerify = /^([a-zA-Z0-9]+[_|.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|.]?)*[a-zA-Z0-9]+\.(?:com|cn)$/;
+    if (emailVerify.test(value)) {
+        callback();
+    }
+    else {
+        callback(new Error('邮箱无效'));
+    }
+}
+
+//验证密码
+function checkPassword(rule, value, callback) {
+    if (value == null || value.trim().length <= 0) {
+        callback(new Error('请输入密码'));
+    }
+    else {
+        callback();
+    }
+}
+
+//获取验证码
+function GetVerificationCode() {
+    let options = {message: '邮箱无效', type: 'error', showClose: true, grouping: true,};
+    //邮箱 正则验证
+    let emailVerify = /^([a-zA-Z0-9]+[_|.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|.]?)*[a-zA-Z0-9]+\.(?:com|cn)$/;
+    if (!emailVerify.test(code.email)) {
+        options.type = 'warning';
+        ElMessage(options);
+        return;
+    }
     
-    //验证码 登陆
-    code = reactive({email: '', code: ''});
-    
-    //账户密码登陆
-    auth = reactive({email: '', password: ''});
-    
-    //email 的验证码
-    emailCode = {
-        //验证码
-        code: null,
-        //冷却时间
-        cd: 0,
-        //销毁验证码的时间
-        destroyTime: 5000,
-        destroyHandle: null,
-    };
-    
-    //验证码的规则
-    codeRules = reactive({
-        email: [{validator: this.checkEmail, trigger: 'blur'}],
-        code: [{required: true, message: '请输入验证码', trigger: 'blur'}],
+    proxy.axios.post('/validator/email', null, {
+        params: {email: code.email}
+    }).then(response => {
+        let data = response.data;
+        if (data.code !== 200) {
+            options.message = data.message;
+            ElMessage(options);
+            return;
+        }
+        emailCode.code = data.data;
+        emailCode.cd = 60;
+        let timer = setInterval(() => {
+            emailCode.cd -= 1;
+            if (emailCode.cd === 0) {
+                clearInterval(timer);
+            }
+        }, 1000);
+        clearTimeout(emailCode.destroyHandle);
+        emailCode.destroyHandle = setTimeout(() => {
+            emailCode.code = null;
+            emailCode.destroyHandle = null;
+        }, emailCode.destroyTime);
+    }).catch(() => {
+        options.message = '网络异常';
+        ElMessage(options);
     });
-    
-    //密码登陆的验证规则
-    authRules = {
-        email: [{validator: this.checkEmail, trigger: 'blur'}],
-        password: [{validator: this.checkPassword, trigger: 'blur'}],
-    };
-    
-    //消息
-    ElMessage = require('element-plus').ElMessage;
-    
-    //验证邮箱
-    checkEmail(rule: any, value: any, callback: any) {
-        //邮箱 正则验证
-        let emailVerify = /^([a-zA-Z0-9]+[_|.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|.]?)*[a-zA-Z0-9]+\.(?:com|cn)$/;
-        if (emailVerify.test(value)) {
-            callback();
-        }
-        else {
-            callback(new Error('邮箱无效'));
-        }
+}
+
+function Register() {
+    proxy.$router.push('/user/register');
+}
+
+//用户登陆
+function UserLogin() {
+    let token = '';
+    let codeLogin = activeName.value === '验证码登陆';
+    let emailVerify = /^([a-zA-Z0-9]+[_|.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|.]?)*[a-zA-Z0-9]+\.(?:com|cn)$/;
+    if (!emailVerify.test(codeLogin ? code.email : auth.email)) {
+        ElMessage({message: '邮箱无效', type: 'error', showClose: true, grouping: true,});
+        return;
     }
-    
-    //验证密码
-    checkPassword(rule: any, value: any, callback: any) {
-        if (value == null || value.trim().length <= 0) {
-            callback(new Error('请输入密码'));
-        }
-        else {
-            callback();
-        }
-    }
-    
-    //获取验证码
-    GetVerificationCode() {
-        let options = {message: '邮箱无效', type: 'error', showClose: true, grouping: true,};
-        //邮箱 正则验证
-        let emailVerify = /^([a-zA-Z0-9]+[_|.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|.]?)*[a-zA-Z0-9]+\.(?:com|cn)$/;
-        if (!emailVerify.test(this.code.email)) {
-            options.type = 'warning';
-            this.ElMessage(options);
+    if (codeLogin) {
+        if (code.code === '') {
+            ElMessage({message: '验证码无效', type: 'error', showClose: true, grouping: true,});
             return;
         }
-        
-        this.axios.post('/validator/email', null, {
-            params: {email: this.code.email}
-        }).then(response => {
-            let data = response.data;
-            if (data.code !== 200) {
-                options.message = data.message;
-                this.ElMessage(options);
-                return;
-            }
-            this.emailCode.code = data.data;
-            this.emailCode.cd = 60;
-            let timer = setInterval(() => {
-                this.emailCode.cd -= 1;
-                if (this.emailCode.cd === 0) {
-                    clearInterval(timer);
-                }
-            }, 1000);
-            clearTimeout(this.emailCode.destroyHandle);
-            this.emailCode.destroyHandle = setTimeout(() => {
-                this.emailCode.code = null;
-                this.emailCode.destroyHandle = null;
-            }, this.emailCode.destroyTime);
-        }).catch(() => {
-            options.message = '网络异常';
-            this.ElMessage(options);
-        });
-    }
-    
-    Register() {
-        this.$router.push('/user/register');
-    }
-    
-    //用户登陆
-    UserLogin() {
-        let token = '';
-        let codeLogin = this.activeName === '验证码登陆';
-        let emailVerify = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.(?:com|cn)$/;
-        if (!emailVerify.test(codeLogin ? this.code.email : this.auth.email)) {
-            this.ElMessage({message: '邮箱无效', type: 'error', showClose: true, grouping: true,});
+        if (emailCode.code !== code.code) {
+            ElMessage({message: '登陆失败', type: 'error', showClose: true, grouping: true,});
             return;
         }
-        if (codeLogin) {
-            if (this.code.code === '') {
-                this.ElMessage({message: '验证码无效', type: 'error', showClose: true, grouping: true,});
-                return;
-            }
-            if (this.emailCode.code !== this.code.code) {
-                this.ElMessage({message: '登陆失败', type: 'error', showClose: true, grouping: true,});
-                return;
-            }
-            token = `${this.code.email}##${this.code.code}`;
+        token = `${code.email}##${code.code}`;
+    }
+    else {
+        token = `${auth.email}#${auth.password}#`;
+    }
+    let buffer = require('buffer').Buffer;
+    token = buffer.from(token, 'utf-8').toString('base64');
+    token = buffer.from(token, 'utf-8').toString('base64');
+    
+    proxy.axios.get('/user/login', {
+        params: {token}
+    }).then(response => {
+        let data = response.data;
+        if (data.code !== 200) {
+            ElMessage({message: data.message, type: 'error', showClose: true, grouping: true,});
         }
         else {
-            token = `${this.auth.email}#${this.auth.password}#`;
+            let userId = data.id;
+            let token = data.token;
+            localStorage.setItem('userId', userId);
+            localStorage.setItem('token', token);
+            
+            require('element-plus').ElNotification({message: '登陆成功', type: 'success',});
+            setTimeout(() => {
+                proxy.$router.push('/');
+            }, 600);
         }
-        let buffer = require('buffer').Buffer;
-        token = buffer.from(token, 'utf-8').toString('base64');
-        token = buffer.from(token, 'utf-8').toString('base64');
-        
-        this.axios.get('/user/login', {
-            params: {token}
-        }).then(response => {
-            let data = response.data;
-            if (data.code !== 200) {
-                this.ElMessage({message: data.message, type: 'error', showClose: true, grouping: true,});
-            }
-            else {
-                let userId = data.id;
-                let token = data.token;
-                this.cookie.set('userId', userId, {expires: 7});
-                this.cookie.set('token', token, {expires: 7});
-                
-                require('element-plus').ElNotification({message: '登陆成功', type: 'success',});
-                setTimeout(() => {
-                    this.$router.push('/');
-                }, 600);
-            }
-        }).catch(() => {
-            this.ElMessage({message: '网络异常', type: 'warning', showClose: true, grouping: true,});
-        });
-    }
-};
+    }).catch(() => {
+        ElMessage({message: '网络异常', type: 'warning', showClose: true, grouping: true,});
+    });
+}
 </script>
-
-<style scoped>
-
-</style>

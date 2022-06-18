@@ -33,12 +33,12 @@
                     </svg>
                 </span>
                 <span>
-                    {{ require('moment')(article.date).format('Y年M月D日') }}
+                    {{ moment(article.date).format('Y年M月D日') }}
                 </span>
             </div>
             <el-divider/>
             <div class="article-item-other-tags">
-                <a v-for="(tag,index) in article.tags"
+                <a v-for="(tag,index) in article.tags" :key="tag"
                    :style="{'background-color': backgroundColors[index], 'color': colors[index]}">
                     {{ tag.name }}
                 </a>
@@ -60,7 +60,7 @@
                                 fill="currentColor">
                             </path>
                         </svg>
-                        <span>{{ $store.state.blogger.name }}</span>
+                        <span>{{ blogger.name }}</span>
                     </div>
                     <div>
                         <svg class="icon" height="200" p-id="2657" t="1649980705565"
@@ -74,7 +74,7 @@
                                 p-id="2659">
                             </path>
                         </svg>
-                        <span>{{ require('moment')(article.date).format('Y年M月D日') }}</span>
+                        <span>{{ moment(article.date).format('Y年M月D日') }}</span>
                     </div>
                     <div v-if="article.type != null">
                         <svg data-v-ba633cb8="" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
@@ -114,46 +114,51 @@
     </el-card>
 </template>
 
-<script>
-import { Options, Vue } from "vue-class-component";
-import Card from "@/components/Card";
+<script setup>
+import moment from "moment";
+import Card from "@/components/Card.vue";
+import { useRouter } from "vue-router";
+import { getCurrentInstance, ref } from "vue";
+import { storeToRefs } from "pinia/dist/pinia";
+import { useCounterStore } from "@/stores/counter";
 
-@Options({
-    components: {Card},
-    props: {
-        //true：卡片显示， false：正常显示
-        mode: {type: Boolean, default: true},
-        //文章
-        article: {type: Object, default: null},
-        //大型显示
-        large: {type: Boolean, default: false},
-        //跳转
-        skip: {type: Boolean, default: true},
-    }
-})
+let router = useRouter();
+let props = defineProps({
+    //true：卡片显示， false：正常显示
+    mode: {type: Boolean, default: true},
+    //文章
+    article: {type: Object, default: null},
+    //大型显示
+    large: {type: Boolean, default: false},
+    //跳转
+    skip: {type: Boolean, default: true},
+});
+let proxy = getCurrentInstance().proxy;
 
-export default class ArticleItem extends Vue {
-    //字体颜色
-    colors = [];
-    //背景颜色
-    backgroundColors = [];
-    
-    created() {
-        if (this.article == null) {
-            this.$router.back();
-            throw "在ArticleItem中article为空";
-        }
-        this.colors = this.article.tags.map(_ => this.functions.RandomColor(0x580E0E));
-        this.backgroundColors = this.colors.map(color => color + '30');
+//字体颜色
+let colors = ref([]);
+//背景颜色
+let backgroundColors = ref([]);
+
+const {blogger} = storeToRefs(useCounterStore());
+
+created();
+
+function created() {
+    if (props.article == null) {
+        router.back();
+        throw "在ArticleItem中article为空";
     }
-    
-    
-    //跳转到对应的文章
-    SkipToArticleView() {
-        //console.log('跳转', this.article?.id)
-        if (this.article != null && this.skip) {
-            this.$router.push(`/article/${this.article.id}`);
-        }
+    colors.value = props.article.tags.map(() => proxy.functions.RandomColor(0x580E0E));
+    backgroundColors.value = colors.value.map(color => color + '30');
+}
+
+
+//跳转到对应的文章
+function SkipToArticleView() {
+    //console.log('跳转', this.article?.id)
+    if (props.article != null && props.skip) {
+        router.push(`/article/${props.article.id}`);
     }
-};
+}
 </script>
