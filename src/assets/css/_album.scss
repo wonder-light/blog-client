@@ -1,0 +1,56 @@
+@use "base";
+
+.album {
+    width: 100%;
+}
+
+.album-content {
+    width: 100%;
+    height: 100%;
+
+    .image {
+        position: relative;;
+        padding-top: 80%;
+    }
+
+    .el-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.4s;
+
+        &:hover {
+            cursor: pointer;
+            transform: scale(1.1);
+        }
+    }
+
+    p {
+        margin: 20px auto 14px;
+        text-align: left;
+    }
+
+    small {
+        display: block;
+        text-align: left;
+    }
+}
+
+.album-view {
+    .title {
+        font-size: 2.2em;
+    }
+
+    .description {
+        font-size: 1.2em;
+        font-weight: 100;
+        margin-bottom: 30px;
+    }
+
+    .image-item {
+        width: 100%;
+        height: 100%;
+    }
+}

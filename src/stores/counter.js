@@ -437,8 +437,9 @@ export const useCounterStore = defineStore({
     }
 });
 
+//设置状态配置
 export function setStoreConfig() {
-    // 数据持久化
+// 数据持久化
 // 1. 保存数据
     const instance = useCounterStore();
     instance.$subscribe((_, state) => {
@@ -489,7 +490,6 @@ async function InitData(instance) {
     //获取游客信息
     //获取游客token
     let touristId = localStorage.getItem('touristId') ?? '0';
-    if (touristId === '0') return;
     await axios.get('/user/simple/' + touristId).then(response => {
         instance.setUser(response.data);
     }).catch(() => {

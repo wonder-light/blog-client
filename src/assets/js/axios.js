@@ -30,19 +30,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
     response => {
         if (env.isDev) console.log('http 响应 拦截器', response);
-        let data = response.data;
-        // * 正常返回数据
-        if (data.code === 0) {
-            // * 返回data
-            return response;
-        }
-        // * 如果code是20103 表示token未认证(后端定义的错误码)
-        // * 跳转到login
-        if (data.code === 20103) {
-            //router.replace('/login');
-            if (env.isDev) console.log('token未认证 权限无效');
-        }
-        //return Promise.reject(data);
+        updateUrl(response.data);
         return response;
     },
     error => {
@@ -51,3 +39,22 @@ axios.interceptors.response.use(
     });
 
 export default axios;
+
+//替换URL
+function updateUrl(obj) {
+    if (typeof obj !== 'object') {
+        return;
+    }
+    for (let key in obj) {
+        let cop = obj[key];
+        let type = typeof cop;
+        if (type === 'string') {
+            //(server)* 匹配0个或者多个
+            let reg = /https:\/\/(server)*blog\.nianian\.cn(:8050)*/;
+            obj[key] = cop.replace(reg, 'https://localhost:8050');
+        }
+        else if (type === 'object') {
+            updateUrl(cop);
+        }
+    }
+}

@@ -1,0 +1,288 @@
+@use "base";
+
+.article-card {
+    width: 100%;
+    height: 100%;
+}
+
+.article-card-header {
+    position: relative;
+    //按照父元素的宽度等比例缩放 https://blog.csdn.net/fspwz/article/details/47706051
+    padding-top: 80%;
+
+    .el-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    //单行显示
+    .title {
+        overflow: hidden; /*一定不能少 超出的内容进行隐藏*/
+        white-space: nowrap; /*强制在一行显示*/
+        text-overflow: ellipsis; /*设置超出内容显示...*/
+        text-align: left;
+        bottom: 0;
+        left: 12px;
+        right: 12px;
+        color: #fff;
+        position: absolute;
+        font-size: 1.5em;
+
+        &.error {
+            color: #000;
+        }
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.article-card-bottom {
+    margin: 12px 20px;
+    display: grid;
+    justify-items: start;
+
+    p {
+        overflow: hidden; /*一定不能少 超出的内容进行隐藏*/
+        //white-space: nowrap; /*强制在一行显示*/
+        text-overflow: ellipsis; /*设置超出内容显示...*/
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+
+    .el-divider--horizontal {
+        margin: 16px 0;
+    }
+
+}
+
+.article-card-time {
+    display: flex;
+    align-items: center;
+    align-content: center;
+
+    span:first-of-type {
+        margin-right: 8px;
+        display: flex;
+    }
+
+    svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+.article-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+
+    a { //Tags
+        display: inline-block;
+        font-size: 10px;
+        line-height: 20px;
+        margin: 4px 4px;
+        padding: 1px 10px;
+        border-radius: 10px;
+    }
+}
+
+.article {
+    width: 100%;
+}
+
+.article-content {
+    width: 100%;
+
+    .article-layout {
+        width: 100%;
+        display: grid;
+        grid-gap: 30px;
+        justify-items: stretch;
+        align-items: stretch;
+        margin-bottom: 40px;
+    }
+
+    .el-pagination {
+        margin-bottom: 40px;
+    }
+}
+
+.article-item {
+    img {
+        transition: transform 0.4s;
+
+        &:hover {
+            cursor: pointer;
+            transform: scale(1.1);
+        }
+    }
+
+    .el-card__body {
+        padding: 0;
+    }
+
+    .row-layout {
+        display: flex;
+        flex-direction: row;
+
+        .item-image {
+            position: relative;
+            padding-left: 40%;
+        }
+
+        .el-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .column-layout {
+        display: flex;
+        flex-direction: column;
+    }
+
+}
+
+.article-item-content {
+    margin: 20px 30px;
+    display: grid;
+    width: 100%;
+
+    h1 {
+        font-weight: 100;
+    }
+
+    p {
+        color: #a0a0a0;
+        overflow: hidden;
+        white-space: normal;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+
+    .item-tags {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        width: 100%;
+
+        div {
+            margin-right: 20px;
+
+            svg {
+                color: #a0a0a0;
+                margin-right: 6px;
+            }
+
+            span {
+                color: #a0a0a0;
+            }
+        }
+    }
+}
+
+
+.article-views {
+    width: 100%;
+
+    .el-card {
+        margin-bottom: 36px;
+    }
+
+    .recommend-article, .last-article, .next-article {
+        text-align: center;
+        color: #eeeeee;
+        padding: 0 30px;
+
+        div {
+            line-height: 2;
+        }
+    }
+
+    .last-article {
+        text-align: left;
+    }
+
+    .next-article {
+        text-align: right;
+    }
+}
+
+.article-views-info {
+    h1 {
+        text-align: left;
+        margin: 20px auto 30px;
+    }
+
+    .infos {
+        display: flex;
+        justify-content: flex-start;
+        margin: 20px auto;
+
+        span {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+
+            svg {
+                margin-right: 6px;
+            }
+        }
+    }
+
+    .el-image {
+        margin-top: 16px;
+    }
+}
+
+
+.article-views-header-tags {
+    .el-collapse-item__content {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    span {
+        color: #fff;
+        font-size: 12px;
+        margin: 4px 6px;
+        padding: 0 8px;
+        border-radius: 10px;
+    }
+}
+
+.article-views-recommend {
+    margin: 20px auto 30px;
+
+    .article-simple-view-item {
+        margin: 0 3px;
+    }
+}
+
+//视图分层结构，如"相关推荐"、"评论"等
+.article-views-hierarchic {
+    display: flex;
+    align-items: center;
+    line-height: 1.5;
+
+    svg {
+        width: 24px;
+        height: 24px;
+        margin-right: 6px;
+    }
+
+    span {
+        font-size: 1.40em;
+    }
+}

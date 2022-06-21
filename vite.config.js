@@ -21,5 +21,9 @@ export default defineConfig({
     server: {
         port: '6050',
         host: '0.0.0.0',
+    },
+    esbuild: {
+        jsxFactory: 'h',
+        jsxFragment: 'Fragment'
     }
 });

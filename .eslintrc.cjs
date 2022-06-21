@@ -31,13 +31,13 @@ module.exports = {
         'no-unused-vars': 1,
         'vue/multi-word-component-names': 0,
     },
-    
     globals: {
         "$ref": true,
         "tinymce": true,
     },
     parserOptions: {
-        //parser: "babel-eslint",
-        sourceType: "module"
-    }
+        parser: "@babel/eslint-parser",
+        sourceType: "module",
+        requireConfigFile: false,
+    },
 };

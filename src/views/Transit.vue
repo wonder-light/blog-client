@@ -13,7 +13,3 @@ if (path != null) {
     router.push(path);
 }
 </script>
-
-<style scoped>
-
-</style>

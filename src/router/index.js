@@ -11,18 +11,18 @@ const router = createRouter({
             children: [
                 {
                     //仓库
-                    path: '/warehouse',
+                    path: 'warehouse',
                     name: 'warehouse',
                     component: () => import('@/views/Warehouse.vue'),
                 },
                 {
                     //相册
-                    path: '/album',
+                    path: 'album',
                     name: 'album',
                     component: () => import('@/views/album/Album.vue'),
                     children: [
                         {
-                            path: '/album/:id',
+                            path: ':id',
                             name: 'albumView',
                             component: () => import('@/views/album/AlbumView.vue'),
                             props: (route) => {
@@ -37,13 +37,13 @@ const router = createRouter({
                 },
                 {
                     //文章
-                    path: '/article',
+                    path: 'article',
                     name: 'article',
                     component: () => import('@/views/article/Article.vue'),
                     children: [
                         {
                             //文章视图
-                            path: '/article/:id',
+                            path: ':id',
                             name: 'articleView',
                             component: () => import('@/views/article/ArticleView.vue'),
                         },
@@ -51,41 +51,21 @@ const router = createRouter({
                 },
                 {
                     //归档
-                    path: '/archive',
+                    path: 'archive',
                     name: 'archive',
                     component: () => import('@/views/Archive.vue'),
                 },
                 {
                     //关于我
-                    path: '/about',
+                    path: 'about',
                     name: 'about',
                     component: () => import('@/views/About.vue'),
                 },
                 {
                     //留言板
-                    path: '/guestbook',
+                    path: 'guestbook',
                     name: 'guestbook',
                     component: () => import('@/views/GuestBook.vue'),
-                },
-            ]
-        },
-        {
-            //用户界面
-            path: '/user',
-            name: 'user',
-            component: () => import('@/views/user/User.vue'),
-            children: [
-                {
-                    //登陆界面
-                    path: '/user/login',
-                    name: 'login',
-                    component: () => import('@/views/user/Login.vue'),
-                },
-                {
-                    //注册界面
-                    path: '/user/register',
-                    name: 'register',
-                    component: () => import('@/views/user/Register.vue'),
                 },
             ]
         },

@@ -33,7 +33,7 @@ export default class functionLibrary {
     //获取 Editor 的 ID 句柄的字符串值
     NewEditorId() {
         this.idHandle += 1;
-        return 'id' + this.idHandle;
+        return 'id-' + this.idHandle;
     }
     
     //获取对象的 ID 句柄

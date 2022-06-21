@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { mount } from '@vue/test-utils';
-import Editor from '../Editor.vue';
+import Editor from '../common/Editor.vue';
 
 describe('Editor', () => {
     it('renders properly', () => {

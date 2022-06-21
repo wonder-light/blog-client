@@ -1,12 +1,13 @@
 <template>
-    <div class="album-view">
-        <p class="album-view-title">{{ album?.name }}</p>
-        <p class="album-view-description">创建时间为{{ '2022年4月15日' }} - {{ album?.number }}个项目</p>
-        <el-divider/>
-        <el-image v-for="(img, index) in album?.images" :key="img" :initial-index="index"
-                  :preview-src-list="album?.images" :src="img" alt="" fit="cover"
-                  lazy/>
+  <div class="album-view">
+    <p class="title">{{ album?.name }}</p>
+    <p class="description">创建时间为{{ '2022年4月15日' }} - {{ album?.number }}个项目</p>
+    <el-divider/>
+    <div class="home-content-layout">
+      <el-image v-for="(url, index) in album?.images" :key="url" :alt="url" :initial-index="index"
+                :preview-src-list="album?.images" :src="url" class="image-item" fit="cover" lazy/>
     </div>
+  </div>
 </template>
 
 <script setup>

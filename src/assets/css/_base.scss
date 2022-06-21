@@ -1,0 +1,89 @@
+$layout-width: 80%;
+$distance-base: 20px;
+$server-url: "https://localhost:8050";
+
+//主题
+[theme='light'] {
+    --theme: light;
+}
+
+[theme='dark'] {
+    --theme: dark;
+}
+
+//全局变量
+:root {
+    --article-mini-card-width: calc(300px + 2px);
+    --comment-avatar-size: 48px;
+    --home-layout-width: 1350px;
+
+    @media screen and (min-width: 1060px) and (max-width: 1400px) {
+        --home-layout-width: 997px;
+    }
+
+    @media screen and (min-width: 710px) and (max-width: 1060px) {
+        --home-layout-width: 650px;
+    }
+
+    @media screen and (max-width: 710px) {
+        --home-layout-width: 80%;
+    }
+}
+
+/* 滚动条整体样式 */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+/* 滚动条里的轨道：滚动槽 */
+::-webkit-scrollbar-track {
+    border-radius: 12px;
+}
+
+/* 滚动条里的小方块：滑块 */
+::-webkit-scrollbar-thumb {
+    border-radius: 12px;
+    background: #0EDEEE99;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+    background: #C730F299;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+    scroll-behavior: smooth;
+}
+
+svg {
+    fill: currentColor;
+    display: inline-block;
+    stroke-width: 2;
+    stroke: currentColor;
+    width: 14px;
+    height: 14px;
+}
+
+//文字渐变
+.text-gradient {
+    display: inline-block;
+    background: linear-gradient(0.25turn, #c21500, #fb6333, #ffc500);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+//tinymce 内容
+.tinymce-content {
+    text-align: initial;
+    word-wrap: break-word;
+    overflow: auto;
+
+    //评论中的图片样式
+    img {
+        width: 100%;
+        height: auto;
+    }
+}
