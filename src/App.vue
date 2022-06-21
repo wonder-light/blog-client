@@ -1,21 +1,28 @@
 <template>
   <RouterView v-slot="{Component}">
-    <Transition mode="out-in">
-      <KeepAlive>
-        <Suspense>
-          <!-- 主要内容 -->
-          <div id="home">
-            <component :is="Component"></component>
-          </div>
-          <!-- 加载中状态 -->
-          <template #fallback>
-            <div style="z-index: 999999999;position: fixed;width: 100%;height: 100vh;left: 0;top: 0;background-color: #3ae8f8">
-              正在加载...
-            </div>
-          </template>
-        </Suspense>
-      </KeepAlive>
-    </Transition>
+    <template v-if="Component">
+      <!-- 为'加载状态'与'显示状态'提供过渡动画 -->
+      <Transition enter-active-class="animate__animated animate__fadeIn" leave-active-class="animate__animated animate__fadeOut" mode="in-out">
+        <KeepAlive>
+          <Suspense>
+            <!-- 主要内容 -->
+            <!-- Component为undefined时Suspense组件的工作方式会变得不正常 -->
+            <template #default>
+              <div id="home">
+                <component :is="Component"></component>
+              </div>
+            </template>
+            <!-- 加载中状态 -->
+            <template #fallback>
+              <LoadPage full/>
+            </template>
+          </Suspense>
+        </KeepAlive>
+      </Transition>
+    </template>
+    <template v-else>
+      <LoadPage full/>
+    </template>
   </RouterView>
   <SakuraEffect/>
   <el-config-provider :locale="locale"/>
@@ -25,28 +32,15 @@
 import moment from "moment";
 import { RouterView } from 'vue-router';
 import { inject, ref, watch } from "vue";
-import SakuraEffect from "@/components/common/SakuraEffect.vue";
 import el_en from "element-plus/es/locale/lang/en";
 import el_zh_cn from "element-plus/es/locale/lang/zh-cn";
+import LoadPage from "@/components/common/LoadPage.vue";
+import SakuraEffect from "@/components/common/SakuraEffect.vue";
 
 const {language} = inject('language');
-
-let locale = ref(null);
-
-
-//显示加载背景
-let load = ref(true);
-//将 moment 的语言环境设置为中文
-
-let timer = setInterval(() => {
-    // 判断文档和所有子资源(图片、音视频等)已完成加载
-    if (document.readyState === 'complete') {
-        load.value = false;
-        //执行方法
-        clearInterval(timer);
-    }
-}, 0);
-
+//element-plus的语言
+const locale = ref(null);
+//监听language的变化
 watch(language, updateLanguage, {immediate: true});
 
 //语言更新时调用

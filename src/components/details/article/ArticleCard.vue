@@ -26,11 +26,10 @@
         <span>{{ moment(article.date).format('Y年M月D日') }}</span>
       </div>
       <el-divider/>
-      <div class="article-card-tags">
-        <a v-for="(tag,index) in article.tags" :key="tag" :style="tagStyle[index]">
-          {{ tag.name }}
+      <div class="article-card-type">
+        <a v-if="article.type" :style="tagStyle">
+          {{ article.type.name }}
         </a>
-        <a v-if="!article.tags"></a>
       </div>
     </div>
   </Card>
@@ -41,24 +40,24 @@ import moment from "moment";
 import Card from "@/components/common/Card.vue";
 import { getCurrentInstance, ref } from "vue";
 
-let props = defineProps({
+const props = defineProps({
     //文章
     article: {type: Object, default: null},
 });
 
-let proxy = getCurrentInstance().proxy;
+const proxy = getCurrentInstance().proxy;
 
-let imgClass = ref(['title']);
+const imgClass = ref(['title']);
 
-let tags = props.article?.tags ?? [];
+const tagStyle = getColor();
 
-let tagStyle = tags.map(() => {
+function getColor() {
     let color = proxy.functions.RandomColor(0x580E0E);
     return ({
         'color': color,
         'background-color': color + '30'
     });
-});
+}
 
 function errorClass() {
     imgClass.value.push('error');

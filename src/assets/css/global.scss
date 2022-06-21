@@ -20,18 +20,6 @@
     margin-bottom: #{$distance-base};
 }
 
-.fixed-full {
-    position: fixed;
-    width: 100%;
-    height: 100vh;
-}
-
-.display-center-align {
-    display: flex;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-}
 
 .background-image {
     background-size: cover;
@@ -111,5 +99,45 @@
         img {
             min-height: 200px;
         }
+    }
+}
+
+
+//加载中的状态
+.page-load {
+    width: 100%;
+    height: 100%;
+    z-index: 999999;
+    background-color: #fff;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+
+
+    &.fullscreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+    }
+
+    .center {
+        width: 160px;
+        height: 160px;
+        margin: auto;
+    }
+}
+
+.page-load-inline {
+    position: relative !important;
+    padding-top: 60%;
+
+    .page {
+        position: absolute !important;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
     }
 }

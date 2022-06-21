@@ -1,6 +1,6 @@
 <template>
   <HomeNav/>
-  <HomeHeader/>
+  <component :is="homeHeader"/>
   <div class="home-layout">
     <HomeMain/>
     <HomeAside/>
@@ -14,4 +14,19 @@ import HomeNav from "@/components/constructe/nav/HomeNav.vue";
 import HomeHeader from "@/components/constructe/home/HomeHeader.vue";
 import HomeMain from "@/components/constructe/home/HomeMain.vue";
 import HomeFooter from "@/components/constructe/home/HomeFooter.vue";
-import HomeAside from "@/components/constructe/home/HomeAside.vue";</script>
+import HomeAside from "@/components/constructe/home/HomeAside.vue";
+import { setStoreConfig } from "@/stores/counter";
+import { shallowRef } from "vue";
+
+
+const homeHeader = shallowRef(HomeHeader);
+
+await setStoreConfig();
+
+await new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve('foo');
+    }, 1000);
+});
+
+</script>

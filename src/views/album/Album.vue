@@ -1,20 +1,16 @@
 <template>
   <div class="album">
-    <router-view v-slot="{Component}">
-      <template v-if="Component">
-        <Transition mode="out-in">
-          <KeepAlive>
-            <Suspense>
-              <component :is="Component"></component>
-            </Suspense>
-          </KeepAlive>
-        </Transition>
-      </template>
-      <template v-else>
-        <Suspense>
-          <AlbumContent/>
-        </Suspense>
-      </template>
+    <router-view v-slot="{Component, route}">
+      <Transition mode="out-in">
+        <KeepAlive>
+          <Suspense>
+            <component :is="Component || AlbumContent" :key="route.path"></component>
+            <template #fallback>
+              <load-page inline/>
+            </template>
+          </Suspense>
+        </KeepAlive>
+      </Transition>
     </router-view>
   </div>
 </template>

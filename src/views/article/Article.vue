@@ -1,20 +1,16 @@
 <template>
   <div class="article">
-    <router-view v-slot="{Component}">
-      <template v-if="Component">
-        <Transition mode="out-in">
-          <KeepAlive>
-            <Suspense>
-              <component :is="Component"></component>
-            </Suspense>
-          </KeepAlive>
-        </Transition>
-      </template>
-      <template v-else>
-        <Suspense>
-          <ArticleContent/>
-        </Suspense>
-      </template>
+    <router-view v-slot="{Component, route}">
+      <Transition mode="out-in">
+        <KeepAlive>
+          <Suspense>
+            <component :is="Component || ArticleContent" :key="route.path"></component>
+            <template #fallback>
+              <load-page inline/>
+            </template>
+          </Suspense>
+        </KeepAlive>
+      </Transition>
     </router-view>
   </div>
 </template>

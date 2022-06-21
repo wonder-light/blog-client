@@ -21,9 +21,10 @@ const store = useCounterStore();
 const {albums} = storeToRefs(store);
 const {proxy} = getCurrentInstance();
 
-await proxy.axios.get('/album').then(response => {
-    store.addAlbumArray(response.data);
-});
+if (!albums.value) {
+    //更新相册
+    await store.updateAlbum();
+}
 
 //打开相册
 function OpenAlbum(album) {

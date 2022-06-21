@@ -16,17 +16,18 @@ import { getCurrentInstance } from "vue";
 
 let props = defineProps({
     name: {type: String, default: 'GitHub'},
-    repository: {type: Object, required: true},
+    repository: {type: [Object, null], required: true},
     method: {type: String, default: 'get'},
     baseUrl: {type: String, default: 'https://api.github.com'},
     api: {type: String, default: '/users/wonder-light/repos'},
     params: {type: Object, default: () => ({})},
+    //更新数据的方法
     update: {type: Function, required: true},
 });
 
 const {proxy} = getCurrentInstance();
 
-if (!(props.repository instanceof Array && props.repository.length > 0)) {
+if (!props.repository) {
     await getRepository();
 }
 

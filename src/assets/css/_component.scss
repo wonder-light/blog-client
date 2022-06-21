@@ -53,6 +53,9 @@
 
 //Card Comment End
 
+
+//Comment Editor End
+
 .editor {
     width: 100%;
 }
@@ -85,38 +88,8 @@
     }
 }
 
-//CommentArea Comment Begin
 .comment-area {
     width: 100%;
-}
-
-.comment-area-ul {
-    height: calc((100vh - var(--el-dialog-margin-top) - 50px) - 144px) overflow auto;
-    margin: 0;
-    padding-left: 6px;
-    list-style-type: none;
-
-    li {
-        margin-bottom: 20px;
-        border-bottom-width: 1px;
-        border-bottom-style: solid;
-        border-bottom-color: #efefef;
-    }
-
-    li:nth-child(1) {
-        margin-bottom: 30px;
-        border-bottom-width: 10px;
-        border-bottom-style: solid;
-    }
-
-    li:nth-child(2):before {
-        content: "全部评论";
-        display: flex;
-        font-size: 16px;
-        line-height: initial;
-        padding-left: 10px;
-        margin-bottom: 20px;
-    }
 }
 
 .comment-area-header {
@@ -150,10 +123,10 @@
     }
 }
 
-//CommentArea Comment End
+//Comment Editor End
 
 
-//Comment Comment Begin
+//Comment Begin
 .comment {
     --padding-left-width: 60px;
     position: relative;
@@ -168,7 +141,6 @@
         }
     }
 }
-
 
 .comment-avatar {
     --size: 40px;
@@ -263,7 +235,7 @@
 
 }
 
-//Comment Comment End
+//Comment End
 
 
 //TagCloud Begin
@@ -289,46 +261,3 @@
 
 //TagCloud End
 
-
-//ArticleSimpleView Begin
-.article-simple-view {
-    width: 100%;
-    height: auto;
-    display: flex;
-}
-
-.article-simple-view-item {
-    position: relative;
-    width: 100%;
-    height: auto;
-
-    .el-image {
-        width: 100%;
-        height: 100%;
-        padding: 0;
-        filter: brightness(60%); //使图片颜色变暗
-
-        img {
-            transition: all 0.3s;
-        }
-    }
-
-    &:hover {
-        cursor: pointer;
-
-        img {
-            transform: scale(1.1);
-        }
-    }
-}
-
-.article-simple-view-item-content {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    padding: 0;
-    transform: translate(0, -50%);
-}
-
-//ArticleSimpleView End

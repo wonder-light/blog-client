@@ -37,7 +37,7 @@ function create() {
 function setStyle() {
     let he = document.getElementById('he-plugin-standard');
     //没有子节点就继续定时
-    if (he.children.length <= 0) {
+    if (!he?.children || he.children.length <= 0) {
         setTimeout(setStyle, 50);
         return;
     }

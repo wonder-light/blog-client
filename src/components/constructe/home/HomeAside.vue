@@ -78,6 +78,9 @@ import { storeToRefs } from "pinia/dist/pinia";
 import { useCounterStore } from "@/stores/counter";
 import { getCurrentInstance } from "vue";
 
+const store = useCounterStore();
+const {proxy} = getCurrentInstance();
+
 //颜色
 let colors = ['#ff5b00', '#e6af00', '#7fbf03', '#0be617',
     '#00ffc2', '#00abff', '#2428ff', '#f31eff'];
@@ -85,8 +88,17 @@ let colors = ['#ff5b00', '#e6af00', '#7fbf03', '#0be617',
 let MaxIndex = colors.length - 1;
 
 //博客信息
-const {blogInfo, tags} = storeToRefs(useCounterStore());
-const {proxy} = getCurrentInstance();
+const {blogInfo, tags} = storeToRefs(store);
+
+if (!blogInfo.value) {
+    //更新博客信息
+    await store.updateBlogInfo();
+}
+
+if (!tags.value) {
+    //更新标签信息
+    await store.updateTags();
+}
 
 function getColor() {
     return colors[proxy.functions.RandomNumber(0, MaxIndex)];

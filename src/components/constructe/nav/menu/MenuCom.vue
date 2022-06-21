@@ -106,11 +106,18 @@ import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia/dist/pinia";
 import { useCounterStore } from "@/stores/counter";
 
-const {types} = storeToRefs(useCounterStore());
+const store = useCounterStore();
+const {types} = storeToRefs(store);
 
-let router = useRouter();
+const router = useRouter();
 const {animEnd} = inject('animEnd');
 const closeMenuPanel = inject('closeMenuPanel');
+
+//更新分类
+if (!types.value) {
+    await store.updateTypes();
+}
+
 
 //跳转网页
 function skip(url, target = '_blank') {

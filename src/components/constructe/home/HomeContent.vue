@@ -1,7 +1,7 @@
 <template>
   <div style="width: auto">
     <div class="home-content-layout">
-      <ArticleCard v-for="item in articleRecommends" :key="item.id" :article="item"/>
+      <ArticleCard v-for="item in recommendArticles" :key="item.id" :article="item"/>
     </div>
   </div>
 </template>
@@ -12,5 +12,10 @@ import { storeToRefs } from "pinia/dist/pinia";
 import { useCounterStore } from "@/stores/counter";
 import ArticleCard from "@/components/details/article/ArticleCard.vue";
 
-const {articleRecommends} = storeToRefs(useCounterStore());
+const store = useCounterStore();
+const {recommendArticles} = storeToRefs(store);
+
+if (!recommendArticles.value) {
+    await store.updateRecommendArticles();
+}
 </script>

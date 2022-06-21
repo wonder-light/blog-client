@@ -1,20 +1,16 @@
 <template>
   <main class="home-main">
     <RouterView v-slot="{Component}">
-      <template v-if="Component">
-        <Transition mode="out-in">
-          <KeepAlive>
-            <Suspense>
-              <component :is="Component"></component>
-            </Suspense>
-          </KeepAlive>
-        </Transition>
-      </template>
-      <template v-else>
-        <Suspense>
-          <HomeContent/>
-        </Suspense>
-      </template>
+      <Transition mode="out-in">
+        <KeepAlive>
+          <Suspense>
+            <component :is="Component || HomeContent"></component>
+            <template #fallback>
+              <load-page inline/>
+            </template>
+          </Suspense>
+        </KeepAlive>
+      </Transition>
     </RouterView>
   </main>
 </template>

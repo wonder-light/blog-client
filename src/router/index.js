@@ -75,7 +75,17 @@ const router = createRouter({
             name: 'transit',
             component: () => import('@/views/Transit.vue'),
         },
-    ]
+    ],
+    //路由滚动
+    scrollBehavior(to, from, savedPosition) {
+        //浏览器 前进、后退，savedPosition有效。否则无效
+        if (savedPosition) {
+            return savedPosition;
+        }
+        else {
+            return {top: 0};
+        }
+    },
 });
 
 

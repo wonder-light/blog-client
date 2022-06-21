@@ -1,15 +1,14 @@
 <template>
-    <div></div>
+  <div class="page-load" style="background: #33333300"></div>
 </template>
 
 <!-- 中转路由 -->
 <script setup>
-import { useRoute, useRouter } from "vue-router";
+import { getCurrentInstance } from "vue";
 
-let route = useRoute();
-let router = useRouter();
-let path = route.query.path;
-if (path != null) {
-    router.push(path);
-}
+const {proxy} = getCurrentInstance();
+
+let path = proxy.$route.query.path;
+
+proxy.$router.push(path ? path : '/');
 </script>

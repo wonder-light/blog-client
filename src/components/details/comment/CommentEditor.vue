@@ -85,7 +85,6 @@ const editorConfig = {
 
 onMounted(createEditor);
 onUnmounted(() => {
-    console.log("销毁");
     tinymce.get(editorId.value)?.destroy();
 });
 

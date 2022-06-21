@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { getCurrentInstance, provide, ref } from "vue";
+import { getCurrentInstance, onUnmounted, provide, ref } from "vue";
 import Comment from "@/components/details/comment/Comment.vue";
 import CommentEditor from "@/components/details/comment/CommentEditor.vue";
 import { storeToRefs } from "pinia/dist/pinia";
@@ -47,7 +47,7 @@ const props = defineProps({
 
 const {proxy} = getCurrentInstance();
 const {user} = storeToRefs(useCounterStore());
-
+onUnmounted(() => console.log("Area 销毁"));
 //自身ID
 const IdHandle = ref(proxy.functions.NewEditorId());
 //待显示的评论区ID
@@ -71,7 +71,10 @@ function setAreaId(newId) {
     }
 }
 
-await loadComment(0, props.targetId);
+//关闭评论时跳过加载
+if (props.closeComment !== true) {
+    await loadComment(0, props.targetId);
+}
 
 //加载评论 (父评论, 子评论)
 async function loadComment(start, targetId, rootParentId) {
@@ -86,7 +89,7 @@ async function loadComment(start, targetId, rootParentId) {
         sub = parent.children.slice(start, start + loadNumber);
     }
     else if (rootNumber.value <= 0 && rootNumber.value === comments.value.length) {
-        //根级评论没有需要获取的必要
+        //根级评论的数量为0时没有获取的必要
         return;
     }
     else {
@@ -154,4 +157,6 @@ async function submitComment(editorId, parent = null) {
 }
 
 provide('loadComment', loadComment);
+
+
 </script>

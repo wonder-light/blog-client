@@ -77,7 +77,7 @@
     }
 }
 
-.article-card-tags {
+.article-card-type {
     display: flex;
     flex-wrap: wrap;
 
@@ -200,22 +200,16 @@
         margin-bottom: 36px;
     }
 
-    .recommend-article, .last-article, .next-article {
-        text-align: center;
-        color: #eeeeee;
-        padding: 0 30px;
-
-        div {
-            line-height: 2;
-        }
+    .article-views-info {
+        padding-bottom: 20px;
     }
 
-    .last-article {
-        text-align: left;
+    .tinymce-content {
+        padding: 20px 0;
     }
 
-    .next-article {
-        text-align: right;
+    .article-last-next {
+        padding: 20px 0;
     }
 }
 
@@ -246,43 +240,63 @@
     }
 }
 
-
-.article-views-header-tags {
-    .el-collapse-item__content {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    span {
-        color: #fff;
-        font-size: 12px;
-        margin: 4px 6px;
-        padding: 0 8px;
-        border-radius: 10px;
+.article-last-next {
+    width: 100%;
+    display: grid;
+    grid-auto-rows: 200px;
+    @media screen and (min-width: 710px) {
+        grid-template-columns: 1fr 1fr;
     }
 }
 
-.article-views-recommend {
-    margin: 20px auto 30px;
+.view-item {
+    position: relative;
+    width: 100%;
+    height: 100%;
 
-    .article-simple-view-item {
-        margin: 0 3px;
+    .el-image {
+        width: 100%;
+        height: 100%;
+        filter: brightness(70%); //使图片颜色变暗
+
+        img {
+            transition: all 0.3s;
+        }
+    }
+
+    &:hover {
+        cursor: pointer;
+
+        img {
+            transform: scale(1.1);
+        }
+    }
+
+    .title {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        color: #eeeeee;
+        padding: 0 30px;
+        line-height: 60px;
+        display: grid;
+        align-items: center;
+        align-content: center;
+
+        &.last {
+            justify-content: start;
+        }
+
+        &.next {
+            justify-content: end;
+        }
+
+        > span {
+            line-height: 40px;
+        }
     }
 }
 
-//视图分层结构，如"相关推荐"、"评论"等
-.article-views-hierarchic {
-    display: flex;
-    align-items: center;
-    line-height: 1.5;
 
-    svg {
-        width: 24px;
-        height: 24px;
-        margin-right: 6px;
-    }
-
-    span {
-        font-size: 1.40em;
-    }
-}
