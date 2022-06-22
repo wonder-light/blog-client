@@ -12,31 +12,31 @@ axios.defaults.responseType = 'json';//'blob';
 
 //sessionStorage.setItem('Token', window.btoa(axios.defaults.auth.username + ':' + axios.defaults.auth.password));
 
-// * http request 拦截器
-axios.interceptors.request.use(
-    config => {
-        // * 判断是否存在token，如果存在的话，则每个http header都加上token
-        // * token会在登录之后存储在本地
-        // @ts-ignore
-        if (env.isDev) console.log('http 请求 拦截器', config);
-        return config;
-    },
-    err => {
-        if (env.isDev) console.log('http 请求 拦截器 失败', err);
-        return Promise.reject(err);
-    });
-
-// * http response 拦截器
-axios.interceptors.response.use(
-    response => {
-        if (env.isDev) console.log('http 响应 拦截器', response);
-        updateUrl(response.data);
-        return response;
-    },
-    error => {
-        if (env.isDev) console.log('http 响应 拦截器 失败', error);
-        return Promise.reject(error);
-    });
+if (env.isDev) {
+    // * http request 拦截器
+    axios.interceptors.request.use(config => {
+            // * 判断是否存在token，如果存在的话，则每个http header都加上token
+            // * token会在登录之后存储在本地
+            // @ts-ignore
+            console.log('http 请求 拦截器', config);
+            return config;
+        },
+        err => {
+            console.log('http 请求 拦截器 失败', err);
+            return Promise.reject(err);
+        });
+    
+    // * http response 拦截器
+    axios.interceptors.response.use(response => {
+            console.log('http 响应 拦截器', response);
+            updateUrl(response.data);
+            return response;
+        },
+        error => {
+            console.log('http 响应 拦截器 失败', error);
+            return Promise.reject(error);
+        });
+}
 
 export default axios;
 

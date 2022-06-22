@@ -25,5 +25,11 @@ export default defineConfig({
     esbuild: {
         jsxFactory: 'h',
         jsxFragment: 'Fragment'
+    },
+    build: {
+        outDir: '../dist'
+    },
+    preview: {
+        port: '6050',
     }
 });

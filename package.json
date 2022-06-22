@@ -3,8 +3,8 @@
     "version": "0.0.0",
     "scripts": {
         "dev": "vite --mode bate",
-        "build": "vite build",
-        "preview": "vite preview --port 4173",
+        "build": "vite build --mode production",
+        "preview": "vite preview",
         "test:unit": "vitest --environment jsdom",
         "test:e2e": "start-server-and-test preview http://127.0.0.1:4173/ 'cypress open --e2e'",
         "test:e2e:ci": "start-server-and-test preview http://127.0.0.1:4173/ 'cypress run --e2e'",

@@ -24,7 +24,7 @@ await updateVersion();
 const store = useCounterStore();
 const {blogger} = storeToRefs(store);
 
-if (!blogger) {
+if (!blogger.value) {
     await store.updateBlogger();
 }
 </script>

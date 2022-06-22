@@ -157,7 +157,6 @@ export function setStoreConfig() {
     }
     // 2. 订阅保存数据
     instance.$subscribe((_, state) => {
-        console.log("订阅", state);
         localStorage.setItem('counter-store', JSON.stringify({...state}));
     });
 }
@@ -192,6 +191,7 @@ export async function updateVersion() {
                 instance.types = null;
             }
             if (oldVersion.user !== newVersion.user) {
+                instance.blogger = null;
                 instance.tourist = null;
             }
         }
