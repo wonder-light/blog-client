@@ -62,7 +62,7 @@
       <div class="tinymce-content" v-html="article.content"/>
       <ArticleLastNext :id="articleId"/>
     </el-card>
-    <CommentArea :close-comment="article.closeComment" :target-id="article.id"/>
+    <CommentArea :close-comment="article.closeComment" :root-number="article.commentCount" :target-id="article.id"/>
   </div>
   <div v-else>
     <el-empty/>

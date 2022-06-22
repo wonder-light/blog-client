@@ -26,6 +26,8 @@ export const useCounterStore = defineStore({
         githubRepository: null,
         //用户的Gitee存储库
         giteeRepository: null,
+        //所有评论集合
+        commentSet: {}
     }),
     getters: {
         //文章 articleId<=0 : 创建文章， articleId > 0 : 修改文章
@@ -112,6 +114,19 @@ export const useCounterStore = defineStore({
         //设置游客信息
         setUser(tourist) {
             this.user = tourist;
+        },
+    
+        //设置指定目标ID的评论
+        setCommentSet(targetId) {
+            this.commentSet[targetId] = {
+                comments: [],
+                count: -1
+            };
+        },
+    
+        //设置指定ID评论集合的数量
+        setCommentCount(targetId, count) {
+            this.commentSet[targetId].count = count;
         },
     }
 });

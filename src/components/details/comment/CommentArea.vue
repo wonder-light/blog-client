@@ -12,13 +12,13 @@
         </svg>
         <span>评论</span>
       </div>
-      <CommentEditor v-if="areaId === IdHandle" @submit="submitComment($event.target.value, null)"/>
+      <CommentEditor v-if="areaId === IdHandle" @submit="submitComment($event, null)"/>
       <div class="comment-area-main">
         <div class="comment-number">{{ rootNumber + ' 条评论' }}</div>
         <div v-if="rootNumber <= 0">
           <el-empty description="暂无评论"/>
         </div>
-        <div v-else class="comment-list">
+        <div v-else v-scroll="scrollLoad" class="comment-list" distance="500">
           <Comment v-for="parent in comments" :key="parent.id" :comment="parent">
             <template v-slot="{start}">
               <Comment v-for="child in parent.children.slice(start, start + 10)" :key="child.id" :comment="child" :parent="parent"/>
@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { getCurrentInstance, onUnmounted, provide, ref } from "vue";
+import { getCurrentInstance, provide, ref } from "vue";
 import Comment from "@/components/details/comment/Comment.vue";
 import CommentEditor from "@/components/details/comment/CommentEditor.vue";
 import { storeToRefs } from "pinia/dist/pinia";
@@ -43,24 +43,40 @@ const props = defineProps({
     closeComment: {type: Boolean, default: false},
     //评论目标ID: 0-留言板
     targetId: {type: Number, default: 0},
+    ////根级评论的数量
+    rootNumber: {type: Number, default: -1},
 });
 
+const store = useCounterStore();
 const {proxy} = getCurrentInstance();
-const {user} = storeToRefs(useCounterStore());
-onUnmounted(() => console.log("Area 销毁"));
+const {user, commentSet} = storeToRefs(store);
+
+//更新评论集合
+if (!commentSet.value[props.targetId]) {
+    store.setCommentSet(props.targetId);
+}
+
 //自身ID
 const IdHandle = ref(proxy.functions.NewEditorId());
 //待显示的评论区ID
 const areaId = ref(IdHandle.value);
 //评论集合
-const comments = ref([]);
+const comments = ref(commentSet.value[props.targetId].comments);
 //根级评论的数量
-const rootNumber = ref(-1);
+const rootNumber = ref(props.rootNumber);
 //每次加载的数量
 const loadNumber = 10;
 
 provide('areaId', {areaId, setAreaId});
 provide('submitComment', submitComment);
+
+//关闭评论时跳过加载
+if (props.closeComment !== true) {
+    //获取评论数量
+    await loadCommentCount();
+    await loadComment(0, props.targetId);
+}
+
 
 function setAreaId(newId) {
     if (newId && newId.trim().length > 0) {
@@ -71,9 +87,26 @@ function setAreaId(newId) {
     }
 }
 
-//关闭评论时跳过加载
-if (props.closeComment !== true) {
-    await loadComment(0, props.targetId);
+//加载评论数量
+async function loadCommentCount() {
+    if (rootNumber.value >= 0) {
+        store.setCommentCount(props.targetId, rootNumber.value);
+        return;
+    }
+    else {
+        rootNumber.value = commentSet.value.count;
+    }
+    if (rootNumber.value >= 0) {
+        return;
+    }
+    let params = {targetId: null};
+    if (props.targetId > 0) {
+        params.targetId = props.targetId;
+    }
+    await proxy.axios.get('/comment/number', {params}).then(response => {
+        rootNumber.value = response.data;
+        store.setCommentCount(props.targetId, rootNumber.value);
+    });
 }
 
 //加载评论 (父评论, 子评论)
@@ -107,6 +140,7 @@ async function loadComment(start, targetId, rootParentId) {
         if (parent) {
             parent.childrenNumber = response.data.count;
             for (let info of response.data.comments) {
+                //直接修改store中的comments数组对象
                 parent.children[start++] = info;
             }
         }
@@ -114,6 +148,7 @@ async function loadComment(start, targetId, rootParentId) {
         else {
             rootNumber.value = response.data.count;
             for (let info of response.data.comments) {
+                //直接修改store中的comments数组对象
                 comments.value[start++] = info;
             }
         }
@@ -156,7 +191,12 @@ async function submitComment(editorId, parent = null) {
     });
 }
 
-provide('loadComment', loadComment);
+function scrollLoad() {
+    if (rootNumber.value > comments.value.length) {
+        loadComment(comments.value.length, props.targetId);
+    }
+}
 
+provide('loadComment', loadComment);
 
 </script>

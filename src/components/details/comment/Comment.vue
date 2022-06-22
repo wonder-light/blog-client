@@ -7,7 +7,7 @@
       <CommentUser :target="parent?.member" :user="comment.member"/>
       <div class="tinymce-content" v-html="comment.content"/>
       <CommentInfo :date="comment.date" :editor-id="IdHandle"/>
-      <CommentEditor v-if="areaId === IdHandle" reply @submit="submitComment($event.target.value, comment)"/>
+      <CommentEditor v-if="areaId === IdHandle" reply @submit="submitComment($event, comment)"/>
       <div v-if="showChild" class="reply">
         <slot :start="page * 10 - 10"/>
         <div v-if="more" class="comment-more">
@@ -47,7 +47,7 @@ const IdHandle = ref(proxy.functions.NewEditorId());
 //当前页
 const page = ref(1);
 //分页的绑定对象
-const v_bind = {'pager-count': 5, 'hide-on-single-page': false, 'layout': "prev, pager, next", 'small': true};
+const v_bind = {'pager-count': 5, 'hide-on-single-page': true, 'layout': "prev, pager, next", 'small': true};
 //显示子评论
 const showChild = computed(() => props.comment.children.length > 0);
 //更多评论

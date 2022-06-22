@@ -209,7 +209,18 @@
 
     > small {
         color: #98a6ad;
-        margin-right: 20px;
+        margin-right: 10px;
+    }
+
+    .reply {
+        cursor: pointer;
+        padding: 2px 8px;
+
+        &:hover {
+            color: #00a1d6;
+            background-color: #e5e9ef;
+            border-radius: 10px;
+        }
     }
 }
 
@@ -242,6 +253,11 @@
 .tag-cloud {
     position: relative;
     height: 230px;
+    //禁止鼠标移动时选中文本
+    -moz-user-select: none; /*firefox*/
+    -webkit-user-select: none; /*webkit浏览器*/
+    -ms-user-select: none; /*ie10+*/
+    user-select: none; /*文字不能被选中*/
 
     a {
         position: absolute;
@@ -251,11 +267,10 @@
         font-weight: bold;
         text-decoration: none;
         padding: 3px 6px;
+    }
 
-        &:hover {
-            cursor: pointer;
-            color: #FF0000;
-        }
+    &:hover {
+        cursor: pointer;
     }
 }
 

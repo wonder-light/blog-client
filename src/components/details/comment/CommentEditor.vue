@@ -84,9 +84,7 @@ const editorConfig = {
 };
 
 onMounted(createEditor);
-onUnmounted(() => {
-    tinymce.get(editorId.value)?.destroy();
-});
+onUnmounted(() => tinymce.get(editorId.value)?.destroy());
 
 //创建编辑器
 function createEditor() {
@@ -94,9 +92,6 @@ function createEditor() {
         let editor = tinymce.get(editorId.value);
         if (!editor) {
             setTimeout(createEditor, 10);
-        }
-        else {
-            console.log(editor);
         }
     });
 }
@@ -185,8 +180,8 @@ function Submit() {
                 });
             }
         }
-        
-        if (tinymce.get(editorId).getContent().trim().length <= 0) {
+    
+        if (tinymce.get(editorId.value).getContent().trim().length <= 0) {
             state = false;
             message = '评论内容为空';
         }

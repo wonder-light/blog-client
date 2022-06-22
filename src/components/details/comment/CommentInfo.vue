@@ -3,7 +3,7 @@
     <small>
       {{ functions.GetNearestDate(date) }}
     </small>
-    <small @click="setAreaId(editorId)">回复</small>
+    <small class="reply" @click="setAreaId(editorId)">回复</small>
   </div>
 </template>
 

@@ -7,7 +7,7 @@
       <el-image :src="env.serverUrl + '/files/image/background/mmexport1650128636119.jpg'" fit="cover"/>
       <el-image :src="env.serverUrl + '/files/image/background/mmexport1649387413764.jpg'" fit="cover"/>
     </el-card>
-    <CommentArea :close-comment="true"/>
+    <CommentArea :close-comment="false"/>
   </div>
 </template>
 
