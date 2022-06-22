@@ -3,10 +3,11 @@
     <p class="title">{{ album.name }}</p>
     <p class="description">创建时间为{{ '2022年4月15日' }} - {{ album.number }}个项目</p>
     <el-divider/>
-    <div class="home-content-layout">
+    <div v-if="album?.images?.length > 0" class="home-content-layout">
       <el-image v-for="(url, index) in album.images" :key="url" :alt="url" :initial-index="index"
                 :preview-src-list="album.images" :src="url" class="image-item" fit="cover" loading="lazy"/>
     </div>
+    <el-empty v-else/>
   </div>
 </template>
 
@@ -18,7 +19,7 @@ let props = defineProps({
     albumId: {type: Number, default: 0},
 });
 
-const albums = useCounterStore().albums;
+const {albums} = useCounterStore();
 const {proxy} = getCurrentInstance();
 
 let album = ref(albums?.find(item => item.id === props.albumId));

@@ -1,10 +1,11 @@
 <template>
-  <div class="article-content">
+  <div v-if="shows?.length > 0" class="article-content">
     <div class="article-layout">
       <ArticleItem v-for="(article, index) in shows" :key="article.id" :article="article" :large="canDiversified(index)"/>
     </div>
     <el-pagination v-model:current-page="currentPage" :total="articleNumber" v-bind="v_bind" @current-change="check"/>
   </div>
+  <el-empty v-else/>
 </template>
 
 <script setup>

@@ -3,9 +3,10 @@
     <div style="display: flex;">
       <h1 class="warehouse-title">{{ name }}</h1>
     </div>
-    <div class="home-content-layout">
+    <div v-if="repository?.length > 0" class="home-content-layout">
       <WarehouseCard v-for="item in repository" :key="item" :repository="item"/>
     </div>
+    <el-empty v-else/>
   </div>
 </template>
 

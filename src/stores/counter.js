@@ -27,7 +27,9 @@ export const useCounterStore = defineStore({
         //用户的Gitee存储库
         giteeRepository: null,
         //所有评论集合
-        commentSet: {}
+        commentSet: {},
+        //数据的版本信息
+        version: {},
     }),
     getters: {
         //文章 articleId<=0 : 创建文章， articleId > 0 : 修改文章
@@ -142,24 +144,58 @@ export const useCounterStore = defineStore({
 });
 
 //设置状态配置
-export async function setStoreConfig() {
-// 数据持久化
-// 1. 保存数据
+export function setStoreConfig() {
+//数据持久化
     const instance = useCounterStore();
-    instance.$subscribe((_, state) => {
-        localStorage.setItem('counter-store', JSON.stringify({...state}));
-    });
-// 2. 获取保存的数据，先判断有无，无则用先前的
+    // 1. 获取保存的数据，先判断有无，无则用先前的
     const old = localStorage.getItem('counter-store');
     if (old) {
-        //instance.$state = JSON.parse(old);
+        //替换状态
+        instance.$state = JSON.parse(old);
+        instance.githubRepository = null;
+        instance.giteeRepository = null;
     }
-    await InitData(instance);
+    // 2. 订阅保存数据
+    instance.$subscribe((_, state) => {
+        console.log("订阅", state);
+        localStorage.setItem('counter-store', JSON.stringify({...state}));
+    });
 }
 
-async function InitData(instance) {
-    if (!instance) return false;
-    
-    await instance.updateBlogger();
-    
+
+//更新数据的版本
+export async function updateVersion() {
+    const instance = useCounterStore();
+    await axios.get('/blog/version').then(response => {
+        let newVersion = response.data;
+        let oldVersion = instance.version;
+        if (!oldVersion || typeof oldVersion !== 'object') {
+            instance.$reset();
+        }
+        else {
+            if (oldVersion.blogInfo !== newVersion.blogInfo) {
+                instance.blogInfo = null;
+            }
+            if (oldVersion.album !== newVersion.album) {
+                instance.albums = null;
+            }
+            if (oldVersion.article !== newVersion.article) {
+                instance.articles = [];
+            }
+            if (oldVersion.comment !== newVersion.comment) {
+                instance.commentSet = {};
+            }
+            if (oldVersion.tag !== newVersion.tag) {
+                instance.tags = null;
+            }
+            if (oldVersion.type !== newVersion.type) {
+                instance.types = null;
+            }
+            if (oldVersion.user !== newVersion.user) {
+                instance.tourist = null;
+            }
+        }
+        instance.version = newVersion;
+    }).catch(() => {
+    });
 }

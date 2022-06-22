@@ -1,5 +1,5 @@
 <template>
-  <div class="home-content-layout">
+  <div v-if="albums?.length > 0" class="home-content-layout">
     <el-card v-for="item in albums" :key="item.id" class="album-content">
       <div class="image">
         <el-image :src="item.cover" alt="" fit="cover" @click="OpenAlbum(item)"/>
@@ -10,6 +10,7 @@
       </div>
     </el-card>
   </div>
+  <el-empty v-else/>
 </template>
 
 <script setup>

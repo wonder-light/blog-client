@@ -1,6 +1,6 @@
 <template>
   <HomeNav/>
-  <component :is="homeHeader"/>
+  <HomeHeader/>
   <div class="home-layout">
     <HomeMain/>
     <HomeAside/>
@@ -15,12 +15,16 @@ import HomeHeader from "@/components/constructe/home/HomeHeader.vue";
 import HomeMain from "@/components/constructe/home/HomeMain.vue";
 import HomeFooter from "@/components/constructe/home/HomeFooter.vue";
 import HomeAside from "@/components/constructe/home/HomeAside.vue";
-import { setStoreConfig } from "@/stores/counter";
-import { shallowRef } from "vue";
+import { updateVersion, useCounterStore } from "@/stores/counter";
+import { storeToRefs } from "pinia/dist/pinia";
 
+//更新数据版本
+await updateVersion();
 
-const homeHeader = shallowRef(HomeHeader);
+const store = useCounterStore();
+const {blogger} = storeToRefs(store);
 
-await setStoreConfig();
-
+if (!blogger) {
+    await store.updateBlogger();
+}
 </script>

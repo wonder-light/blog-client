@@ -94,7 +94,7 @@ async function loadCommentCount() {
         return;
     }
     else {
-        rootNumber.value = commentSet.value.count;
+        rootNumber.value = commentSet.value[props.targetId].count;
     }
     if (rootNumber.value >= 0) {
         return;
