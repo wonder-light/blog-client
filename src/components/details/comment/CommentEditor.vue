@@ -1,5 +1,6 @@
 <template>
   <div class="comment-editor">
+    <div :id="editorId" style="text-align: initial"/>
     <el-form ref="form" :inline="true" :model="userCopy" :rules="rules" class="form-info">
       <el-form-item prop="name">
         <el-input v-model="userCopy.name" placeholder="名称"/>
@@ -14,10 +15,9 @@
         <el-input v-model="userCopy.avatar" placeholder="头像URL"/>
       </el-form-item>
     </el-form>
-    <div :id="editorId" style="text-align: initial"/>
     <div class="action-bottom">
-      <el-button round type="primary" @click="Submit">发送</el-button>
       <el-button v-if="reply" round type="primary" @click="setAreaId(null)">取消</el-button>
+      <el-button round type="primary" @click="Submit">发送</el-button>
     </div>
   </div>
 </template>
@@ -39,13 +39,17 @@ const {proxy} = getCurrentInstance();
 const {setAreaId} = inject('areaId');
 const {language} = inject('language');
 const store = useCounterStore();
-const {user} = storeToRefs(store);
+const {tourist} = storeToRefs(store);
+
+if (!tourist.value) {
+    await store.updateTourist();
+}
 
 //编辑器ID
 const editorId = ref(proxy.functions.NewEditorId());
 //用户信息,可能是游客
 //用户信息的副本
-const userCopy = ref(Object.assign({}, user.value));
+const userCopy = ref(Object.assign({}, tourist.value));
 //信息校验规则
 const rules = ref({
     name: [{required: true, message: '请输入名称', trigger: 'blur'}],
@@ -55,7 +59,6 @@ const rules = ref({
 });
 
 //编辑器配置
-
 const editorConfig = {
     selector: `#${editorId.value}`, // change this value according to your HTML
     inline: false,
@@ -96,13 +99,16 @@ function createEditor() {
     });
 }
 
+//编辑器实例化后的回调函数
 function InitInstance(instance) {
     if (props.content != null && props.content.trim().length > 0) {
         instance.setContent(props.content);
     }
     //addEventListener("touchstart", (e) =>(console.log(e)), { passive: true });
-    instance.on('touchmove', (e) => (console.log(e)));
-    instance.on('touchstart', (e) => (console.log(e)));
+    instance.on('touchmove', () => {
+    });
+    instance.on('touchstart', () => {
+    });
 }
 
 //验证邮箱
@@ -147,18 +153,19 @@ function Submit() {
     form.value.validate(async (isValid, invalidFields) => {
         //无效
         if (isValid === false) {
-            let message = Object.values(invalidFields)[0][0].message;
+            const message = Object.values(invalidFields)[0][0].message;
             ElMessage({showClose: true, message, center: true, grouping: true, type: 'error'});
             return false;
         }
         let state = false;
         let message = '';
-        //不存在游客
-        if (user.value.id <= 0) {
+        //不存用户,将用户添加到服务器中
+        if (tourist.value.id <= 0) {
+            //若有匹配的用户，则返回用户数据，否则创建新用户
             await proxy.axios.post('/user/match', userCopy.value).then(response => {
-                store.setUser(response.data);
-                userCopy.value = Object.assign({}, user.value);
-                localStorage.setItem('touristId', user.value.id);
+                store.updateTourist(response.data);
+                userCopy.value = Object.assign({}, tourist.value);
+                localStorage.setItem('touristId', tourist.value.id);
                 state = true;
             }).catch(() => {
                 state = false;
@@ -166,14 +173,14 @@ function Submit() {
             });
         }
         else {
-            //游客信息不变
-            if (proxy.functions.ObjectEqual(user.value, userCopy.value)) {
+            //先检测用户信息是否变化
+            if (proxy.functions.ObjectEqual(tourist.value, userCopy.value)) {
                 state = true;
             }
             else {
-                await proxy.axios.post(`/user/tourist/${user.value.id}`, user.value).then(() => {
+                await proxy.axios.post(`/user/tourist/${tourist.value.id}`, userCopy.value).then(() => {
+                    store.updateTourist(Object.assign({}, userCopy.value));
                     state = true;
-                    userCopy.value = Object.assign({}, user.value);
                 }).catch(() => {
                     state = false;
                     message = '网络错误';

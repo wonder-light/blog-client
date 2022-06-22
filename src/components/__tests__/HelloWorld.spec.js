@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest';
 
 import { mount } from '@vue/test-utils';
-import Editor from '../common/Editor.vue';
+import SakuraEffect from '../common/SakuraEffect.vue';
 
-describe('Editor', () => {
+describe('SakuraEffect', () => {
     it('renders properly', () => {
-        const wrapper = mount(Editor, {props: {msg: 'Editor Vitest'}});
+        const wrapper = mount(SakuraEffect, {props: {msg: 'Editor Vitest'}});
         expect(wrapper.text()).toContain('Editor Vitest');
     });
 });

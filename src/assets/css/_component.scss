@@ -64,21 +64,30 @@
     padding-top: 20px;
 
     .form-info {
-        display: flex;
-        justify-content: space-around;
+        display: grid;
+        margin: 20px 0;
+        @media screen and (min-width: 710px) {
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
+        @media screen and (min-width: 400px) and (max-width: 710px) {
+            grid-template-columns: 1fr 1fr;
+        }
+        @media screen and (max-width: 400px) {
+            grid-template-columns: 1fr;
+        }
 
         .el-form-item {
-            margin-right: 0;
+            margin: 0;
         }
     }
 
     .action-bottom {
         display: flex;
-        flex-direction: row-reverse;
-        margin: 20px auto;
+        margin-bottom: 20px;
+        justify-content: flex-end;
 
         > .el-button {
-            margin-left: 10px;
+            padding: 10px 30px;
             background: linear-gradient(45deg, rgb(68, 139, 255), rgb(68, 233, 255)) rgb(68, 139, 255);
 
             &:hover {
@@ -165,6 +174,11 @@
         left: 0;
         width: 100%;
         height: 100%;
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
     }
 }
 
@@ -175,6 +189,7 @@
     .user-name {
         font-weight: bold;
         color: #000000;
+        padding-right: 4px;
 
         &:hover {
             cursor: default;
@@ -182,25 +197,15 @@
     }
 
     .blogger {
+        padding: 0 4px;
         color: #0afdf8;
         border: 1px solid #0afdf8;
         background-color: #0AFDF81E;
-        padding: 0 4px;
     }
 
     .user-reply {
-        padding: 0 4px;
         color: #49b1f5;
-    }
-
-    > div {
-        line-height: 1.5;
-        display: flex;
-        align-items: center;
-
-        span {
-            margin-right: 8px;
-        }
+        padding: 0 4px;
     }
 }
 

@@ -49,7 +49,7 @@ const props = defineProps({
 
 const store = useCounterStore();
 const {proxy} = getCurrentInstance();
-const {user, commentSet} = storeToRefs(store);
+const {tourist, commentSet} = storeToRefs(store);
 
 //更新评论集合
 if (!commentSet.value[props.targetId]) {
@@ -164,9 +164,9 @@ async function loadComment(start, targetId, rootParentId) {
  */
 async function submitComment(editorId, parent = null) {
     let simpleComment = {
-        parentId: parent?.id,
+        parentId: parent?.id ?? null,
         targetId: props.targetId <= 0 ? null : props.targetId,
-        userId: user.id,
+        userId: tourist.value.id,
         content: tinymce.get(editorId).getContent(),
     };
     

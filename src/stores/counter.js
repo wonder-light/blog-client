@@ -9,7 +9,7 @@ export const useCounterStore = defineStore({
         //博客信息
         blogInfo: null,
         //游客信息
-        user: null,
+        tourist: null,
         //需要显示声明类型
         tags: null,
         //分类集合
@@ -84,6 +84,21 @@ export const useCounterStore = defineStore({
             });
         },
     
+        //更新用户信息
+        async updateTourist(tourist = null) {
+            if (tourist) {
+                this.tourist = tourist;
+                return;
+            }
+            //通过游客token获取游客信息
+            let userId = localStorage.getItem('touristId') ?? '0';
+            await axios.get('/user/simple/' + userId).then(response => {
+                this.tourist = response.data;
+            }).catch(() => {
+                this.tourist = {id: 0, name: '', email: '', blog: '', avatar: '', mode: -1};
+            });
+        },
+    
         //设置GitHub仓库
         setGithubRepository(githubRepository) {
             this.githubRepository = githubRepository;
@@ -109,11 +124,6 @@ export const useCounterStore = defineStore({
                 return;
             }
             this.articles.push(article);
-        },
-    
-        //设置游客信息
-        setUser(tourist) {
-            this.user = tourist;
         },
     
         //设置指定目标ID的评论
@@ -152,12 +162,4 @@ async function InitData(instance) {
     
     await instance.updateBlogger();
     
-    //获取游客信息
-    //获取游客token
-    let touristId = localStorage.getItem('touristId') ?? '0';
-    await axios.get('/user/simple/' + touristId).then(response => {
-        instance.setUser(response.data);
-    }).catch(() => {
-        instance.setUser({id: 0, name: '', email: '', blog: '', avatar: '', mode: -1});
-    });
 }

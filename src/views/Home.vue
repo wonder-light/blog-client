@@ -23,10 +23,4 @@ const homeHeader = shallowRef(HomeHeader);
 
 await setStoreConfig();
 
-await new Promise((resolve, reject) => {
-    setTimeout(() => {
-        resolve('foo');
-    }, 1000);
-});
-
 </script>

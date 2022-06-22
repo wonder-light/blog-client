@@ -2,11 +2,11 @@
   <div class="comment-user">
     <span class="user-name" @click="Open(user.blog)">{{ user?.name }}</span>
     <span v-if="user?.mode > 0" class="blogger">博主</span>
-    <span v-if="target != null">
+    <span v-if="target">
         <span class="user-reply"> @ </span>
         <span class="user-name" @click="Open(target.blog)"> {{ target?.name }} </span>
-        <span v-if="target?.mode > 0" class="blogger">博主</span>
-      </span>
+        <span v-if="target.mode > 0" class="blogger">博主</span>
+    </span>
   </div>
 </template>
 
