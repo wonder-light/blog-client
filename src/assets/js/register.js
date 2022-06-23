@@ -5,7 +5,7 @@ import { computed } from "vue";
 //注册组件
 export default {
     install: (app) => {
-        app.component('svg_img', svg_img);
+        app.component('svg-img', svg_img);
         app.component('load-page', LoadPage);
     
         //自定义指令

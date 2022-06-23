@@ -7,10 +7,7 @@
   <!-- 菜单面板 -->
   <transition enter-active-class="animate__animated animate__rotateInUpRight" leave-active-class="animate__animated animate__rotateOutUpLeft">
     <div v-if="showMenuPane" class="menu-pane">
-      <svg class="menu-close" version="1.1" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" @click="setShowMenuPane(false)">
-        <path
-          d="M18.362 19.324c-0.902 0.902-2.363 0.902-3.263 0l-5.098-5.827-5.098 5.825c-0.902 0.902-2.363 0.902-3.263 0-0.902-0.902-0.902-2.363 0-3.263l5.304-6.057-5.306-6.061c-0.902-0.902-0.902-2.361 0-3.263s2.361-0.902 3.263 0l5.1 5.829 5.098-5.829c0.902-0.902 2.361-0.902 3.263 0s0.902 2.363 0 3.263l-5.304 6.061 5.304 6.057c0.902 0.902 0.902 2.363 0 3.265z"></path>
-      </svg>
+      <svg-img class="menu-close" src="../../../assets/img/close.svg#id-svg" @click="setShowMenuPane(false)"/>
       <div class="menu-gradient"/>
       <div class="menu-layout">
         <div class="menu-main">
