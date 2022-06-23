@@ -1,5 +1,4 @@
 import '../../interface';
-import "./registerServiceWorker";
 
 import env from "@/assets/js/env";
 import '@/assets/css/global.scss';

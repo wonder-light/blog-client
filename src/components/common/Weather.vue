@@ -21,10 +21,9 @@ window.WIDGET = {
     }
 };
 
-onMounted(() => {
-    create();
-    setStyle();
-});
+create();
+
+onMounted(() => setStyle());
 
 function create() {
     let WeatherNode = document.createElement('script');

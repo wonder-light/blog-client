@@ -8,12 +8,14 @@ const router = createRouter({
             path: '/',
             name: 'home',
             component: () => import('@/views/Home.vue'),
+            meta: {title: '念的小世界'},
             children: [
                 {
                     //仓库
                     path: 'warehouse',
                     name: 'warehouse',
                     component: () => import('@/views/Warehouse.vue'),
+                    meta: {title: '仓库'}
                 },
                 {
                     //相册
@@ -89,7 +91,15 @@ const router = createRouter({
 });
 
 
-router.beforeEach(() => {
+router.beforeEach((to) => {
+    let title = [];
+    for (let route of to.matched) {
+        if (route.meta.title) {
+            title.push(route.meta.title);
+        }
+    }
+    title = title.join(' | ');
+    document.title = title;
     return true;
 });
 
