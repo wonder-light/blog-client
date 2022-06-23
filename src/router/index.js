@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
+const modules = import.meta.glob('../views/**/**.vue');
+
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
@@ -7,26 +9,26 @@ const router = createRouter({
             //首页
             path: '/',
             name: 'home',
-            component: () => import('@/views/Home.vue'),
+            component: modules['../views/Home.vue'],
             meta: {title: '念的小世界'},
             children: [
                 {
                     //仓库
                     path: 'warehouse',
                     name: 'warehouse',
-                    component: () => import('@/views/Warehouse.vue'),
+                    component: modules['../views/Warehouse.vue'],
                     meta: {title: '仓库'}
                 },
                 {
                     //相册
                     path: 'album',
                     name: 'album',
-                    component: () => import('@/views/album/Album.vue'),
+                    component: modules['../views/album/Album.vue'],
                     children: [
                         {
                             path: ':id',
                             name: 'albumView',
-                            component: () => import('@/views/album/AlbumView.vue'),
+                            component: modules['../views/album/AlbumView.vue'],
                             props: (route) => {
                                 let albumId = Number(route.params.id);
                                 if (isNaN(albumId)) {
@@ -41,13 +43,13 @@ const router = createRouter({
                     //文章
                     path: 'article',
                     name: 'article',
-                    component: () => import('@/views/article/Article.vue'),
+                    component: modules['../views/article/Article.vue'],
                     children: [
                         {
                             //文章视图
                             path: ':id',
                             name: 'articleView',
-                            component: () => import('@/views/article/ArticleView.vue'),
+                            component: modules['../views/article/ArticleView.vue'],
                         },
                     ]
                 },
@@ -55,19 +57,19 @@ const router = createRouter({
                     //归档
                     path: 'archive',
                     name: 'archive',
-                    component: () => import('@/views/Archive.vue'),
+                    component: modules['../views/Archive.vue'],
                 },
                 {
                     //关于我
                     path: 'about',
                     name: 'about',
-                    component: () => import('@/views/About.vue'),
+                    component: modules['../views/About.vue'],
                 },
                 {
                     //留言板
                     path: 'guestbook',
                     name: 'guestbook',
-                    component: () => import('@/views/GuestBook.vue'),
+                    component: modules['../views/GuestBook.vue'],
                 },
             ]
         },
@@ -75,7 +77,7 @@ const router = createRouter({
             //中转路由
             path: '/transit',
             name: 'transit',
-            component: () => import('@/views/Transit.vue'),
+            component: modules['../views/Transit.vue'],
         },
     ],
     //路由滚动
