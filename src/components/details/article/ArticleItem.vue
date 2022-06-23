@@ -10,23 +10,23 @@
         <el-divider/>
         <div class="item-tags">
           <div>
-            <svg-img src="../../../assets/img/user.svg#id-svg"/>
+            <svg-img :src="env.svg['user.svg']"/>
             <span>{{ blogger.name }}</span>
           </div>
           <div>
-            <svg-img src="../../../assets/img/date.svg#id-svg"/>
+            <svg-img :src="env.svg['date.svg']"/>
             <span>{{ moment(article.date).format('Y年M月D日') }}</span>
           </div>
           <div v-if="article.type">
-            <svg-img src="../../../assets/img/bookmarks.svg#id-svg"/>
+            <svg-img :src="env.svg['bookmarks.svg']"/>
             <span>{{ article.type.name }}</span>
           </div>
           <div>
-            <svg-img src="../../../assets/img/views.svg#id-svg"/>
+            <svg-img :src="env.svg['views.svg']"/>
             <span>{{ article.views }}</span>
           </div>
           <div>
-            <svg-img src="../../../assets/img/comment.svg#id-svg"/>
+            <svg-img :src="env.svg['comment.svg']"/>
             <span>{{ article.commentCount }}</span>
           </div>
         </div>

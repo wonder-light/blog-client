@@ -4,12 +4,13 @@
       <h1>随风飞扬</h1>
       <p>心之所向，素履以往；生如逆旅，一苇以航</p>
     </div>
-    <svg-img class="down" src="../../../assets/img/arrow-down.svg#id-svg" @click="scrollToContent"/>
+    <svg-img :src="env.svg['arrow-down.svg']" class="down" @click="scrollToContent"/>
   </header>
 </template>
 
 <!-- 首页头部 -->
 <script setup>
+
 let AnimationFrameId = 0;
 let speed = 0.1;
 let top = 0;

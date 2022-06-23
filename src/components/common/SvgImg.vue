@@ -1,11 +1,20 @@
 <template>
   <svg>
-    <use :xlink:href="src"/>
+    <use :href="dataSrc"/>
   </svg>
 </template>
 
 <script setup>
-defineProps({
-    src: String,
+import { ref } from "vue";
+
+const props = defineProps({
+    src: Function,
 });
+
+let dataSrc = ref('');
+
+dataSrc.value = await props.src().then(module => {
+    return module.default + '#id-svg';
+});
+
 </script>

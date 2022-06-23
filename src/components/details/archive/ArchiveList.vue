@@ -9,7 +9,7 @@
           </div>
           <div>
             <div class="item-date">
-              <svg-img src="../../../assets/img/date.svg#id-svg"/>
+              <svg-img :src="env.svg['date.svg']"/>
               <span>{{ moment(item.date).format('Y-M-D') }}</span>
             </div>
             <a class="item-title" @click="skipView(item.id)">{{ item.title }}</a>

@@ -10,7 +10,7 @@
       <ul class="home-blog-info">
         <li>
           <span class="label">
-            <svg-img src="../../../assets/img/article1.svg#id-svg"/>
+            <svg-img :src="env.svg['article1.svg']"/>
             <span>文章数目</span>
           </span>
           <span :style="{'background-color': getColor()}" class="data">
@@ -19,7 +19,7 @@
         </li>
         <li>
           <span class="label">
-            <svg-img src="../../../assets/img/comment.svg#id-svg"/>
+            <svg-img :src="env.svg['comment.svg']"/>
             <span>评论数目</span>
           </span>
           <span :style="{'background-color': getColor()}" class="data">
@@ -28,7 +28,7 @@
         </li>
         <li>
           <span class="label">
-            <svg-img src="../../../assets/img/date1.svg#id-svg"/>
+            <svg-img :src="env.svg['date1.svg']"/>
             <span>运行天数</span>
           </span>
           <span :style="{'background-color': getColor()}" class="data">
@@ -37,7 +37,7 @@
         </li>
         <li>
           <span class="label">
-            <svg-img src="../../../assets/img/action1.svg#id-svg"/>
+            <svg-img :src="env.svg['action1.svg']"/>
             <span>最后活动</span>
           </span>
           <span :style="{'background-color': getColor()}" class="data">
