@@ -3,7 +3,7 @@
     <div v-if="closeComment">评论已关闭</div>
     <div v-else class="comment-area">
       <div class="comment-area-header">
-        <svg-img :src="env.svg['comment.svg']"/>
+        <svg-img svg-id="comment"/>
         <span>评论</span>
       </div>
       <CommentEditor v-if="areaId === IdHandle" @submit="submitComment($event, null)"/>

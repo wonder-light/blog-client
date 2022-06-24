@@ -5,23 +5,23 @@
         <h1>{{ article.title }}</h1>
         <div class="infos">
           <span>
-            <svg-img :src="env.svg['user.svg']"/>
+            <svg-img svg-id="user"/>
             {{ blogger.name }}
           </span>
           <span>
-            <svg-img :src="env.svg['date.svg']"/>
+            <svg-img svg-id="date"/>
             {{ moment(article.date).format('Y年M月D日') }}
           </span>
           <span>
-            <svg-img :src="env.svg['views.svg']"/>
+            <svg-img svg-id="views"/>
             {{ article.views + ' 次浏览' }}
           </span>
           <span>
-            <svg-img :src="env.svg['comment.svg']"/>
+            <svg-img svg-id="comment"/>
             {{ article.commentCount + ' 条评论' }}
           </span>
           <span v-if="article.type">
-            <svg-img :src="env.svg['bookmarks.svg']"/>
+            <svg-img svg-id="bookmarks"/>
             {{ article.type.name }}
           </span>
         </div>

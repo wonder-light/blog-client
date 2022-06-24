@@ -7,7 +7,7 @@
   <!-- 菜单面板 -->
   <transition enter-active-class="animate__animated animate__rotateInUpRight" leave-active-class="animate__animated animate__rotateOutUpLeft">
     <div v-if="showMenuPane" class="menu-pane">
-      <svg-img :src="env.svg['close.svg']" class="menu-close" @click="setShowMenuPane(false)"/>
+      <svg-img class="menu-close" svg-id="close" @click="setShowMenuPane(false)"/>
       <div class="menu-gradient"/>
       <div class="menu-layout">
         <div class="menu-main">

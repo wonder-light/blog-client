@@ -5,16 +5,12 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed } from "vue";
+import svgSet from "@/assets/img/svg-set.svg";
 
 const props = defineProps({
-    src: Function,
+    svgId: String,
 });
 
-let dataSrc = ref('');
-
-dataSrc.value = await props.src().then(module => {
-    return module.default + '#id-svg';
-});
-
+let dataSrc = computed(() => svgSet + '#' + props.svgId);
 </script>

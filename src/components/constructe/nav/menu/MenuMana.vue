@@ -1,13 +1,13 @@
 <template>
   <div class="menu-mana">
     <el-tooltip content="搜索" effect="customized" placement="top">
-      <svg-img :src="env.svg['search.svg']" @click="$router.push('/transit')"/>
+      <svg-img svg-id="search" @click="$router.push('/transit')"/>
     </el-tooltip>
     <el-tooltip v-if="true" content="登陆" effect="customized" placement="top">
-      <svg-img :src="env.svg['user.svg']" @click="Login"/>
+      <svg-img svg-id="user" @click="Login"/>
     </el-tooltip>
     <el-tooltip v-if="false" content="退出登陆" effect="customized" placement="top">
-      <svg-img :src="env.svg['logout.svg']"/>
+      <svg-img svg-id="logout"/>
     </el-tooltip>
   </div>
 </template>

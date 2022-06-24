@@ -1,6 +1,6 @@
 <template>
   <el-backtop :bottom="bottom" :right="40" :visibility-height="height">
-    <svg-img :src="env.svg['backTop.svg']" style="width: 100%; height: 100%;"/>
+    <svg-img style="width: 100%; height: 100%;" svg-id="backTop"/>
   </el-backtop>
 </template>
 

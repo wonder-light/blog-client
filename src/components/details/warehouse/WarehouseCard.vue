@@ -4,15 +4,15 @@
       <h1>{{ repository.name }}</h1>
       <small>
         <span class="star">
-          <svg-img :src="env.svg['star.svg']"/>
+          <svg-img svg-id="star"/>
           <span>{{ repository.stargazers_count + ' star / ' }}</span>
         </span>
         <span class="star">
-          <svg-img :src="env.svg['fork.svg']"/>
+          <svg-img svg-id="fork"/>
           <span>{{ repository.forks_count + ' fork / ' }}</span>
         </span>
         <span class="star">
-          <svg-img :src="env.svg['views.svg']"/>
+          <svg-img svg-id="views"/>
           <span>{{ repository.watchers_count + ' watch' }}</span>
         </span>
       </small>
@@ -22,11 +22,11 @@
     </div>
     <div style="width: 100%">
       <span class="time">
-      <svg-img :src="env.svg['date.svg']"/>
+      <svg-img svg-id="date"/>
       <small>{{ moment(repository.updated_at).format('Y-M-D') }}</small>
     </span>
       <el-button class="visit" round @click="OpenWebPage(repository.html_url)">
-        <svg-img :src="env.svg['click.svg']"/>
+        <svg-img svg-id="click"/>
         <p>访问</p>
       </el-button>
     </div>
