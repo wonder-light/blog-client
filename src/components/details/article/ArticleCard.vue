@@ -8,7 +8,7 @@
       <p>{{ article.description }}</p>
       <div class="article-card-time">
         <span>
-          <svg-img svg-id="date-color"/>
+          <SvgImg svg-id="date-color"/>
         </span>
         <span>{{ moment(article.date).format('Y年M月D日') }}</span>
       </div>

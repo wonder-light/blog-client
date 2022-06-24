@@ -14,6 +14,9 @@ import { setStoreConfig } from "@/stores/counter";
 export default {
     install: (app, options) => {
         app.use(ElementPlus);
+    
+        app.config.warnHandler = warnCaptured;
+        app.config.errorHandler = errorCaptured;
         app.config.globalProperties.env = env;
         app.config.globalProperties.axios = axios;
         app.config.globalProperties.$http = axios;
@@ -27,3 +30,17 @@ export default {
         }
     }
 };
+
+//用于为应用内传递的未捕获的错误指定一个全局处理函数
+function errorCaptured(err, instance, info) {
+    if (env.isDev) {
+        console.log(err, instance, info);
+    }
+}
+
+//警告处理器将接受警告信息作为其第一个参数，来源组件实例为第二个参数，以及组件追踪字符串作为第三个参数
+function warnCaptured(err, instance, info) {
+    if (env.isDev) {
+        console.log(err, instance, info);
+    }
+}

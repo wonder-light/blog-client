@@ -4,7 +4,7 @@
       <h1>随风飞扬</h1>
       <p>心之所向，素履以往；生如逆旅，一苇以航</p>
     </div>
-    <svg-img class="down" svg-id="arrow-down" @click="scrollToContent"/>
+    <SvgImg class="down" svg-id="arrow-down" @click="scrollToContent"/>
   </header>
 </template>
 

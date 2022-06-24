@@ -1,12 +1,12 @@
-import svg_img from "@/components/common/SvgImg.vue";
+import SvgImg from "@/components/common/SvgImg.vue";
 import LoadPage from "@/components/common/LoadPage.vue";
 import { computed } from "vue";
 
 //注册组件
 export default {
     install: (app) => {
-        app.component('svg-img', svg_img);
-        app.component('load-page', LoadPage);
+        app.component('SvgImg', SvgImg);
+        app.component('LoadPage', LoadPage);
     
         //自定义指令
         //滚动到一定程度时触发加载

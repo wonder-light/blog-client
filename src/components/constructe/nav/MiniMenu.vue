@@ -1,6 +1,6 @@
 <template>
   <div :class="['mini-menu', {'edge': miniEdge}]" @click="setShowMenuPane(true)">
-    <svg-img svg-id="mini-menu"/>
+    <SvgImg svg-id="mini-menu"/>
     <span>&nbsp; menu</span>
   </div>
 </template>
