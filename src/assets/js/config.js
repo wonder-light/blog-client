@@ -34,7 +34,10 @@ export default {
 //用于为应用内传递的未捕获的错误指定一个全局处理函数
 function errorCaptured(err, instance, info) {
     if (env.isDev) {
-        console.log(err, instance, info);
+        //网络连接错误
+        if (err.code === 'ERR_NETWORK') {
+            console.log('网络连接错误', instance.$router.push({name: 'error'}));
+        }
     }
 }
 

@@ -79,6 +79,12 @@ const router = createRouter({
             name: 'transit',
             component: modules['../views/Transit.vue'],
         },
+        {
+            //错误页面
+            path: '/:error*',
+            name: 'error',
+            component: () => import("@/views/error/404.vue"),
+        }
     ],
     //路由滚动
     scrollBehavior(to, from, savedPosition) {
