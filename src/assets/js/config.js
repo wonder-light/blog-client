@@ -3,7 +3,6 @@ import '../../interface';
 import env from "@/assets/js/env";
 import '@/assets/css/global.scss';
 import axios from "@/assets/js/axios";
-import ElementPlus from "element-plus";
 import functionLibrary from "@/assets/js/functionLibrary";
 import "moment/dist/locale/en-nz";
 import "moment/dist/locale/zh-cn";
@@ -12,9 +11,7 @@ import { setStoreConfig } from "@/stores/counter";
 
 //配置插件
 export default {
-    install: (app, options) => {
-        app.use(ElementPlus);
-    
+    install: (app) => {
         app.config.warnHandler = warnCaptured;
         app.config.errorHandler = errorCaptured;
         app.config.globalProperties.env = env;
@@ -36,7 +33,7 @@ function errorCaptured(err, instance, info) {
     if (env.isDev) {
         //网络连接错误
         if (err.code === 'ERR_NETWORK') {
-            console.log('网络连接错误', instance.$router.push({name: 'error'}));
+            console.log('网络连接错误', instance.$router.push({name: 'error'}), info);
         }
     }
 }
