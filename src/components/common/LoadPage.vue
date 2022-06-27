@@ -6,7 +6,7 @@
   </div>
   <div v-else :class="className">
     <slot>
-      <img alt="加载中..." class="center" src="@/assets/img/loading.gif"/>
+      <img alt="加载中..." class="center" src="/loading.gif"/>
     </slot>
   </div>
 </template>

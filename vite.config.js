@@ -13,6 +13,7 @@ let isProduction = process.env.NODE_ENV === 'production';
 // https://cn.vitejs.dev/config/
 export default defineConfig({
     root: path.resolve(__dirname, "src"),
+    publicDir: path.resolve(__dirname, "public"),
     plugins: [
         vue(), vueJsx(),
         AutoImport({
