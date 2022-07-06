@@ -6,7 +6,7 @@ import axios from "@/assets/js/axios";
 import functionLibrary from "@/assets/js/functionLibrary";
 import "moment/dist/locale/en-nz";
 import "moment/dist/locale/zh-cn";
-import { setStoreConfig } from "@/stores/counter";
+import { setStoreConfig, setUser } from "@/stores/counter";
 
 
 //配置插件
@@ -25,6 +25,13 @@ export default {
             //设置此项为 true 可以在浏览器开发工具的“性能/时间线”页中启用对组件初始化、编译、渲染和修补的性能表现追踪
             app.config.performance = true;
         }
+    
+        //接收从'https://blogadmin.nianian.cn'发送过来的数据
+        window.onmessage = (event) => {
+            if (event.data.key === import.meta.env.VITE_Key) {
+                setUser(event.data.user);
+            }
+        };
     }
 };
 

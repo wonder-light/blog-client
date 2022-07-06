@@ -39,9 +39,9 @@ const {proxy} = getCurrentInstance();
 const {setAreaId} = inject('areaId');
 const {language} = inject('language');
 const store = useCounterStore();
-const {tourist} = storeToRefs(store);
+const {tourist, isUser} = storeToRefs(store);
 
-if (!tourist.value) {
+if (!tourist.value && !isUser.value) {
     await store.updateTourist();
 }
 
@@ -159,35 +159,15 @@ function Submit() {
         }
         let state = false;
         let message = '';
-        //不存用户,将用户添加到服务器中
-        if (tourist.value.id <= 0) {
-            //若有匹配的用户，则返回用户数据，否则创建新用户
-            await proxy.axios.post('/user/match', userCopy.value).then(response => {
-                store.updateTourist(response.data);
-                userCopy.value = Object.assign({}, tourist.value);
-                localStorage.setItem('touristId', tourist.value.id);
-                state = true;
-            }).catch(() => {
-                state = false;
-                message = '网络错误';
+        
+        //不是用户则是游客, 用户不可以在这里更改
+        if (!isUser.value) {
+            await checkTourist().then(result => {
+                state = result;
+                if (!state) message = '网络错误';
             });
         }
-        else {
-            //先检测用户信息是否变化
-            if (proxy.functions.ObjectEqual(tourist.value, userCopy.value)) {
-                state = true;
-            }
-            else {
-                await proxy.axios.post(`/user/tourist/${tourist.value.id}`, userCopy.value).then(() => {
-                    store.updateTourist(Object.assign({}, userCopy.value));
-                    state = true;
-                }).catch(() => {
-                    state = false;
-                    message = '网络错误';
-                });
-            }
-        }
-    
+        
         if (tinymce.get(editorId.value).getContent().trim().length <= 0) {
             state = false;
             message = '评论内容为空';
@@ -202,4 +182,36 @@ function Submit() {
     });
 }
 
+
+//检测游客信息
+async function checkTourist() {
+    let state = false;
+    //不存用户,将用户添加到服务器中
+    if (tourist.value.id <= 0) {
+        //若有匹配的用户，则返回用户数据，否则创建新用户
+        await proxy.axios.post('/user/match', userCopy.value).then(response => {
+            store.updateTourist(response.data);
+            userCopy.value = Object.assign({}, tourist.value);
+            localStorage.setItem('touristId', tourist.value.id);
+            state = true;
+        }).catch(() => {
+            state = false;
+        });
+    }
+    else {
+        //先检测用户信息是否变化
+        if (proxy.functions.ObjectEqual(tourist.value, userCopy.value)) {
+            state = true;
+        }
+        else {
+            await proxy.axios.post(`/user/tourist/${tourist.value.id}`, userCopy.value).then(() => {
+                store.updateTourist(Object.assign({}, userCopy.value));
+                state = true;
+            }).catch(() => {
+                state = false;
+            });
+        }
+    }
+    return state;
+}
 </script>

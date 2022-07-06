@@ -106,6 +106,16 @@
         width: 160px;
         height: 160px;
         margin: auto;
+        animation: n-loading-image 1s linear infinite;
+    }
+}
+
+@keyframes n-loading-image {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
     }
 }
 

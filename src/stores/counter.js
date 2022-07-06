@@ -10,6 +10,8 @@ export const useCounterStore = defineStore({
         blogInfo: null,
         //游客信息
         tourist: null,
+        //是用户
+        isUser: false,
         //需要显示声明类型
         tags: null,
         //分类集合
@@ -197,5 +199,15 @@ export async function updateVersion() {
         }
         instance.version = newVersion;
     }).catch(() => {
+    });
+}
+
+
+//设置用户(具有权限的用户)
+export function setUser(user) {
+    const instance = useCounterStore();
+    instance.$patch(state => {
+        state.tourist = user;
+        state.isUser = true;
     });
 }
