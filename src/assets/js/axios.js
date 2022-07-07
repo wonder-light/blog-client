@@ -1,16 +1,10 @@
 import env from "@/assets/js/env";
 import axios from "axios";
+import { replaceUrl } from "@/assets/js/api";
 
 axios.defaults.baseURL = env.serverUrl;
 axios.defaults.timeout = 3000;
 axios.defaults.responseType = 'json';//'blob';
-//axios.defaults.headers.common['Token'] = 'CustomToken';
-//axios.defaults.auth = {username: "User", password: "Huyyej55844KJJifdss"};
-
-// 编码 window.btoa('china is so nb')
-// 解码 window.atob("Y2hpbmEgaXMgc28gbmI=")
-
-//sessionStorage.setItem('Token', window.btoa(axios.defaults.auth.username + ':' + axios.defaults.auth.password));
 
 if (env.isDev) {
     // * http request 拦截器
@@ -29,7 +23,9 @@ if (env.isDev) {
     // * http response 拦截器
     axios.interceptors.response.use(response => {
             console.log('http 响应 拦截器', response);
-            updateUrl(response.data);
+            //(server)* 匹配0个或者多个
+            let reg = /https:\/\/(server)*blog\.nianian\.cn(:8050)*/;
+            replaceUrl(response.data, reg, 'https://localhost:8050');
             return response;
         },
         error => {
@@ -39,22 +35,3 @@ if (env.isDev) {
 }
 
 export default axios;
-
-//替换URL
-function updateUrl(obj) {
-    if (typeof obj !== 'object') {
-        return;
-    }
-    for (let key in obj) {
-        let cop = obj[key];
-        let type = typeof cop;
-        if (type === 'string') {
-            //(server)* 匹配0个或者多个
-            let reg = /https:\/\/(server)*blog\.nianian\.cn(:8050)*/;
-            obj[key] = cop.replace(reg, 'https://localhost:8050');
-        }
-        else if (type === 'object') {
-            updateUrl(cop);
-        }
-    }
-}

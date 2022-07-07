@@ -22,10 +22,11 @@
 
 <!-- 评论组件 -->
 <script setup>
-import { computed, getCurrentInstance, inject, ref } from "vue";
 import CommentEditor from "@/components/details/comment/CommentEditor.vue";
 import CommentUser from "@/components/details/comment/CommentUser.vue";
 import CommentInfo from "@/components/details/comment/CommentInfo.vue";
+import { computed, inject, ref } from "vue";
+import { getId } from "@/assets/js/api";
 
 const props = defineProps({
     //评论
@@ -34,7 +35,6 @@ const props = defineProps({
     parent: {type: Object, default: null},
 });
 
-const proxy = getCurrentInstance().proxy;
 //加载评论
 const loadComment = inject('loadComment');
 //激活的编辑器ID
@@ -43,7 +43,7 @@ const {areaId} = inject('areaId');
 const submitComment = inject('submitComment');
 
 //自身ID
-const IdHandle = ref(proxy.functions.NewEditorId());
+const IdHandle = ref(getId());
 //当前页
 const page = ref(1);
 //分页的绑定对象

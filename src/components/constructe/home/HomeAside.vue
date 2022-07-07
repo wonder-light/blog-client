@@ -62,19 +62,17 @@ import Weather from "@/components/common/Weather.vue";
 import TagCloud from "@/components/common/TagCloud.vue";
 import { storeToRefs } from "pinia/dist/pinia";
 import { useCounterStore } from "@/stores/counter";
-import { getCurrentInstance } from "vue";
+import { randomNumber } from "@/assets/js/api";
 
 const store = useCounterStore();
-const {proxy} = getCurrentInstance();
+//博客信息
+const {blogInfo, tags} = storeToRefs(store);
 
 //颜色
 let colors = ['#ff5b00', '#e6af00', '#7fbf03', '#0be617',
     '#00ffc2', '#00abff', '#2428ff', '#f31eff'];
 
 let MaxIndex = colors.length - 1;
-
-//博客信息
-const {blogInfo, tags} = storeToRefs(store);
 
 if (!blogInfo.value) {
     //更新博客信息
@@ -87,7 +85,7 @@ if (!tags.value) {
 }
 
 function getColor() {
-    return colors[proxy.functions.RandomNumber(0, MaxIndex)];
+    return colors[randomNumber(0, MaxIndex)];
 }
 
 </script>

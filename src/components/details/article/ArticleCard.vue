@@ -26,6 +26,7 @@
 import moment from "moment";
 import Card from "@/components/common/Card.vue";
 import { getCurrentInstance, ref } from "vue";
+import { randomColor } from "@/assets/js/api";
 
 const props = defineProps({
     //文章
@@ -39,7 +40,7 @@ const imgClass = ref(['title']);
 const tagStyle = getColor();
 
 function getColor() {
-    let color = proxy.functions.RandomColor(0x580E0E);
+    let color = randomColor(0x580E0E);
     return ({
         'color': color,
         'background-color': color + '30'

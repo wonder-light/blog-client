@@ -8,13 +8,13 @@
 
 
 <script setup>
-import { getCurrentInstance, nextTick, onMounted, onUnmounted, ref } from "vue";
+import { nextTick, onMounted, onUnmounted, ref } from "vue";
+import { randomNumber } from "@/assets/js/api";
 
 let props = defineProps({
     tagList: {type: Array, default: () => []},
 });
 
-const {proxy} = getCurrentInstance();
 //标签列表
 let tagPositionList = [];
 //文档元素的引用
@@ -43,10 +43,10 @@ onUnmounted(() => {
 //随机颜色
 function RandomColor() {
     let color = [];
-    color.push(proxy.functions.RandomNumber(0, 255));
-    color.push(proxy.functions.RandomNumber(0, 255));
-    color.push(proxy.functions.RandomNumber(0, 255));
-    color[proxy.functions.RandomNumber(0, 2)] = proxy.functions.RandomNumber(0, 145);
+    color.push(randomNumber(0, 255));
+    color.push(randomNumber(0, 255));
+    color.push(randomNumber(0, 255));
+    color[randomNumber(0, 2)] = randomNumber(0, 145);
     return `rgb(${color[0]},${color[1]},${color[2]})`;
 }
 

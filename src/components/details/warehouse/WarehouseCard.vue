@@ -37,14 +37,12 @@
 <script setup>
 import moment from "moment";
 import Card from "@/components/common/Card.vue";
-import { getCurrentInstance } from "vue";
+import { randomNumber } from "@/assets/js/api";
 
 defineProps({
     //存储库
     repository: {type: Object, default: null},
 });
-
-const {proxy} = getCurrentInstance();
 
 //卡片颜色
 let colors = [
@@ -53,7 +51,7 @@ let colors = [
     '#0e87c0', '#3e5abb', '#b300be',
 ];
 
-let color = colors[proxy.functions.RandomNumber(0, colors.length - 1)];
+let color = colors[randomNumber(0, colors.length - 1)];
 
 //打开网页
 function OpenWebPage(url, target = '_blank') {
@@ -61,7 +59,3 @@ function OpenWebPage(url, target = '_blank') {
 }
 
 </script>
-
-<style scoped>
-
-</style>

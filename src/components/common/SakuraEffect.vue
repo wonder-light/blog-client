@@ -4,11 +4,11 @@
 
 <!-- 背景特效：樱花跑飘落 -->
 <script setup>
-import { getCurrentInstance, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
+import { getId } from "@/assets/js/api";
 
-const {proxy} = getCurrentInstance();
 //背景特效：樱花跑飘落 Id
-let sakuraId = ref(proxy.functions.NewEditorId());
+let sakuraId = ref(getId());
 
 
 onMounted(sakuraEffect);

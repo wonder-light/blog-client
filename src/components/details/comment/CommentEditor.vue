@@ -27,6 +27,7 @@ import { storeToRefs } from "pinia/dist/pinia";
 import { useCounterStore } from "@/stores/counter";
 import { getCurrentInstance, inject, onMounted, onUnmounted, ref } from "vue";
 import { ElMessage } from "element-plus";
+import { getId, objectEqual } from "@/assets/js/api";
 
 const props = defineProps({
     reply: {type: Boolean, default: false},
@@ -46,7 +47,7 @@ if (!tourist.value && !isUser.value) {
 }
 
 //编辑器ID
-const editorId = ref(proxy.functions.NewEditorId());
+const editorId = ref(getId());
 //用户信息,可能是游客
 //用户信息的副本
 const userCopy = ref(Object.assign({}, tourist.value));
@@ -200,7 +201,7 @@ async function checkTourist() {
     }
     else {
         //先检测用户信息是否变化
-        if (proxy.functions.ObjectEqual(tourist.value, userCopy.value)) {
+        if (objectEqual(tourist.value, userCopy.value)) {
             state = true;
         }
         else {

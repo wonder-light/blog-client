@@ -1,6 +1,7 @@
 import SvgImg from "@/components/common/SvgImg.vue";
 import LoadPage from "@/components/common/LoadPage.vue";
 import { computed } from "vue";
+import { getBottomToView, scrollBottom } from "@/assets/js/api";
 
 //注册组件
 export default {
@@ -19,14 +20,14 @@ export default {
                 //已经触发
                 let triggered = false;
                 binding.dir.scrollLoad = () => {
-                    const dis = (container ? scrollBottom : getBottom)(el);
+                    const dis = (container ? scrollBottom : getBottomToView)(el);
                     if (!triggered) {
-                        if (dis <= distance.value) {
+                        if (dis >= distance.value) {
                             binding.value();
                             triggered = true;
                         }
                     }
-                    else if (dis > distance.value) {
+                    else if (dis < distance.value) {
                         triggered = false;
                     }
                 };
@@ -38,34 +39,3 @@ export default {
         });
     }
 };
-
-
-//获取元素到视口顶部的距离 https://blog.csdn.net/weichangIT/article/details/88185250
-//在顶部的下面为正, 上面为负
-function getTop(el) {
-    let top = 0;
-    while (el.offsetParent) {
-        top += el.offsetTop;
-        el = el.offsetParent;
-    }
-    return top;
-}
-
-//获取元素到视口底部的距离
-//在底部的下面为正, 上面为负
-function getBottom(el) {
-    let top = getTop(el);
-    return (top + el.offsetHeight) - (window.innerHeight + document.documentElement.scrollTop);
-}
-
-//获取滚动容器中“滚动内容”到容器顶部的距离
-//在顶部的下面为正, 上面为负
-function scrollTop(el) {
-    return el.scrollTop;
-}
-
-//获取滚动容器中“滚动内容”到容器底部的距离
-//在底部的下面为正, 上面为负
-function scrollBottom(el) {
-    return el.scrollHeight - el.offsetHeight - el.scrollTop;
-}

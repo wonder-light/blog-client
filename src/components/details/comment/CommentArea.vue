@@ -31,6 +31,7 @@ import CommentEditor from "@/components/details/comment/CommentEditor.vue";
 import { storeToRefs } from "pinia/dist/pinia";
 import { useCounterStore } from "@/stores/counter";
 import { ElMessage } from "element-plus";
+import { getId } from "@/assets/js/api";
 
 const props = defineProps({
     //关闭评论
@@ -51,7 +52,7 @@ if (!commentSet.value[props.targetId]) {
 }
 
 //自身ID
-const IdHandle = ref(proxy.functions.NewEditorId());
+const IdHandle = ref(getId());
 //待显示的评论区ID
 const areaId = ref(IdHandle.value);
 //评论集合

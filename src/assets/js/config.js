@@ -3,10 +3,9 @@ import '../../interface';
 import env from "@/assets/js/env";
 import '@/assets/css/global.scss';
 import axios from "@/assets/js/axios";
-import functionLibrary from "@/assets/js/functionLibrary";
 import "moment/dist/locale/en-nz";
 import "moment/dist/locale/zh-cn";
-import { setStoreConfig, setUser } from "@/stores/counter";
+import { setStoreConfig, setUser } from "@/assets/js/api";
 
 
 //配置插件
@@ -17,7 +16,6 @@ export default {
         app.config.globalProperties.env = env;
         app.config.globalProperties.axios = axios;
         app.config.globalProperties.$http = axios;
-        app.config.globalProperties.functions = new functionLibrary();
     
         setStoreConfig();
     
@@ -26,12 +24,7 @@ export default {
             app.config.performance = true;
         }
     
-        //接收从'https://blogadmin.nianian.cn'发送过来的数据
-        window.onmessage = (event) => {
-            if (event.data.key === import.meta.env.VITE_Key) {
-                setUser(event.data.user);
-            }
-        };
+        window.onmessage = receiveMessage;
     }
 };
 
@@ -49,5 +42,13 @@ function errorCaptured(err, instance, info) {
 function warnCaptured(err, instance, info) {
     if (env.isDev) {
         console.log(err, instance, info);
+    }
+}
+
+
+//接收从'https://blogadmin.nianian.cn'发送过来的数据
+function receiveMessage(event) {
+    if (event.data.key === import.meta.env.VITE_Key) {
+        setUser(event.data.user);
     }
 }

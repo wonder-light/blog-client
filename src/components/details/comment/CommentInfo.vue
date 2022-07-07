@@ -1,7 +1,7 @@
 <template>
   <div class="comment-info">
     <small>
-      {{ functions.GetNearestDate(date) }}
+      {{ getNearestDate(date) }}
     </small>
     <small class="reply" @click="setAreaId(editorId)">回复</small>
   </div>
@@ -9,6 +9,7 @@
 
 <script setup>
 import { inject } from "vue";
+import { getNearestDate } from "@/assets/js/api";
 
 defineProps({
     date: [Date, String, Number, Object],

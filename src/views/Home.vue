@@ -15,8 +15,9 @@ import HomeHeader from "@/components/constructe/home/HomeHeader.vue";
 import HomeMain from "@/components/constructe/home/HomeMain.vue";
 import HomeFooter from "@/components/constructe/home/HomeFooter.vue";
 import HomeAside from "@/components/constructe/home/HomeAside.vue";
-import { updateVersion, useCounterStore } from "@/stores/counter";
+import { useCounterStore } from "@/stores/counter";
 import { storeToRefs } from "pinia/dist/pinia";
+import { updateVersion } from "@/assets/js/api";
 
 //更新数据版本
 await updateVersion();
