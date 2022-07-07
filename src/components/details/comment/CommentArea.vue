@@ -186,6 +186,7 @@ async function submitComment(editorId, parent = null) {
     });
 }
 
+//滚动时加载
 function scrollLoad() {
     if (rootNumber.value > comments.value.length) {
         loadComment(comments.value.length, props.targetId);

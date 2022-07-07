@@ -4,7 +4,7 @@
     <Suspense v-for="item in set" :key="item.api">
       <WarehouseSet v-bind="item"/>
       <template #fallback>
-        <load-page inline/>
+        <load-page/>
       </template>
     </Suspense>
   </div>

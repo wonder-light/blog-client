@@ -23,7 +23,8 @@
 
 <script setup>
 import moment from "moment";
-import { computed, getCurrentInstance } from "vue";
+import { computed } from "vue";
+import { useRouter } from "vue-router";
 
 let props = defineProps({
     title: {type: String, default: '文章总览'},
@@ -31,7 +32,7 @@ let props = defineProps({
     origins: {type: Array, default: () => []},
 });
 
-const {proxy} = getCurrentInstance();
+const router = useRouter();
 
 //显示的数据
 let items = computed(() => {
@@ -50,6 +51,6 @@ let items = computed(() => {
 
 //跳转到视图
 function skipView(id) {
-    proxy.$router.push(`/article/${id}`);
+    router.push(`/article/${id}`);
 }
 </script>

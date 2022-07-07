@@ -220,6 +220,7 @@ export function getNearestDate(TimeStamp) {
 
 //打开网页
 export function openWebPage(url, target = '_blank') {
+    if (!url) return;
     window.open(url, target);
 }
 
@@ -264,4 +265,29 @@ export function objectEqual(a, b) {
         }
     }
     return true;
+}
+
+//验证邮箱,正确返回true,否则返回false
+export function verifyEmail(email) {
+    //邮箱 正则验证
+    let verify = /^([a-zA-Z\d]+[_|\-.]?)*[a-zA-Z\d]+@([a-zA-Z\d]+[_|\-.]?)*[a-zA-Z\d]+\.[a-zA-Z]{2,3}$/;
+    return verify.test(email);
+}
+
+//验证链接,正确返回true,否则返回false
+export function verifyLink(link) {
+    //网址 正则验证  参考网页: https://www.phpernote.com/javascript-function/337.html
+    
+    //正则表达式对象
+    let verify = new RegExp("^((https|http|ftp|rtsp|mms)?://)"
+        + "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" // ftp的user@
+        + "(([0-9]{1,3}.){3}[0-9]{1,3}" // IP形式的URL- 199.194.52.184
+        + "|" // 允许IP和DOMAIN（域名）
+        + "([0-9a-z_!~*'()-]+.)*" // 域名- www.
+        + "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]." // 二级域名
+        + "[a-z]{2,6})" // first level domain- .com or .museum
+        + "(:[0-9]{1,4})?" // 端口- :80
+        + "((/?)|" // a slash isn't required if there is no file name
+        + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$");
+    return (link && link.length > 0 && verify.test(link));
 }

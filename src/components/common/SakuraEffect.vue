@@ -25,7 +25,7 @@ function sakuraEffect() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     
-    // 增加一个雪花
+    // 增加一个樱花
     function addSakura() {
         let speedY = Math.random() * 0.8 + 0.8;
         let maxY = speedY * Math.tan(Math.PI / 3);

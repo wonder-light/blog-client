@@ -47,7 +47,3 @@ function setStyle() {
     he.style.width = '100%';
 }
 </script>
-
-<style scoped>
-
-</style>

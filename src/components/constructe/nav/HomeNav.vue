@@ -40,7 +40,3 @@ provide('animEnd', {animEnd, setAnimEnd});
 provide('closeMenuPanel', closeMenuPanel);
 provide('showMenuPane', {showMenuPane, setShowMenuPane});
 </script>
-
-<style lang="stylus">
-
-</style>

@@ -87,5 +87,4 @@ if (!tags.value) {
 function getColor() {
     return colors[randomNumber(0, MaxIndex)];
 }
-
 </script>

@@ -1,6 +1,6 @@
 <template>
   <Card class="article-card">
-    <div class="article-card-header" @click="SkipToView">
+    <div class="article-card-header" @click="skipToView">
       <el-image :alt="article.title" :src="article.cover" fit="cover" @error="errorClass"/>
       <p :class="imgClass">{{ article.title }}</p>
     </div>
@@ -53,7 +53,7 @@ function errorClass() {
 }
 
 //跳转到对应的文章
-function SkipToView() {
+function skipToView() {
     //console.log('跳转', this.article?.id)
     if (props.article != null) {
         proxy.$router.push(`/article/${props.article.id}`);

@@ -6,7 +6,7 @@
           <Suspense>
             <component :is="Component || ArticleContent" :key="route.path"></component>
             <template #fallback>
-              <load-page inline/>
+              <load-page/>
             </template>
           </Suspense>
         </KeepAlive>
@@ -16,4 +16,6 @@
 </template>
 
 <script setup>
-import ArticleContent from "@/components/details/article/ArticleContent.vue";</script>
+import ArticleContent from "@/components/details/article/ArticleContent.vue";
+//
+</script>

@@ -39,7 +39,3 @@ const {showMenuPane, setShowMenuPane} = inject('showMenuPane');
 const {setAnimEnd} = inject('animEnd');
 const closeMenuPanel = inject('closeMenuPanel');
 </script>
-
-<style scoped>
-
-</style>

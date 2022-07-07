@@ -1,6 +1,6 @@
 <template>
   <div ref="tagCloud" class="tag-cloud">
-    <a v-for="item in tagList" :key="item.url" :href="item.url" :style="'color:' + RandomColor() + ';top: 0;left: 0;'">
+    <a v-for="item in tagList" :key="item.url" :href="item.url" :style="'color:' + randomColor() + ';top: 0;left: 0;'">
       {{ item.name }}
     </a>
   </div>
@@ -41,7 +41,7 @@ onUnmounted(() => {
 });
 
 //随机颜色
-function RandomColor() {
+function randomColor() {
     let color = [];
     color.push(randomNumber(0, 255));
     color.push(randomNumber(0, 255));
@@ -51,7 +51,7 @@ function RandomColor() {
 }
 
 // 设置初始定位
-function InitPosition() {
+function initPosition() {
     //极坐标 (θ,φ,r) => (theta, phi, r)
     //x = r*sin(θ)cos(φ)
     //y = r*cos(θ)sin(φ)
@@ -84,7 +84,7 @@ function InitPosition() {
     }
 }
 
-function RotateX(angleX) {
+function rotateX(angleX) {
     let cos = Math.cos(angleX);
     let sin = Math.sin(angleX);
     tagPositionList.forEach((tag, index) => {
@@ -98,22 +98,22 @@ function RotateX(angleX) {
     });
 }
 
-function RotateY(angleY) {
+function rotateY(angleY) {
     let cos = Math.cos(angleY);
     let sin = Math.sin(angleY);
-  
-  tagPositionList.forEach((tag, index) => {
-      let elem = elementA[index];
-      let x1 = tag.x * cos - tag.z * sin;
-      let z1 = tag.z * cos + tag.x * sin;
-      tag.x = x1;
-      tag.z = z1;
-      elem.style.left = tag.x + tag.w + 'px';
-      elem.style.opacity = (tag.z / radius + 1) * 0.45 + 0.1;//[0.1, 1];
-  });
+    
+    tagPositionList.forEach((tag, index) => {
+        let elem = elementA[index];
+        let x1 = tag.x * cos - tag.z * sin;
+        let z1 = tag.z * cos + tag.x * sin;
+        tag.x = x1;
+        tag.z = z1;
+        elem.style.left = tag.x + tag.w + 'px';
+        elem.style.opacity = (tag.z / radius + 1) * 0.45 + 0.1;//[0.1, 1];
+    });
 }
 
-/*function RotateXY(angleX, angleY) {
+/*function rotateXY(angleX, angleY) {
     let cosX = Math.cos(angleX);
     let sinX = Math.sin(angleX);
     let cosY = Math.cos(angleY);
@@ -136,8 +136,8 @@ function RotateY(angleY) {
 function update() {
     // 坐标更新 让标签动起来
     //旋转球体
-    RotateX(rX * 0.001);
-    RotateY(rY * 0.001);
+    rotateX(rX * 0.001);
+    rotateY(rY * 0.001);
     
     AnimationFrameId = window.requestAnimationFrame(update);
 }
@@ -146,7 +146,8 @@ function update() {
 function createTagCloud() {
     setOrigin();
     elementA = tagCloud.value.getElementsByTagName('a');
-    InitPosition();
+    initPosition();
+    //鼠标点击时调用
     tagCloud.value.onmousedown = drag;
     AnimationFrameId = window.requestAnimationFrame(update);
 }
@@ -166,9 +167,10 @@ function drag(ev) {
     }
     
     const el = tagCloud.value;
+    //鼠标在网页中的坐标
     let pageX = ev.pageX;
     let pageY = ev.pageY;
-    
+    //鼠标移动时调用
     el.onmousemove = (ev) => {
         let x = ev.pageX - pageX;
         let y = ev.pageY - pageY;
@@ -180,6 +182,7 @@ function drag(ev) {
         pageY = ev.pageY;
     };
     
+    //清理鼠标事件
     function clean() {
         el.onmouseup = null;
         el.onmousemove = null;

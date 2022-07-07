@@ -32,8 +32,6 @@
 import moment from "moment";
 import { RouterView } from 'vue-router';
 import { inject, ref, watch } from "vue";
-import el_en from "element-plus/es/locale/lang/en";
-import el_zh_cn from "element-plus/es/locale/lang/zh-cn";
 import LoadPage from "@/components/common/LoadPage.vue";
 import SakuraEffect from "@/components/common/SakuraEffect.vue";
 
@@ -44,11 +42,11 @@ const locale = ref(null);
 watch(language, updateLanguage, {immediate: true});
 
 //语言更新时调用
-function updateLanguage(new_v) {
-    locale.value = (new_v === 'en' ? el_en : el_zh_cn);
+function updateLanguage(newValue) {
+    newValue = 'en';
+    let promise = () => import(`../node_modules/element-plus/es/locale/lang/${newValue}`);
+    promise().then(module => locale.value = module.default);
     //将 moment 的语言环境设置为中文 https://blog.csdn.net/weixin_44495599/article/details/123701037
-    moment.locale(new_v);
+    moment.locale(newValue);
 }
-
-//可以使用 import.meta.globEager('moment') 导入模块
 </script>

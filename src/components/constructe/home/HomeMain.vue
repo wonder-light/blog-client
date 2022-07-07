@@ -6,7 +6,7 @@
           <Suspense>
             <component :is="Component || HomeContent"></component>
             <template #fallback>
-              <load-page inline/>
+              <load-page/>
             </template>
           </Suspense>
         </KeepAlive>

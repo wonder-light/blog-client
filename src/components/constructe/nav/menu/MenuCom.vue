@@ -49,14 +49,13 @@
 <!-- 菜单组成部分 -->
 <script setup>
 import { inject } from "vue";
-import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia/dist/pinia";
 import { useCounterStore } from "@/stores/counter";
+import { openWebPage } from "@/assets/js/api";
 
 const store = useCounterStore();
 const {types} = storeToRefs(store);
 
-const router = useRouter();
 const {animEnd} = inject('animEnd');
 const closeMenuPanel = inject('closeMenuPanel');
 
@@ -65,17 +64,11 @@ if (!types.value) {
     await store.updateTypes();
 }
 
-
 //跳转网页
 function skip(url, target = '_blank') {
     if (animEnd.value) {
         closeMenuPanel();
-        if (target == null) {
-            router.push(url);
-        }
-        else {
-            window.open(url, target);
-        }
+        openWebPage(url, target);
     }
 }
 </script>

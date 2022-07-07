@@ -108,6 +108,15 @@
         margin: auto;
         animation: n-loading-image 1s linear infinite;
     }
+
+    &.inline {
+        height: 200px;
+
+        .center {
+            width: 60px;
+            height: 60px;
+        }
+    }
 }
 
 @keyframes n-loading-image {
@@ -116,19 +125,6 @@
     }
     to {
         transform: rotate(360deg);
-    }
-}
-
-.page-load-inline {
-    position: relative !important;
-    padding-top: 60%;
-
-    .page {
-        position: absolute !important;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
     }
 }
 

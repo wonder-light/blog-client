@@ -2,7 +2,7 @@
   <el-card class="article-item" shadow="hover">
     <div :class="large ? ['column-layout'] : ['row-layout']">
       <div class="item-image">
-        <el-image :alt="article.title" :src="article.cover" fit="cover" @click="SkipToView"/>
+        <el-image :alt="article.title" :src="article.cover" fit="cover" @click="skipToView"/>
       </div>
       <div class="article-item-content">
         <h1>{{ article.title }}</h1>
@@ -53,7 +53,7 @@ const {blogger} = storeToRefs(useCounterStore());
 
 
 //跳转到对应的文章
-function SkipToView() {
+function skipToView() {
     if (props.article != null) {
         proxy.$router.push(`/article/${props.article.id}`);
     }

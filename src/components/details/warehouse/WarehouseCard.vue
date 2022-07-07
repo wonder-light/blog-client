@@ -25,7 +25,7 @@
       <SvgImg svg-id="date"/>
       <small>{{ moment(repository.updated_at).format('Y-M-D') }}</small>
     </span>
-      <el-button class="visit" round @click="OpenWebPage(repository.html_url)">
+      <el-button class="visit" round @click="openWebPage(repository.html_url)">
         <SvgImg svg-id="click"/>
         <p>访问</p>
       </el-button>
@@ -37,7 +37,7 @@
 <script setup>
 import moment from "moment";
 import Card from "@/components/common/Card.vue";
-import { randomNumber } from "@/assets/js/api";
+import { openWebPage, randomNumber } from "@/assets/js/api";
 
 defineProps({
     //存储库
@@ -52,10 +52,4 @@ let colors = [
 ];
 
 let color = colors[randomNumber(0, colors.length - 1)];
-
-//打开网页
-function OpenWebPage(url, target = '_blank') {
-    window.open(url, target);
-}
-
 </script>

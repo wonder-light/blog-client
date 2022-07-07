@@ -13,4 +13,6 @@
 
 <!-- 留言板 -->
 <script setup>
-import CommentArea from "@/components/details/comment/CommentArea.vue";</script>
+import CommentArea from "@/components/details/comment/CommentArea.vue";
+//
+</script>

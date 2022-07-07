@@ -1,7 +1,7 @@
 <template>
   <div class="comment">
     <div :class="['comment-avatar', {'sub': parent}]">
-      <el-avatar :alt="comment.member.name" :src="comment.member.avatar" fit="cover" @click="Open"/>
+      <el-avatar :alt="comment.member.name" :src="comment.member.avatar" fit="cover" @click="openWebPage(comment.member.blog ?? '')"/>
     </div>
     <div class="main">
       <CommentUser :target="parent?.member" :user="comment.member"/>
@@ -26,7 +26,7 @@ import CommentEditor from "@/components/details/comment/CommentEditor.vue";
 import CommentUser from "@/components/details/comment/CommentUser.vue";
 import CommentInfo from "@/components/details/comment/CommentInfo.vue";
 import { computed, inject, ref } from "vue";
-import { getId } from "@/assets/js/api";
+import { getId, openWebPage } from "@/assets/js/api";
 
 const props = defineProps({
     //评论
@@ -55,13 +55,6 @@ const more = computed(() => props.comment.childrenNumber > 2 && props.comment.ch
 //显示分页
 const pagination = computed(() => props.comment.childrenNumber > 2);
 
-//打开博客
-function Open() {
-    let blog = props.comment?.member?.blog ?? '';
-    if (blog.trim().length > 0) {
-        window.open(blog, '_blank');
-    }
-}
 
 //查看更多评论
 function seeMore() {

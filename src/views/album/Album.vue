@@ -6,7 +6,7 @@
           <Suspense>
             <component :is="Component || AlbumContent" :key="route.path"></component>
             <template #fallback>
-              <load-page inline/>
+              <load-page/>
             </template>
           </Suspense>
         </KeepAlive>
@@ -16,4 +16,6 @@
 </template>
 
 <script setup>
-import AlbumContent from "@/components/details/album/AlbumContent.vue";</script>
+import AlbumContent from "@/components/details/album/AlbumContent.vue";
+//
+</script>

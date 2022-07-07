@@ -17,7 +17,7 @@
     </el-form>
     <div class="action-bottom">
       <el-button v-if="reply" round type="primary" @click="setAreaId(null)">取消</el-button>
-      <el-button round type="primary" @click="Submit">发送</el-button>
+      <el-button round type="primary" @click="submit">发送</el-button>
     </div>
   </div>
 </template>
@@ -25,9 +25,9 @@
 <script setup>
 import { storeToRefs } from "pinia/dist/pinia";
 import { useCounterStore } from "@/stores/counter";
-import { getCurrentInstance, inject, onMounted, onUnmounted, ref } from "vue";
 import { ElMessage } from "element-plus";
-import { getId, objectEqual } from "@/assets/js/api";
+import { getCurrentInstance, inject, onMounted, onUnmounted, ref } from "vue";
+import { getId, objectEqual, verifyEmail, verifyLink } from "@/assets/js/api";
 
 const props = defineProps({
     reply: {type: Boolean, default: false},
@@ -54,9 +54,9 @@ const userCopy = ref(Object.assign({}, tourist.value));
 //信息校验规则
 const rules = ref({
     name: [{required: true, message: '请输入名称', trigger: 'blur'}],
-    email: [{required: true, validator: CheckEmail, trigger: 'blur'}],
-    blog: [{validator: CheckLink, trigger: 'blur'}],
-    avatar: [{validator: CheckLink, trigger: 'blur'}],
+    email: [{required: true, validator: checkEmail, trigger: 'blur'}],
+    blog: [{validator: checkLink, trigger: 'blur'}],
+    avatar: [{validator: checkLink, trigger: 'blur'}],
 });
 
 //编辑器配置
@@ -64,7 +64,7 @@ const editorConfig = {
     selector: `#${editorId.value}`, // change this value according to your HTML
     inline: false,
     language: language.value === 'en' ? "en_US" : "zh_CN",
-    init_instance_callback: InitInstance,
+    init_instance_callback: initInstance,
     mobile: {
         menubar: false,
         toolbar_mode: 'floating',
@@ -101,7 +101,7 @@ function createEditor() {
 }
 
 //编辑器实例化后的回调函数
-function InitInstance(instance) {
+function initInstance(instance) {
     if (props.content != null && props.content.trim().length > 0) {
         instance.setContent(props.content);
     }
@@ -113,43 +113,17 @@ function InitInstance(instance) {
 }
 
 //验证邮箱
-function CheckEmail(rule, value, callback) {
-    //邮箱 正则验证
-    let emailVerify = /^([a-zA-Z\d]+[_|\-.]?)*[a-zA-Z\d]+@([a-zA-Z\d]+[_|\-.]?)*[a-zA-Z\d]+\.[a-zA-Z]{2,3}$/;
-    if (emailVerify.test(value)) {
-        callback();
-    }
-    else {
-        callback(new Error('邮箱无效'));
-    }
+function checkEmail(rule, value, callback) {
+    callback(verifyEmail(value) ? null : new Error('邮箱无效'));
 }
 
 //验证链接
-function CheckLink(rule, value, callback) {
-    //网址 正则验证  参考网页: https://www.phpernote.com/javascript-function/337.html
-    let strRegex = "^((https|http|ftp|rtsp|mms)?://)"
-        + "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" // ftp的user@
-        + "(([0-9]{1,3}.){3}[0-9]{1,3}" // IP形式的URL- 199.194.52.184
-        + "|" // 允许IP和DOMAIN（域名）
-        + "([0-9a-z_!~*'()-]+.)*" // 域名- www.
-        + "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]." // 二级域名
-        + "[a-z]{2,6})" // first level domain- .com or .museum
-        + "(:[0-9]{1,4})?" // 端口- :80
-        + "((/?)|" // a slash isn't required if there is no file name
-        + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$";
-    
-    //正则表达式对象
-    let RE = new RegExp(strRegex);
-    if (value == null || value.length <= 0 || RE.test(value)) {
-        callback();
-    }
-    else {
-        callback(new Error('链接无效'));
-    }
+function checkLink(rule, value, callback) {
+    callback(verifyLink(value) ? null : new Error('邮箱无效'));
 }
 
 //提交发送
-function Submit() {
+function submit() {
     //验证
     form.value.validate(async (isValid, invalidFields) => {
         //无效
@@ -182,7 +156,6 @@ function Submit() {
         }
     });
 }
-
 
 //检测游客信息
 async function checkTourist() {
