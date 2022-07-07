@@ -34,7 +34,7 @@ export default defineConfig({
         jsxFragment: 'Fragment'
     },
     build: {
-        outDir: '../dist'
+        outDir: './dist'
     },
     preview: {
         port: '6050',

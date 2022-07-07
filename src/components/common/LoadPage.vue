@@ -1,7 +1,7 @@
 <template>
   <div :class="['page-load', full ? 'fullscreen':'inline']">
     <slot>
-      <img alt="加载中..." class="center" src="/loading.png"/>
+      <img alt="加载中..." class="center" src="/image/loading.png"/>
     </slot>
   </div>
 </template>
