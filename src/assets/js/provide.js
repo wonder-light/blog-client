@@ -1,6 +1,7 @@
-//提供全局数据
 import { ref, watch } from "vue";
+import { updateLanguage } from "@/assets/js/api";
 
+//提供全局数据
 export default {
     install: (app) => {
         provideTheme(app);
@@ -32,9 +33,7 @@ function provideTheme(app) {
 function provideLanguage(app) {
     let language = ref(localStorage.getItem('language') === 'en' ? 'en' : 'zh-cn');
     
-    watch(language, (new_v) => {
-        localStorage.setItem('language', new_v);
-    }, {immediate: true});
+    watch(language, updateLanguage, {immediate: true});
     
     app.provide('language', {language, setLanguage});
     

@@ -3,8 +3,6 @@ import '../../interface';
 import env from "@/assets/js/env";
 import '@/assets/css/global.scss';
 import axios from "@/assets/js/axios";
-import "moment/dist/locale/en-nz";
-import "moment/dist/locale/zh-cn";
 import { setStoreConfig, setUser } from "@/assets/js/api";
 
 

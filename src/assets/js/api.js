@@ -1,8 +1,26 @@
 import { useCounterStore } from "@/stores/counter";
 import axios from "@/assets/js/axios";
 import env from "@/assets/js/env";
+import "moment/dist/locale/zh-cn";
 import moment from "moment";
+import { ref } from "vue";
 
+//地方语言
+export const locale = ref(null);
+
+//更新语言
+export function updateLanguage(newValue, oldValue) {
+    if (newValue === oldValue) return;
+    localStorage.setItem('language', newValue);
+    //将 moment 的语言环境设置为中文 https://blog.csdn.net/weixin_44495599/article/details/123701037
+    moment.locale(newValue);
+    //设置element-ui的语言
+    let modules = newValue === 'en'
+        ? import.meta.glob('element-plus/es/locale/lang/en')
+        : import.meta.glob('element-plus/es/locale/lang/zh-cn');
+    let promise = Object.values(modules)[0];
+    promise().then(module => locale.value = module.default);
+}
 
 //设置状态配置
 export function setStoreConfig() {
