@@ -49,12 +49,10 @@ function getColor() {
 
 function errorClass() {
     imgClass.value.push('error');
-    console.log(imgClass.value);
 }
 
 //跳转到对应的文章
 function skipToView() {
-    //console.log('跳转', this.article?.id)
     if (props.article != null) {
         proxy.$router.push(`/article/${props.article.id}`);
     }

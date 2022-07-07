@@ -28,11 +28,12 @@ export default {
 
 //用于为应用内传递的未捕获的错误指定一个全局处理函数
 function errorCaptured(err, instance, info) {
-    if (env.isDev) {
-        //网络连接错误
-        if (err.code === 'ERR_NETWORK') {
-            console.log('网络连接错误', instance.$router.push({name: 'error'}), info);
+    //网络连接错误
+    if (err.code === 'ERR_NETWORK') {
+        if (env.isDev) {
+            console.log('网络连接错误', err, instance, info);
         }
+        instance.$router.push({name: 'error'});
     }
 }
 
@@ -46,6 +47,8 @@ function warnCaptured(err, instance, info) {
 
 //接收从'https://blogadmin.nianian.cn'发送过来的数据
 function receiveMessage(event) {
+    const origin = env.isDev ? 'http://localhost' : 'https://blogadmin.nianian.cn';
+    if (event.origin !== origin) return;
     if (event.data.key === import.meta.env.VITE_Key) {
         setUser(event.data.user);
     }
