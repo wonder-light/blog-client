@@ -32,7 +32,6 @@
 import moment from "moment";
 import { RouterView } from 'vue-router';
 import { inject, ref, watch } from "vue";
-import LoadPage from "@/components/common/LoadPage.vue";
 import SakuraEffect from "@/components/common/SakuraEffect.vue";
 
 const {language} = inject('language');

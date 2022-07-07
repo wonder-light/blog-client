@@ -6,7 +6,7 @@
           <Suspense>
             <component :is="Component || AlbumContent" :key="route.path"></component>
             <template #fallback>
-              <load-page/>
+              <LoadPage/>
             </template>
           </Suspense>
         </KeepAlive>
