@@ -1,9 +1,9 @@
 <template>
-  <div v-if="shows?.length > 0" class="article-content">
-    <div class="article-layout">
+  <div v-if="shows?.length > 0" class="w-full">
+    <div class="w-full grid gap-8 justify-items-stretch items-stretch mb-10">
       <ArticleItem v-for="(article, index) in shows" :key="article.id" :article="article" :large="canDiversified(index)"/>
     </div>
-    <el-pagination v-model:current-page="currentPage" :total="articleNumber" v-bind="v_bind" @current-change="check"/>
+    <el-pagination v-model:current-page="currentPage" :total="articleNumber" class="mb-10" v-bind="v_bind" @current-change="check"/>
   </div>
   <el-empty v-else/>
 </template>

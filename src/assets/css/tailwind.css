@@ -1,0 +1,428 @@
+@import "animate.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    [theme='light'] {
+        --theme: light;
+    }
+
+    [theme='dark'] {
+        --theme: dark;
+    }
+
+    :root {
+        --comment-padding-width: 60px;
+        --avatar-size: 40px;
+        --circle-radius: 6px;
+        --line-width: 2px;
+    }
+
+    ::before {
+        @apply box-content;
+    }
+
+    /* 滚动条整体样式 */
+    ::-webkit-scrollbar {
+        @apply w-1.5 h-1.5;
+    }
+
+    /* 滚动条里的轨道：滚动槽 */
+    ::-webkit-scrollbar-track {
+        @apply rounded-xl;
+    }
+
+    /* 滚动条里的小方块：滑块 */
+    ::-webkit-scrollbar-thumb {
+        @apply rounded-xl;
+        background: #0EDEEE99;
+    }
+
+    ::-webkit-scrollbar-thumb:window-inactive {
+        background: #C730F299;
+    }
+
+    body {
+        @apply font-mono m-0 p-0 text-center antialiased;
+        font-size: 15px;
+    }
+
+    h1 {
+        font-size: revert;
+    }
+
+    svg {
+        @apply inline-block stroke-2 stroke-current fill-current w-3.5 h-3.5;
+    }
+}
+
+@layer utilities {
+    .animate-load {
+        animation: n-loading-image 1s linear infinite;
+    }
+
+    @keyframes n-loading-image {
+        from {
+            transform: rotate(0);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .animate-twinkle {
+        animation: twinkle 4s linear infinite;
+    }
+
+    @keyframes twinkle {
+        from, to {
+            color: rgba(255, 41, 255, 0.75);
+        }
+        50% {
+            color: rgba(32, 252, 213, 0.75);
+        }
+    }
+
+    .scrollbar-hidden {
+        &::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+    }
+
+    .image-scale {
+        img {
+            transition: all 0.2s;
+        }
+
+        &:hover {
+            cursor: pointer;
+
+            img {
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    .transition-right {
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+            cursor: pointer;
+            transform: translateX(20px);
+        }
+    }
+
+    .content-circle {
+        @apply absolute top-0 bottom-0 m-auto bg-white;
+        content: "";
+        z-index: 4;
+        left: calc(var(--circle-radius) * -1);
+        width: var(--circle-radius);
+        height: var(--circle-radius);
+        border: calc(var(--circle-radius) / 2) solid #49b1f5;
+        border-radius: var(--circle-radius);
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+            @apply border-orange-600;
+        }
+    }
+
+    .content-line {
+        @apply absolute h-full bottom-0 bg-blue-300;
+        z-index: 3;
+        left: calc(var(--line-width) / -2);
+        width: var(--line-width);
+    }
+
+    .bg-gradient-cyan-blue {
+        @apply bg-gradient-to-r from-cyan-500 to-blue-500;
+    }
+}
+
+@layer components {
+    .tag-cloud {
+        height: 14.5rem;
+
+        a {
+            @apply absolute font-bold;
+            text-decoration: none;
+            padding: 3px 6px;
+        }
+    }
+
+    .mini-menu {
+        @apply cursor-pointer fixed flex content-center uppercase text-white;
+        border: 1px solid hsla(0, 0%, 100%, .6);
+        border-radius: 3px;
+        font-size: 12px;
+        top: 20px;
+        left: 20px;
+        padding: 10px;
+        z-index: 15;
+
+        &:hover {
+            @apply opacity-70;
+        }
+    }
+
+    .image-min-200 {
+        img {
+            min-height: 200px;
+        }
+    }
+
+    .text-gradient { /*文字渐变*/
+        @apply inline-block text-transparent;
+        background: linear-gradient(0.25turn, #c21500, #fb6333, #ffc500);
+        -webkit-background-clip: text;
+    }
+
+    /*多行显示*/
+    .multiple-lines-show {
+        /*文字超过两行或三行就显示省略号*/
+        @apply truncate whitespace-normal;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+
+    .star {
+        @apply inline-block items-center;
+
+        svg {
+            @apply stroke-0 mr-1;
+        }
+
+        span {
+            @apply mr-1;
+        }
+    }
+
+    .card { /*卡片*/
+        @apply border border-solid rounded-xl border-slate-200 overflow-hidden bg-white text-zinc-800 shadow-xl box-border transition-all;
+
+        &:hover {
+            @apply translate-y-3.5 shadow-md;
+        }
+    }
+
+    .blogger {
+        @apply px-1;
+        color: #0afdf8;
+        border: 1px solid #0afdf8;
+        background-color: #0AFDF81E;
+    }
+
+    .user-avatar {
+        @apply absolute inset-0;
+        width: 100% !important;
+        height: 100% !important;
+
+        img {
+            @apply w-full h-full;
+        }
+    }
+
+    .comment {
+        position: relative;
+        padding: 10px 10px 10px var(--comment-padding-width);
+    }
+
+    .comment-avatar {
+        @apply absolute cursor-pointer;
+        padding: calc(var(--avatar-size) / 2);
+        top: calc(10px + (40px - var(--avatar-size)) / 2);
+        left: calc(var(--comment-padding-width) - 10px - var(--avatar-size));
+    }
+
+    .comment-reply {
+        --comment-padding-width: 40px;
+        --avatar-size: 30px;
+    }
+
+    .user-form-info {
+        @media screen and (min-width: 710px) {
+            @apply grid-cols-4;
+        }
+        @media screen and (min-width: 400px) and (max-width: 710px) {
+            @apply grid-cols-2;
+        }
+        @media screen and (max-width: 400px) {
+            @apply grid-cols-1;
+        }
+
+        .el-form-item {
+            margin: 0 !important;
+        }
+    }
+
+    .tinymce-content { /* tinymce 内容 */
+        @apply overflow-auto;
+        text-align: initial;
+        word-wrap: break-word;
+
+        img { /* 评论中的图片样式 */
+            @apply w-full h-auto;
+        }
+    }
+
+    .article-info {
+        @apply flex items-center mr-5 text-gray-400;
+
+        svg {
+            @apply mr-1.5;
+        }
+    }
+
+    .el-img-400 {
+        @apply w-full;
+
+        img {
+            max-height: 400px;
+        }
+    }
+
+    .blog-info {
+        @apply opacity-80 flex items-center p-4 justify-between;
+
+        .label {
+            @apply flex items-center text-gray-500;
+        }
+
+        .data {
+            @apply text-white text-xs py-0.5 px-2 rounded-xl;
+        }
+    }
+
+    .content-layout {
+        @apply w-full grid justify-evenly justify-items-center grid-cols-1;
+        @media (min-width: 500px) {
+            @apply grid-cols-2;
+        }
+        @apply xl:grid-cols-3;
+        grid-gap: 30px;
+    }
+
+    .home-background {
+        background: url("https://blogserver.nianian.cn/files/image/background/background_14.jpg") no-repeat center;
+    }
+
+    .avatar-background {
+        background: url("https://blogserver.nianian.cn/files/image/background/H191af1ed5f7c4574ac314da7f8983af8f.jpg") no-repeat center;
+    }
+
+    .menu-style {
+        @apply m-auto;
+
+        .el-menu-item, .el-sub-menu__title {
+            @apply pr-0 h-10;
+
+            svg {
+                @apply mr-4;
+            }
+
+            p {
+                font-size: 15px;
+            }
+        }
+    }
+
+    .avatar-image {
+        @apply mt-8;
+        --el-avatar-size: 80px !important;
+
+        img {
+            @apply w-full;
+        }
+    }
+
+    .content-width {
+        width: 80%;
+        @media (min-width: 640px) {
+            width: 580px;
+        }
+        @media (min-width: 768px) {
+            width: 720px;
+        }
+        @media (min-width: 1024px) {
+            width: 960px;
+        }
+        @media (min-width: 1280px) {
+            width: 1180px;
+        }
+        @media (min-width: 1536px) {
+            width: 1350px;
+        }
+    }
+}
+
+
+.el-timeline-item__timestamp.is-top {
+    text-align: left;
+}
+
+.el-container {
+    min-height: 100vh;
+}
+
+.el-header {
+    background: #ffffff;
+}
+
+.el-footer {
+    --el-footer-height: auto;
+    background: #ffffff;
+}
+
+.el-tabs__item {
+    height: auto;
+}
+
+.el-card {
+    border-radius: 10px;
+}
+
+/* 文字提示 */
+.el-popper {
+    /* Set padding to ensure the height is 32px */
+    padding: 6px 12px;
+    background: linear-gradient(90deg, rgb(159, 229, 151), rgb(204, 229, 129));
+
+    .el-popper__arrow::before {
+        background: linear-gradient(45deg, #b2e68d, #bce689);
+        right: 0;
+    }
+}
+
+.el-select-dropdown__option-item {
+    --el-select-font-size: 14px;
+}
+
+/* 图片加载失败 */
+.el-image__wrapper {
+    position: static;
+}
+
+.tox .tox-tbtn svg {
+    width: auto;
+    height: auto;
+    stroke: none;
+    stroke-width: 0;
+}
+
+.tox-tinymce-aux {
+    z-index: 1111130 !important;
+}
+
+.tox .tox-menu {
+    z-index: 1111050 !important;
+}
+
+.tox .tox-statusbar__branding svg {
+    stroke: none;
+    stroke-width: 0;
+}

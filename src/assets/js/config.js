@@ -1,9 +1,9 @@
-import '@/assets/css/global.scss';
 import { setStoreConfig, setUser } from "@/assets/js/api";
 import axios from "@/assets/js/axios";
 
 import env from "@/assets/js/env";
 import '../../interface';
+import '../css/tailwind.css';
 
 
 //配置插件

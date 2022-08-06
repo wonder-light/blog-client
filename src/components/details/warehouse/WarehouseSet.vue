@@ -1,9 +1,9 @@
 <template>
-  <div class="warehouse-set">
+  <div class="w-full">
     <div style="display: flex;">
-      <h1 class="warehouse-title">{{ name }}</h1>
+      <h1 class="text-left mt-10 overflow-hidden text-gradient">{{ name }}</h1>
     </div>
-    <div v-if="repository?.length > 0" class="home-content-layout">
+    <div v-if="repository?.length > 0" class="content-layout">
       <WarehouseCard v-for="item in repository" :key="item" :repository="item"/>
     </div>
     <el-empty v-else/>

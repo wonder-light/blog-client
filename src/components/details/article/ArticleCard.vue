@@ -1,20 +1,20 @@
 <template>
-  <Card class="article-card">
-    <div class="article-card-header" @click="skipToView">
-      <el-image :alt="article.title" :src="article.cover" fit="cover" @error="errorClass"/>
-      <p :class="imgClass">{{ article.title }}</p>
+  <Card class="w-full h-full">
+    <div class="relative hover:cursor-pointer" style="padding-top: 80%" @click="skipToView">
+      <el-image :alt="article.title" :src="article.cover" class="!absolute inset-0" fit="cover"/>
+      <p class="absolute left-0 bottom-1 max-w-full px-3 text-white text-2xl truncate text-left">{{ article.title }}</p>
     </div>
-    <div class="article-card-bottom">
-      <p>{{ article.description }}</p>
-      <div class="article-card-time">
-        <span>
-          <SvgImg svg-id="date-color"/>
+    <div class="grid justify-items-start my-3 mx-5">
+      <p class="w-full truncate text-left mb-2">{{ article.description }}</p>
+      <div class="flex items-center content-center">
+        <span class="flex mr-2">
+          <SvgImg class="w-5 h-5" svg-id="date-color"/>
         </span>
         <span>{{ moment(article.date).format('Y年M月D日') }}</span>
       </div>
-      <el-divider/>
-      <div class="article-card-type">
-        <a v-if="article.type" :style="tagStyle">
+      <el-divider class="!my-4"/>
+      <div class="flex flex-wrap">
+        <a v-if="article.type" :style="tagStyle" class="inline-block text-xs m-1 py-0.5 px-2.5 rounded-xl">
           {{ article.type.name }}
         </a>
       </div>
@@ -26,7 +26,7 @@
 import { randomColor } from "@/assets/js/api";
 import Card from "@/components/common/Card.vue";
 import moment from "moment";
-import { getCurrentInstance, ref } from "vue";
+import { getCurrentInstance } from "vue";
 
 const props = defineProps({
     //文章
@@ -34,8 +34,6 @@ const props = defineProps({
 });
 
 const proxy = getCurrentInstance().proxy;
-
-const imgClass = ref(['title']);
 
 const tagStyle = getColor();
 
@@ -45,10 +43,6 @@ function getColor() {
         'color': color,
         'background-color': color + '30'
     });
-}
-
-function errorClass() {
-    imgClass.value.push('error');
 }
 
 //跳转到对应的文章

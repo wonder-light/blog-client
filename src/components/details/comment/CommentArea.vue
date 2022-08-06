@@ -1,18 +1,18 @@
 <template>
   <el-card shadow="hover">
     <div v-if="closeComment">评论已关闭</div>
-    <div v-else class="comment-area">
-      <div class="comment-area-header">
-        <SvgImg svg-id="comment"/>
-        <span>评论</span>
+    <div v-else class="w-full">
+      <div class="flex items-center leading-10">
+        <SvgImg class="w-5 h-5 mr-1.5" svg-id="comment"/>
+        <span class="text-xl font-bold">评论</span>
       </div>
       <CommentEditor v-if="areaId === IdHandle" @submit="submitComment($event, null)"/>
-      <div class="comment-area-main">
-        <div class="comment-number">{{ rootNumber + ' 条评论' }}</div>
+      <div>
+        <div class="flex text-base leading-loose my-5 text-gray-500">{{ rootNumber + ' 条评论' }}</div>
         <div v-if="rootNumber <= 0">
           <el-empty description="暂无评论"/>
         </div>
-        <div v-else v-scroll="scrollLoad" class="comment-list" distance="500">
+        <div v-else v-scroll="scrollLoad" class="w-full" distance="500">
           <Comment v-for="parent in comments" :key="parent.id" :comment="parent">
             <template v-slot="{start}">
               <Comment v-for="child in parent.children.slice(start, start + 10)" :key="child.id" :comment="child" :parent="parent"/>

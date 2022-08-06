@@ -1,7 +1,7 @@
 <template>
-  <div class="comment-editor">
+  <div class="pt-5">
     <div :id="editorId" style="text-align: initial"/>
-    <el-form ref="form" :inline="true" :model="userCopy" :rules="rules" class="form-info">
+    <el-form ref="form" :inline="true" :model="userCopy" :rules="rules" class="grid my-5 gap-6 user-form-info">
       <el-form-item prop="name">
         <el-input v-model="userCopy.name" placeholder="名称"/>
       </el-form-item>
@@ -15,9 +15,9 @@
         <el-input v-model="userCopy.avatar" placeholder="头像URL"/>
       </el-form-item>
     </el-form>
-    <div class="action-bottom">
-      <el-button v-if="reply" round type="primary" @click="setAreaId(null)">取消</el-button>
-      <el-button round type="primary" @click="submit">发送</el-button>
+    <div class="flex justify-end mb-5">
+      <el-button v-if="reply" class="!px-8 bg-gradient-cyan-blue hover:opacity-70" round type="primary" @click="setAreaId(null)">取消</el-button>
+      <el-button class="!px-8 bg-gradient-cyan-blue hover:opacity-70" round type="primary" @click="submit">发送</el-button>
     </div>
   </div>
 </template>

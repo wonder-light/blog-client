@@ -1,8 +1,8 @@
 <template>
-  <div class="about">
-    <el-card shadow="hover">
-      <h1 class="title">关于我</h1>
-      <el-image :src="article.cover" alt="" class="about-head-img" fit="cover"/>
+  <div class="w-full">
+    <el-card class="mb-9" shadow="hover">
+      <h1 class="text-left mt-5 mb-8">关于我</h1>
+      <el-image :src="article.cover" alt="" class="mb-8 image-min-200" fit="cover"/>
       <div class="tinymce-content" v-html="article.content"/>
     </el-card>
     <CommentArea :close-comment="article.closeComment" :root-number="article.commentCount" :target-id="article.id"/>

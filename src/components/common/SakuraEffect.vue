@@ -1,5 +1,5 @@
 <template>
-  <canvas :id="sakuraId" class="sakura-effect"/>
+  <canvas :id="sakuraId" class="fixed top-0 left-0 -z-10"/>
 </template>
 
 <!-- 背景特效：樱花跑飘落 -->

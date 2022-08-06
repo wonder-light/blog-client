@@ -1,5 +1,5 @@
 <template>
-  <nav class="home-nav">
+  <nav class="relative">
     <MiniMenu/>
     <BackTop/>
     <NavPanel/>

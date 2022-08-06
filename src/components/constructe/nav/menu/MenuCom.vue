@@ -1,16 +1,16 @@
 <template>
-  <div class="menu-nav">
-    <p>组成</p>
-    <el-menu active-text-color="#98a6ad" menu-trigger="click" text-color="#98a6ad" unique-opened>
+  <div class="ml-4 text-gray-400">
+    <p class="text-left text-lg leading-loose">组成</p>
+    <el-menu :default-active="$route.path" active-text-color="#9ca3af" class="menu-style" menu-trigger="click" text-color="#9ca3af" unique-opened>
       <el-sub-menu index="1">
         <template #title>
-          <SvgImg svg-id="classify1"/>
+          <SvgImg svg-id="classify"/>
           <p>分类</p>
         </template>
         <el-menu-item v-for="type in types" :key="type.id.toString()">
-          <div class="side-pane-types">
+          <div class="w-11/12 flex items-center justify-between">
             <p>{{ type.name }}</p>
-            <span>{{ type.articleNumber }}</span>
+            <span class="leading-none py-0.5 px-2 rounded-xl text-white bg-sky-400/80">{{ type.articleNumber }}</span>
           </div>
         </el-menu-item>
       </el-sub-menu>
@@ -19,7 +19,7 @@
           <SvgImg svg-id="page1"/>
           <p>页面</p>
         </template>
-        <el-menu-item index="2-1" @click="skip('/about', null)">
+        <el-menu-item index="/about" @click="skip('/about', null)">
           <SvgImg svg-id="about"/>
           <p>关于我</p>
         </el-menu-item>

@@ -1,5 +1,5 @@
 <template>
-  <footer class="home-footer">
+  <footer class="w-full">
   </footer>
 </template>
 

@@ -1,11 +1,11 @@
 <template>
-  <div class="album-view">
-    <p class="title">{{ album.name }}</p>
-    <p class="description">创建时间为{{ '2022年4月15日' }} - {{ album.number }}个项目</p>
+  <div class="w-full">
+    <p class="text-4xl leading-relaxed">{{ album.name }}</p>
+    <p class="text-lg mb-8">创建时间为{{ '2022年4月15日' }} - {{ album.number }}个项目</p>
     <el-divider/>
-    <div v-if="album?.images?.length > 0" class="home-content-layout">
+    <div v-if="album?.images?.length > 0" class="content-layout">
       <el-image v-for="(url, index) in album.images" :key="url" :alt="url" :initial-index="index"
-                :preview-src-list="album.images" :src="url" class="image-item" fit="cover" loading="lazy"/>
+                :preview-src-list="album.images" :src="url" class="w-full h-full" fit="cover" loading="lazy"/>
     </div>
     <el-empty v-else/>
   </div>

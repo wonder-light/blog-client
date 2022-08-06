@@ -1,32 +1,32 @@
 <template>
-  <Card :style="{'background-color': color}" class="warehouse-card">
+  <Card :style="{'background-color': color}" class="w-full h-full px-7 py-5 flex flex-col justify-between">
     <div style="width: 100%">
-      <h1>{{ repository.name }}</h1>
-      <small>
-        <span class="star">
+      <h1 class="text-white truncate">{{ repository.name }}</h1>
+      <div class="text-stone-300 mt-3">
+        <small class="star">
           <SvgImg svg-id="star"/>
           <span>{{ repository.stargazers_count + ' star / ' }}</span>
-        </span>
-        <span class="star">
+        </small>
+        <small class="star">
           <SvgImg svg-id="fork"/>
           <span>{{ repository.forks_count + ' fork / ' }}</span>
-        </span>
-        <span class="star">
+        </small>
+        <small class="star">
           <SvgImg svg-id="views"/>
           <span>{{ repository.watchers_count + ' watch' }}</span>
-        </span>
-      </small>
+        </small>
+      </div>
     </div>
-    <div class="description">
-      <p class="multiple-lines-show">{{ repository.description ?? '暂无介绍' }}</p>
+    <div class="flex items-center justify-center my-3.5">
+      <p class="leading-normal text-stone-100 multiple-lines-show">{{ repository.description ?? '暂无介绍' }}</p>
     </div>
     <div style="width: 100%">
-      <span class="time">
-      <SvgImg svg-id="date"/>
-      <small>{{ moment(repository.updated_at).format('Y-M-D') }}</small>
-    </span>
-      <el-button class="visit" round @click="openWebPage(repository.html_url)">
-        <SvgImg svg-id="click"/>
+      <span class="flex items-center justify-start my-3.5">
+        <SvgImg class="w-4 h-4 mr-1.5 text-stone-300" svg-id="date"/>
+        <small class="text-stone-300">{{ moment(repository.updated_at).format('Y-M-D') }}</small>
+      </span>
+      <el-button class="text-gray-500 hover:text-sky-400" round @click="openWebPage(repository.html_url)">
+        <SvgImg class="mr-1.5" svg-id="click"/>
         <p>访问</p>
       </el-button>
     </div>

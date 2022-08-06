@@ -1,5 +1,5 @@
 <template>
-  <div class="article">
+  <div class="w-full">
     <router-view v-slot="{Component, route}">
       <Transition mode="out-in">
         <KeepAlive>

@@ -1,34 +1,34 @@
 <template>
-  <div v-if="article" class="article-views">
-    <el-card shadow="hover">
-      <div class="article-views-info">
-        <h1>{{ article.title }}</h1>
-        <div class="infos">
-          <span>
+  <div v-if="article" class="w-full">
+    <el-card class="mb-8" shadow="hover">
+      <div class="pb-5">
+        <h1 class="text-left mt-5 mb-8">{{ article.title }}</h1>
+        <div class="flex justify-start my-5">
+          <span class="article-info">
             <SvgImg svg-id="user"/>
             {{ blogger.name }}
           </span>
-          <span>
+          <span class="article-info">
             <SvgImg svg-id="date"/>
             {{ moment(article.date).format('Y年M月D日') }}
           </span>
-          <span>
+          <span class="article-info">
             <SvgImg svg-id="views"/>
             {{ article.views + ' 次浏览' }}
           </span>
-          <span>
+          <span class="article-info">
             <SvgImg svg-id="comment"/>
             {{ article.commentCount + ' 条评论' }}
           </span>
-          <span v-if="article.type">
+          <span v-if="article.type" class="article-info">
             <SvgImg svg-id="bookmarks"/>
             {{ article.type.name }}
           </span>
         </div>
-        <el-image :alt="article.title" :src="article.cover" fit="cover"/>
+        <el-image :alt="article.title" :src="article.cover" class="mt-4" fit="cover"/>
       </div>
-      <div class="tinymce-content" v-html="article.content"/>
-      <ArticleLastNext :id="articleId"/>
+      <div class="py-5" v-html="article.content"/>
+      <ArticleLastNext :id="articleId" class="py-5"/>
     </el-card>
     <CommentArea :close-comment="article.closeComment" :root-number="article.commentCount" :target-id="article.id"/>
   </div>

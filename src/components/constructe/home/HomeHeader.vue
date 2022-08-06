@@ -1,10 +1,10 @@
 <template>
-  <header class="home-header">
-    <div class="content">
-      <h1>随风飞扬</h1>
-      <p>心之所向，素履以往；生如逆旅，一苇以航</p>
+  <header class="w-full h-screen relative flex flex-col justify-center items-center bg-cover home-background">
+    <div>
+      <h1 class="text-4xl text-white leading-loose">随风飞扬</h1>
+      <p class="text-xl text-white leading-normal">心之所向，素履以往；生如逆旅，一苇以航</p>
     </div>
-    <SvgImg class="down" svg-id="arrow-down" @click="scrollToContent"/>
+    <SvgImg class="absolute bottom-2.5 w-7 h-7 text-white/80 animate-bounce cursor-pointer" svg-id="arrow-down" @click="scrollToContent"/>
   </header>
 </template>
 

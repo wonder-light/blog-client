@@ -1,18 +1,18 @@
 <template>
   <div class="comment">
-    <div :class="['comment-avatar', {'sub': parent}]">
-      <el-avatar :alt="comment.member.name" :src="comment.member.avatar" fit="cover" @click="openWebPage(comment.member.blog ?? '')"/>
+    <div class="comment-avatar">
+      <el-avatar :alt="comment.member.name" :src="comment.member.avatar" class="user-avatar" fit="cover" @click="openWebPage(comment.member.blog ?? '')"/>
     </div>
-    <div class="main">
+    <div>
       <CommentUser :target="parent?.member" :user="comment.member"/>
       <div class="tinymce-content" v-html="comment.content"/>
       <CommentInfo :date="comment.date" :editor-id="IdHandle"/>
       <CommentEditor v-if="areaId === IdHandle" reply @submit="submitComment($event, comment)"/>
-      <div v-if="showChild" class="reply">
+      <div v-if="showChild" class="comment-reply">
         <slot :start="page * 10 - 10"/>
-        <div v-if="more" class="comment-more">
-          <small>共{{ comment.childrenNumber }}条回复</small>
-          <small class="view" @click="seeMore">点击查看</small>
+        <div v-if="more" class="flex items-center">
+          <small class="text-gray-400">共{{ comment.childrenNumber }}条回复</small>
+          <small class="text-sky-400 rounded-xl ml-2.5 py-0.5 px-1.5 cursor-pointer hover:bg-gray-200" @click="seeMore">点击查看</small>
         </div>
         <el-pagination v-else-if="pagination" v-model:currentPage="page" :total="comment.childrenNumber" v-bind="v_bind"/>
       </div>

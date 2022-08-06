@@ -1,7 +1,7 @@
 <template>
-  <div :class="['mini-menu', {'edge': miniEdge}]" @click="setShowMenuPane(true)">
-    <SvgImg svg-id="mini-menu"/>
-    <span>&nbsp; menu</span>
+  <div :class="['mini-menu', {'left-0 bg-neutral-800': miniEdge}]" @click="setShowMenuPane(true)">
+    <SvgImg class="stroke-0" svg-id="mini-menu"/>
+    <span :class="{hidden: miniEdge}">&nbsp; menu</span>
   </div>
 </template>
 

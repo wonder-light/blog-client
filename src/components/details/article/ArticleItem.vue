@@ -1,31 +1,32 @@
 <template>
-  <el-card class="article-item" shadow="hover">
-    <div :class="large ? ['column-layout'] : ['row-layout']">
-      <div class="item-image">
-        <el-image :alt="article.title" :src="article.cover" fit="cover" @click="skipToView"/>
+  <el-card :body-style="{padding: '0'}" shadow="hover">
+    <div :class="['flex', large ? 'flex-col' : 'flex-row']">
+      <div :class="{'relative pl-[40%]': !large}">
+        <el-image :alt="article.title" :class="['image-scale el-img-400', {'!absolute inset-0': !large}]"
+                  :src="article.cover" fit="cover" @click="skipToView"/>
       </div>
-      <div class="article-item-content">
-        <h1>{{ article.title }}</h1>
-        <p>{{ article.description }}</p>
+      <div class="my-5 mx-8 grid w-full">
+        <h1 class="font-thin">{{ article.title }}</h1>
+        <p class="text-gray-400 overflow-hidden whitespace-normal text-ellipsis">{{ article.description }}</p>
         <el-divider/>
-        <div class="item-tags">
-          <div>
-            <SvgImg svg-id="user.svg"/>
+        <div class="w-full flex items-center justify-center m-auto">
+          <div class="article-info">
+            <SvgImg svg-id="user"/>
             <span>{{ blogger.name }}</span>
           </div>
-          <div>
-            <SvgImg svg-id="date.svg"/>
+          <div class="article-info">
+            <SvgImg svg-id="date"/>
             <span>{{ moment(article.date).format('Y年M月D日') }}</span>
           </div>
-          <div v-if="article.type">
+          <div v-if="article.type" class="article-info">
             <SvgImg svg-id="bookmarks"/>
             <span>{{ article.type.name }}</span>
           </div>
-          <div>
+          <div class="article-info">
             <SvgImg svg-id="views"/>
             <span>{{ article.views }}</span>
           </div>
-          <div>
+          <div class="article-info">
             <SvgImg svg-id="comment"/>
             <span>{{ article.commentCount }}</span>
           </div>

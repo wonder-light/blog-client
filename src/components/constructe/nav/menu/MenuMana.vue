@@ -1,13 +1,13 @@
 <template>
-  <div class="menu-mana">
+  <div class="sticky left-0 bottom-0 w-65 flex py-2 bg-white items-center justify-evenly">
     <el-tooltip content="搜索" effect="customized" placement="top">
-      <SvgImg svg-id="search" @click="$router.push('/transit')"/>
+      <SvgImg :class="svgClass" svg-id="search"/>
     </el-tooltip>
     <el-tooltip v-if="true" content="登陆" effect="customized" placement="top">
-      <SvgImg svg-id="user" @click="Login"/>
+      <SvgImg :class="svgClass" svg-id="user"/>
     </el-tooltip>
     <el-tooltip v-if="false" content="退出登陆" effect="customized" placement="top">
-      <SvgImg svg-id="logout"/>
+      <SvgImg :class="svgClass" svg-id="logout"/>
     </el-tooltip>
   </div>
 </template>
@@ -17,8 +17,10 @@
 import { inject } from "vue";
 import { useRouter } from "vue-router";
 
-let router = useRouter();
-let closeMenuPanel = inject('closeMenuPanel');
+const router = useRouter();
+const closeMenuPanel = inject('closeMenuPanel');
+
+const svgClass = 'h-4 w-4 transition-all cursor-pointer text-gray-400 hover:text-sky-400';
 
 //用户登陆
 function Login() {

@@ -1,11 +1,10 @@
 <template>
-  <div ref="tagCloud" class="tag-cloud">
+  <div ref="tagCloud" class="relative select-none tag-cloud hover:cursor-pointer">
     <a v-for="item in tagList" :key="item.url" :href="item.url" :style="'color:' + randomColor() + ';top: 0;left: 0;'">
       {{ item.name }}
     </a>
   </div>
 </template>
-
 
 <script setup>
 import { randomNumber } from "@/assets/js/api";

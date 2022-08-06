@@ -1,21 +1,23 @@
 <template>
-  <div class="archive-list">
-    <div class="archive-list-title">{{ title }}</div>
-    <div class="archive-item">
-      <div v-for="item in items" :key="item" :class="{'archive-year': item.year, 'archive-info': !item.year}">
-        <div v-if="!item.year" class="archive-item-main">
-          <div class="item-image">
-            <el-image :alt="item.title" :src="item.cover" fit="cover" @click="skipView(item.id)"/>
+  <div class="ml-3 mb-3">
+    <div class="relative text-left pl-5 text-3xl leading-loose before:content-circle after:content-line after:!h-2/4"
+         style="--circle-radius: 10px;">{{ title }}
+    </div>
+    <div class="relative grid gap-6 pt-4 after:content-line">
+      <div v-for="item in items" :key="item" :class="['relative pl-5 before:content-circle', {'before:!border-orange-600': item.year}]">
+        <div v-if="!item.year" class="flex items-center">
+          <div class="relative p-10 mr-2.5">
+            <el-image :alt="item.title" :src="item.cover" class="!absolute inset-0 image-scale" fit="cover" @click="skipView(item.id)"/>
           </div>
           <div>
-            <div class="item-date">
+            <div class="flex items-center text-sm text-neutral-500">
               <SvgImg svg-id="date"/>
-              <span>{{ moment(item.date).format('Y-M-D') }}</span>
+              <span class="ml-1.5">{{ moment(item.date).format('Y-M-D') }}</span>
             </div>
-            <a class="item-title" @click="skipView(item.id)">{{ item.title }}</a>
+            <a class="flex text-base text-black decoration-0 transition-right hover:text-blue-500" @click="skipView(item.id)">{{ item.title }}</a>
           </div>
         </div>
-        <a v-else class="year-title">{{ item.year }}</a>
+        <a v-else class="block text-2xl text-left">{{ item.year }}</a>
       </div>
     </div>
   </div>

@@ -1,17 +1,17 @@
 <template>
-  <div v-if="last || next" class="article-last-next">
-    <div v-if="last" class="view-item" @click="skipView(last.id)">
-      <el-image :alt="last.title" :src="last.cover" fit="cover"/>
-      <div class="title last">
-        <span>上一篇</span>
-        <span>{{ last.title }}</span>
+  <div v-if="last || next" class="w-full grid sm:grid-cols-2" style="grid-auto-rows: 180px;">
+    <div v-if="last" class="relative w-full h-full image-scale" @click="skipView(last.id)">
+      <el-image :alt="last.title" :src="last.cover" class="w-full h-full  brightness-75" fit="cover"/>
+      <div class="absolute inset-0 text-gray-100 grid items-center content-center px-8 justify-start">
+        <span class="leading-10">上一篇</span>
+        <span class="leading-10">{{ last.title }}</span>
       </div>
     </div>
-    <div v-if="next" class="view-item" @click="skipView(next.id)">
-      <el-image :alt="next.title" :src="next.cover" fit="cover"/>
-      <div class="title next">
-        <span>下一篇</span>
-        <span>{{ next.title }}</span>
+    <div v-if="next" class="relative w-full h-full image-scale" @click="skipView(next.id)">
+      <el-image :alt="next.title" :src="next.cover" class="w-full h-full  brightness-75" fit="cover"/>
+      <div class="absolute inset-0 text-gray-100 grid items-center content-center px-8 justify-end">
+        <span class="leading-10">下一篇</span>
+        <span class="leading-10">{{ next.title }}</span>
       </div>
     </div>
   </div>

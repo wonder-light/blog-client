@@ -1,12 +1,12 @@
 <template>
-  <div v-if="albums?.length > 0" class="home-content-layout">
-    <el-card v-for="item in albums" :key="item.id" class="album-content">
-      <div class="image">
-        <el-image :src="item.cover" alt="" fit="cover" @click="openAlbum(item)"/>
+  <div v-if="albums?.length > 0" class="content-layout">
+    <el-card v-for="item in albums" :key="item.id" class="w-full h-full">
+      <div class="relative" style="padding-top: 80%">
+        <el-image :src="item.cover" alt="" class="!absolute inset-0 image-scale" fit="cover" @click="openAlbum(item)"/>
       </div>
       <div>
-        <p>{{ item.name }}</p>
-        <small>{{ item.number + ' 个项目' }}</small>
+        <p class="text-left mt-5 mb-3">{{ item.name }}</p>
+        <small class="block text-left">{{ item.number + ' 个项目' }}</small>
       </div>
     </el-card>
   </div>

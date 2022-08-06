@@ -1,5 +1,5 @@
 <template>
-  <div v-if="shows?.length > 0" class="archive">
+  <div v-if="shows?.length > 0" class="w-full">
     <el-card shadow="hover">
       <ArchiveList :origins="shows" :title="'文章总览 - ' +  articleNumber"/>
       <el-pagination v-model:current-page="currentPage" :total="articleNumber" v-bind="v_bind" @current-change="pageChang"/>

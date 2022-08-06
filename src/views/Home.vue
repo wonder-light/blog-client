@@ -1,7 +1,7 @@
 <template>
   <HomeNav/>
   <HomeHeader/>
-  <div class="home-layout">
+  <div class="relative m-auto mt-8 content-width">
     <HomeMain/>
     <HomeAside/>
   </div>

@@ -1,6 +1,6 @@
 <template>
   <div style="width: auto">
-    <div v-if="recommendArticles?.length > 0" class="home-content-layout">
+    <div v-if="recommendArticles?.length > 0" class="content-layout">
       <ArticleCard v-for="item in recommendArticles" :key="item.id" :article="item"/>
     </div>
     <el-empty v-else/>
