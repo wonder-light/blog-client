@@ -9,6 +9,6 @@
 <!-- 全局加载页面 -->
 <script setup>
 defineProps({
-    full: {type: Boolean, default: false},
+    full: { type: Boolean, default: false },
 });
 </script>

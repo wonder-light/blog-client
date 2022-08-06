@@ -36,26 +36,26 @@
 </template>
 
 <script setup>
-import moment from "moment";
-import { getCurrentInstance } from "vue";
-import { storeToRefs } from "pinia/dist/pinia";
 import { useCounterStore } from "@/stores/counter";
+import moment from "moment";
+import { storeToRefs } from "pinia/dist/pinia";
+import { getCurrentInstance } from "vue";
 
 let props = defineProps({
     //文章
-    article: {type: Object, default: null},
+    article: { type: Object, default: null },
     //true: 竖版, false: 横版
-    large: {type: Boolean, default: false},
+    large: { type: Boolean, default: false },
 });
 
-const {proxy} = getCurrentInstance();
-const {blogger} = storeToRefs(useCounterStore());
+const { proxy } = getCurrentInstance();
+const { blogger } = storeToRefs(useCounterStore());
 
 
 //跳转到对应的文章
 function skipToView() {
     if (props.article != null) {
-        proxy.$router.push(`/article/${props.article.id}`);
+        proxy.$router.push(`/article/${ props.article.id }`);
     }
 }
 </script>

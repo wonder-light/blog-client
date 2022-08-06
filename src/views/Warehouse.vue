@@ -18,7 +18,7 @@ import { storeToRefs } from "pinia/dist/pinia";
 import { ref } from "vue";
 
 const store = useCounterStore();
-const {githubRepository, giteeRepository} = storeToRefs(store);
+const { githubRepository, giteeRepository } = storeToRefs(store);
 
 const set = ref([
     {
@@ -34,7 +34,7 @@ const set = ref([
         api: '/users/wonder-light/repos',
         baseUrl: 'https://gitee.com/api/v5',
         name: 'Gitee',
-        params: {access_token: '982da8f1bd7e54ccf7a0cf6970699b61'}
+        params: { access_token: '982da8f1bd7e54ccf7a0cf6970699b61' }
     },
 ]);
 

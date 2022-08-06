@@ -38,17 +38,17 @@
 </template>
 
 <script setup>
-import moment from "moment";
-import { getCurrentInstance, ref } from "vue";
-import { useCounterStore } from "@/stores/counter";
-import CommentArea from "@/components/details/comment/CommentArea.vue";
 import ArticleLastNext from "@/components/details/article/ArticleLastNext.vue";
+import CommentArea from "@/components/details/comment/CommentArea.vue";
+import { useCounterStore } from "@/stores/counter";
+import moment from "moment";
 import { storeToRefs } from "pinia/dist/pinia";
+import { getCurrentInstance, ref } from "vue";
 
 
 const store = useCounterStore();
-const {proxy} = getCurrentInstance();
-const {blogger} = storeToRefs(store);
+const { proxy } = getCurrentInstance();
+const { blogger } = storeToRefs(store);
 
 //文章ID
 const articleId = ref(Number(proxy.$route.params.id));

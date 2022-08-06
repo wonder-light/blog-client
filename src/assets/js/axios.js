@@ -1,6 +1,6 @@
+import { replaceUrl } from "@/assets/js/api";
 import env from "@/assets/js/env";
 import axios from "axios";
-import { replaceUrl } from "@/assets/js/api";
 
 axios.defaults.baseURL = env.serverUrl;
 axios.defaults.timeout = 3000;

@@ -8,21 +8,21 @@ const router = createRouter({
             path: '/',
             name: 'home',
             component: () => import('@/views/Home.vue'),
-            meta: {title: '念的小世界'},
+            meta: { title: '念的小世界' },
             children: [
                 {
                     //仓库
                     path: 'warehouse',
                     name: 'warehouse',
                     component: () => import('@/views/Warehouse.vue'),
-                    meta: {title: '仓库'}
+                    meta: { title: '仓库' }
                 },
                 {
                     //相册
                     path: 'album',
                     name: 'album',
                     component: () => import('@/views/album/Album.vue'),
-                    meta: {title: '相册'},
+                    meta: { title: '相册' },
                     children: [
                         {
                             path: ':id',
@@ -33,7 +33,7 @@ const router = createRouter({
                                 if (isNaN(albumId)) {
                                     albumId = 0;
                                 }
-                                return {albumId};
+                                return { albumId };
                             },
                         },
                     ]
@@ -43,7 +43,7 @@ const router = createRouter({
                     path: 'article',
                     name: 'article',
                     component: () => import('../views/article/Article.vue'),
-                    meta: {title: '文章'},
+                    meta: { title: '文章' },
                     children: [
                         {
                             //文章视图
@@ -58,21 +58,21 @@ const router = createRouter({
                     path: 'archive',
                     name: 'archive',
                     component: () => import('../views/Archive.vue'),
-                    meta: {title: '归档'},
+                    meta: { title: '归档' },
                 },
                 {
                     //关于我
                     path: 'about',
                     name: 'about',
                     component: () => import('../views/About.vue'),
-                    meta: {title: '关于我'},
+                    meta: { title: '关于我' },
                 },
                 {
                     //留言板
                     path: 'guestbook',
                     name: 'guestbook',
                     component: () => import('../views/GuestBook.vue'),
-                    meta: {title: '留言板'},
+                    meta: { title: '留言板' },
                 },
             ]
         },
@@ -87,7 +87,7 @@ const router = createRouter({
             path: '/:error*',
             name: 'error',
             component: () => import("@/views/error/404.vue"),
-            meta: {title: '出错啦'},
+            meta: { title: '出错啦' },
         }
     ],
     //路由滚动
@@ -97,7 +97,7 @@ const router = createRouter({
             return savedPosition;
         }
         else {
-            return {top: 0};
+            return { top: 0 };
         }
     },
 });

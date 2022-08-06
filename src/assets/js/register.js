@@ -1,7 +1,7 @@
-import SvgImg from "@/components/common/SvgImg.vue";
-import LoadPage from "@/components/common/LoadPage.vue";
-import { computed } from "vue";
 import { getBottomToView, scrollBottom } from "@/assets/js/api";
+import LoadPage from "@/components/common/LoadPage.vue";
+import SvgImg from "@/components/common/SvgImg.vue";
+import { computed } from "vue";
 
 //注册组件
 export default {

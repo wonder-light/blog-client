@@ -12,15 +12,15 @@
 </template>
 
 <script setup>
-import { getCurrentInstance, ref } from "vue";
 import { useCounterStore } from "@/stores/counter";
+import { getCurrentInstance, ref } from "vue";
 
 let props = defineProps({
-    albumId: {type: Number, default: 0},
+    albumId: { type: Number, default: 0 },
 });
 
-const {albums} = useCounterStore();
-const {proxy} = getCurrentInstance();
+const { albums } = useCounterStore();
+const { proxy } = getCurrentInstance();
 
 let album = ref(albums?.find(item => item.id === props.albumId));
 
@@ -33,7 +33,7 @@ if (!album.value) {
 
 //获取相册的图片URL
 if (!album.value?.images || album.value.images.length <= 0) {
-    await proxy.axios.get(`/album/${props.albumId}/images`).then(response => {
+    await proxy.axios.get(`/album/${ props.albumId }/images`).then(response => {
         album.value.images = response.data;
     });
 }

@@ -11,10 +11,10 @@
 
 <!-- 关于我 -->
 <script setup>
-import { getCurrentInstance, ref } from "vue";
 import CommentArea from "@/components/details/comment/CommentArea.vue";
+import { getCurrentInstance, ref } from "vue";
 
-let {proxy} = getCurrentInstance();
+let { proxy } = getCurrentInstance();
 
 //文章
 let article = ref(null);
@@ -23,10 +23,10 @@ let baseUrRL = proxy.env.baseURL;
 await proxy.axios.get('/article/1651294869000').then(response => {
     article.value = response.data;
     if (article.value == null) {
-        article.value = {cover: baseUrRL + '/files/image/background/mmexport1650128636119.jpg'};
+        article.value = { cover: baseUrRL + '/files/image/background/mmexport1650128636119.jpg' };
     }
 }).catch(() => {
-    article.value = {cover: baseUrRL + '/files/image/background/mmexport1650128636119.jpg'};
+    article.value = { cover: baseUrRL + '/files/image/background/mmexport1650128636119.jpg' };
 });
 
 </script>

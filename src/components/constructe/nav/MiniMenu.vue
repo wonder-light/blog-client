@@ -9,7 +9,7 @@
 <script setup>
 import { inject, onUnmounted, ref } from "vue";
 
-const {setShowMenuPane} = inject('showMenuPane');
+const { setShowMenuPane } = inject('showMenuPane');
 
 // 改变迷你按钮的样式 true: mini-menu, false: class为 mini-menu mini-menu-edge
 let miniEdge = ref(false);

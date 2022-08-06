@@ -8,11 +8,11 @@
 
 
 <script setup>
-import { nextTick, onMounted, onUnmounted, ref } from "vue";
 import { randomNumber } from "@/assets/js/api";
+import { nextTick, onMounted, onUnmounted, ref } from "vue";
 
 let props = defineProps({
-    tagList: {type: Array, default: () => []},
+    tagList: { type: Array, default: () => [] },
 });
 
 //标签列表
@@ -26,7 +26,7 @@ let rX = -12;
 //Y轴的旋转速度
 let rY = 12;
 //tagCloud 的宽高
-let origin = {x: 0, y: 0};
+let origin = { x: 0, y: 0 };
 //标签云的半径
 let radius = 0;
 //动画帧ID
@@ -47,7 +47,7 @@ function randomColor() {
     color.push(randomNumber(0, 255));
     color.push(randomNumber(0, 255));
     color[randomNumber(0, 2)] = randomNumber(0, 145);
-    return `rgb(${color[0]},${color[1]},${color[2]})`;
+    return `rgb(${ color[0] },${ color[1] },${ color[2] })`;
 }
 
 // 设置初始定位
@@ -75,7 +75,7 @@ function initPosition() {
         let w = (origin.x - elem.offsetWidth / 2);
         //该标签对应的半高
         let h = (origin.y - elem.offsetHeight / 2);
-        tagPositionList.push({x, y, z, w, h});
+        tagPositionList.push({ x, y, z, w, h });
         z = (z / r + 1) * 0.45 + 0.1;//[0.1, 1]
         //设置位置
         elem.style.left = x + w + 'px';

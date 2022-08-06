@@ -49,7 +49,7 @@ import { inject } from "vue";
 import { useRouter } from "vue-router";
 
 let router = useRouter();
-const {animEnd} = inject('animEnd');
+const { animEnd } = inject('animEnd');
 const closeMenuPanel = inject('closeMenuPanel');
 
 function skip(url) {

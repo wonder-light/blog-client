@@ -57,16 +57,16 @@
 
 <!-- 侧边栏 -->
 <script setup>
-import moment from 'moment';
-import Weather from "@/components/common/Weather.vue";
-import TagCloud from "@/components/common/TagCloud.vue";
-import { storeToRefs } from "pinia/dist/pinia";
-import { useCounterStore } from "@/stores/counter";
 import { randomNumber } from "@/assets/js/api";
+import TagCloud from "@/components/common/TagCloud.vue";
+import Weather from "@/components/common/Weather.vue";
+import { useCounterStore } from "@/stores/counter";
+import moment from 'moment';
+import { storeToRefs } from "pinia/dist/pinia";
 
 const store = useCounterStore();
 //博客信息
-const {blogInfo, tags} = storeToRefs(store);
+const { blogInfo, tags } = storeToRefs(store);
 
 //颜色
 let colors = ['#ff5b00', '#e6af00', '#7fbf03', '#0be617',

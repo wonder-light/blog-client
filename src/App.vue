@@ -29,8 +29,8 @@
 </template>
 
 <script setup>
-import { RouterView } from 'vue-router';
-import SakuraEffect from "@/components/common/SakuraEffect.vue";
 import { locale } from "@/assets/js/api";
+import SakuraEffect from "@/components/common/SakuraEffect.vue";
+import { RouterView } from 'vue-router';
 //
 </script>

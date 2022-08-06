@@ -8,8 +8,8 @@
 </template>
 
 <script setup>
-import { inject } from "vue";
 import { getNearestDate } from "@/assets/js/api";
+import { inject } from "vue";
 
 defineProps({
     date: [Date, String, Number, Object],
@@ -17,5 +17,5 @@ defineProps({
 });
 
 //激活的编辑器ID
-const {setAreaId} = inject('areaId');
+const { setAreaId } = inject('areaId');
 </script>

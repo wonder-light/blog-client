@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia';
 import axios from "@/assets/js/axios";
+import { defineStore } from 'pinia';
 
 export const useCounterStore = defineStore({
     id: 'counter',
@@ -99,7 +99,7 @@ export const useCounterStore = defineStore({
             await axios.get('/user/simple/' + userId).then(response => {
                 this.tourist = response.data;
             }).catch(() => {
-                this.tourist = {id: 0, name: '', email: '', blog: '', avatar: '', mode: -1};
+                this.tourist = { id: 0, name: '', email: '', blog: '', avatar: '', mode: -1 };
             });
         },
     

@@ -25,26 +25,26 @@
 </template>
 
 <script setup>
-import { getCurrentInstance, provide, ref } from "vue";
+import { getId } from "@/assets/js/api";
 import Comment from "@/components/details/comment/Comment.vue";
 import CommentEditor from "@/components/details/comment/CommentEditor.vue";
-import { storeToRefs } from "pinia/dist/pinia";
 import { useCounterStore } from "@/stores/counter";
 import { ElMessage } from "element-plus";
-import { getId } from "@/assets/js/api";
+import { storeToRefs } from "pinia/dist/pinia";
+import { getCurrentInstance, provide, ref } from "vue";
 
 const props = defineProps({
     //关闭评论
-    closeComment: {type: Boolean, default: false},
+    closeComment: { type: Boolean, default: false },
     //评论目标ID: 0-留言板
-    targetId: {type: Number, default: 0},
+    targetId: { type: Number, default: 0 },
     ////根级评论的数量
-    rootNumber: {type: Number, default: -1},
+    rootNumber: { type: Number, default: -1 },
 });
 
 const store = useCounterStore();
-const {proxy} = getCurrentInstance();
-const {tourist, commentSet} = storeToRefs(store);
+const { proxy } = getCurrentInstance();
+const { tourist, commentSet } = storeToRefs(store);
 
 //更新评论集合
 if (!commentSet.value[props.targetId]) {
@@ -62,7 +62,7 @@ const rootNumber = ref(props.rootNumber);
 //每次加载的数量
 const loadNumber = 10;
 
-provide('areaId', {areaId, setAreaId});
+provide('areaId', { areaId, setAreaId });
 provide('submitComment', submitComment);
 
 //关闭评论时跳过加载
@@ -94,11 +94,11 @@ async function loadCommentCount() {
     if (rootNumber.value >= 0) {
         return;
     }
-    let params = {targetId: null};
+    let params = { targetId: null };
     if (props.targetId > 0) {
         params.targetId = props.targetId;
     }
-    await proxy.axios.get('/comment/number', {params}).then(response => {
+    await proxy.axios.get('/comment/number', { params }).then(response => {
         rootNumber.value = response.data;
         store.setCommentCount(props.targetId, rootNumber.value);
     });
@@ -108,7 +108,7 @@ async function loadCommentCount() {
 async function loadComment(start, targetId, rootParentId) {
     //子评论加载优先
     let sub = [];
-    let params = {start, number: loadNumber};
+    let params = { start, number: loadNumber };
     let parent = comments.value.find(item => item.id === rootParentId);
     //根级评论有效
     if (parent) {
@@ -130,7 +130,7 @@ async function loadComment(start, targetId, rootParentId) {
     if (!sub.includes(undefined)) {
         return;
     }
-    await proxy.axios.get('/comment', {params}).then(response => {
+    await proxy.axios.get('/comment', { params }).then(response => {
         //子评论
         if (parent) {
             parent.childrenNumber = response.data.count;
@@ -148,7 +148,7 @@ async function loadComment(start, targetId, rootParentId) {
             }
         }
     }).catch(() => {
-        ElMessage({showClose: true, message: '评论加载失败', center: true, grouping: true, type: 'error'});
+        ElMessage({ showClose: true, message: '评论加载失败', center: true, grouping: true, type: 'error' });
     });
 }
 
@@ -182,7 +182,7 @@ async function submitComment(editorId, parent = null) {
             root.childrenNumber++;
         }
     }).catch(() => {
-        ElMessage({showClose: true, message: '网络错误', center: true, grouping: true, type: 'error'});
+        ElMessage({ showClose: true, message: '网络错误', center: true, grouping: true, type: 'error' });
     });
 }
 

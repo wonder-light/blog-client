@@ -10,13 +10,13 @@
 
 <script setup>
 import ArticleItem from "@/components/details/article/ArticleItem.vue";
-import { computed, getCurrentInstance, ref } from "vue";
 import { useCounterStore } from "@/stores/counter";
 import { storeToRefs } from "pinia/dist/pinia";
+import { computed, getCurrentInstance, ref } from "vue";
 
 const store = useCounterStore();
-const {blogInfo, simpleArticles} = storeToRefs(store);
-const {proxy} = getCurrentInstance();
+const { blogInfo, simpleArticles } = storeToRefs(store);
+const { proxy } = getCurrentInstance();
 
 //每页的数量
 const pageSize = 10;
@@ -62,7 +62,7 @@ async function check() {
     }
     
     await proxy.axios.get('/article', {
-        params: {start, number: pageSize, mode: 0}
+        params: { start, number: pageSize, mode: 0 }
     }).then(response => {
         store.setSimpleArticles(start, response.data);
     });

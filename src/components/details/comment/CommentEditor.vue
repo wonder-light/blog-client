@@ -23,24 +23,24 @@
 </template>
 
 <script setup>
-import { storeToRefs } from "pinia/dist/pinia";
+import { getId, objectEqual, verifyEmail, verifyLink } from "@/assets/js/api";
 import { useCounterStore } from "@/stores/counter";
 import { ElMessage } from "element-plus";
+import { storeToRefs } from "pinia/dist/pinia";
 import { getCurrentInstance, inject, onMounted, onUnmounted, ref } from "vue";
-import { getId, objectEqual, verifyEmail, verifyLink } from "@/assets/js/api";
 
 const props = defineProps({
-    reply: {type: Boolean, default: false},
-    content: {type: String, default: ''},
+    reply: { type: Boolean, default: false },
+    content: { type: String, default: '' },
 });
 const emits = defineEmits(['submit']);
 
 const form = ref();
-const {proxy} = getCurrentInstance();
-const {setAreaId} = inject('areaId');
-const {language} = inject('language');
+const { proxy } = getCurrentInstance();
+const { setAreaId } = inject('areaId');
+const { language } = inject('language');
 const store = useCounterStore();
-const {tourist, isUser} = storeToRefs(store);
+const { tourist, isUser } = storeToRefs(store);
 
 if (!tourist.value && !isUser.value) {
     await store.updateTourist();
@@ -53,15 +53,15 @@ const editorId = ref(getId());
 const userCopy = ref(Object.assign({}, tourist.value));
 //信息校验规则
 const rules = ref({
-    name: [{required: true, message: '请输入名称', trigger: 'blur'}],
-    email: [{required: true, validator: checkEmail, trigger: 'blur'}],
-    blog: [{validator: checkLink, trigger: 'blur'}],
-    avatar: [{validator: checkLink, trigger: 'blur'}],
+    name: [{ required: true, message: '请输入名称', trigger: 'blur' }],
+    email: [{ required: true, validator: checkEmail, trigger: 'blur' }],
+    blog: [{ validator: checkLink, trigger: 'blur' }],
+    avatar: [{ validator: checkLink, trigger: 'blur' }],
 });
 
 //编辑器配置
 const editorConfig = {
-    selector: `#${editorId.value}`, // change this value according to your HTML
+    selector: `#${ editorId.value }`, // change this value according to your HTML
     inline: false,
     language: language.value === 'en' ? "en_US" : "zh_CN",
     init_instance_callback: initInstance,
@@ -129,7 +129,7 @@ function submit() {
         //无效
         if (isValid === false) {
             const message = Object.values(invalidFields)[0][0].message;
-            ElMessage({showClose: true, message, center: true, grouping: true, type: 'error'});
+            ElMessage({ showClose: true, message, center: true, grouping: true, type: 'error' });
             return false;
         }
         let state = false;
@@ -152,7 +152,7 @@ function submit() {
             emits('submit', editorId.value);
         }
         else {
-            ElMessage({showClose: true, message, center: true, grouping: true, type: 'error'});
+            ElMessage({ showClose: true, message, center: true, grouping: true, type: 'error' });
         }
     });
 }
@@ -178,7 +178,7 @@ async function checkTourist() {
             state = true;
         }
         else {
-            await proxy.axios.post(`/user/tourist/${tourist.value.id}`, userCopy.value).then(() => {
+            await proxy.axios.post(`/user/tourist/${ tourist.value.id }`, userCopy.value).then(() => {
                 store.updateTourist(Object.assign({}, userCopy.value));
                 state = true;
             }).catch(() => {

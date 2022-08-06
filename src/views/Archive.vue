@@ -10,14 +10,14 @@
 
 <!-- 归档 -->
 <script setup>
-import { computed, getCurrentInstance, ref } from "vue";
+import ArchiveList from "@/components/details/archive/ArchiveList.vue";
 import { useCounterStore } from "@/stores/counter";
 import { storeToRefs } from "pinia/dist/pinia";
-import ArchiveList from "@/components/details/archive/ArchiveList.vue";
+import { computed, getCurrentInstance, ref } from "vue";
 
 const store = useCounterStore();
-const {blogInfo, simpleArticles} = storeToRefs(store);
-const {proxy} = getCurrentInstance();
+const { blogInfo, simpleArticles } = storeToRefs(store);
+const { proxy } = getCurrentInstance();
 
 //每页的数量
 const pageSize = 10;
@@ -63,7 +63,7 @@ async function pageChang() {
     }
     
     await proxy.axios.get('/article', {
-        params: {start, number: pageSize, mode: 0}
+        params: { start, number: pageSize, mode: 0 }
     }).then(response => {
         store.setSimpleArticles(start, response.data);
     });

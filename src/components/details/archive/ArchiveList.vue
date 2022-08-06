@@ -27,9 +27,9 @@ import { computed } from "vue";
 import { useRouter } from "vue-router";
 
 let props = defineProps({
-    title: {type: String, default: '文章总览'},
+    title: { type: String, default: '文章总览' },
     //从前往后，时间从大到小
-    origins: {type: Array, default: () => []},
+    origins: { type: Array, default: () => [] },
 });
 
 const router = useRouter();
@@ -42,7 +42,7 @@ let items = computed(() => {
         let y = moment(origin.date).year();
         if (year !== y) {
             year = y;
-            origins.push({year});
+            origins.push({ year });
         }
         origins.push(origin);
     });
@@ -51,6 +51,6 @@ let items = computed(() => {
 
 //跳转到视图
 function skipView(id) {
-    router.push(`/article/${id}`);
+    router.push(`/article/${ id }`);
 }
 </script>

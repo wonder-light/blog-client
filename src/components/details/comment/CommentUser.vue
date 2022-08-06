@@ -14,8 +14,8 @@
 import { openWebPage } from "@/assets/js/api";
 
 defineProps({
-    user: {type: Object, default: () => ({})},
-    target: {type: Object, default: null},
+    user: { type: Object, default: () => ({}) },
+    target: { type: Object, default: null },
 });
 
 </script>

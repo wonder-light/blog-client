@@ -1,11 +1,11 @@
 <template>
-    <canvas :id="sakuraId" class="sakura-effect"/>
+  <canvas :id="sakuraId" class="sakura-effect"/>
 </template>
 
 <!-- 背景特效：樱花跑飘落 -->
 <script setup>
-import { onMounted, ref } from "vue";
 import { getId } from "@/assets/js/api";
+import { onMounted, ref } from "vue";
 
 //背景特效：樱花跑飘落 Id
 let sakuraId = ref(getId());

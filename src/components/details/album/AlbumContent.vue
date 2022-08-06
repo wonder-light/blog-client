@@ -14,13 +14,13 @@
 </template>
 
 <script setup>
-import { getCurrentInstance } from "vue";
 import { useCounterStore } from "@/stores/counter";
 import { storeToRefs } from "pinia/dist/pinia";
+import { getCurrentInstance } from "vue";
 
 const store = useCounterStore();
-const {albums} = storeToRefs(store);
-const {proxy} = getCurrentInstance();
+const { albums } = storeToRefs(store);
+const { proxy } = getCurrentInstance();
 
 if (!albums.value) {
     //更新相册

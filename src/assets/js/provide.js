@@ -1,5 +1,5 @@
-import { ref, watch } from "vue";
 import { updateLanguage } from "@/assets/js/api";
+import { ref, watch } from "vue";
 
 //提供全局数据
 export default {
@@ -15,14 +15,14 @@ function provideTheme(app) {
     let theme = ref('light');
     //body 文档
     let body = document.getElementsByTagName('body')[0];
-    watch(theme, (new_v) => body.setAttribute('theme', new_v), {immediate: true, flush: 'post'});
+    watch(theme, (new_v) => body.setAttribute('theme', new_v), { immediate: true, flush: 'post' });
     
     let mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     if (mediaQuery.matches) {
         setTheme('dark');
     }
     
-    app.provide('theme', {theme, setTheme});
+    app.provide('theme', { theme, setTheme });
     
     function setTheme(value) {
         theme.value = value;
@@ -33,9 +33,9 @@ function provideTheme(app) {
 function provideLanguage(app) {
     let language = ref(localStorage.getItem('language') === 'en' ? 'en' : 'zh-cn');
     
-    watch(language, updateLanguage, {immediate: true});
+    watch(language, updateLanguage, { immediate: true });
     
-    app.provide('language', {language, setLanguage});
+    app.provide('language', { language, setLanguage });
     
     function setLanguage(value) {
         language.value = value;

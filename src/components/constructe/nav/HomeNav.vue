@@ -8,10 +8,10 @@
 
 <!-- 导航 -->
 <script setup>
-import { provide, ref } from "vue";
-import MiniMenu from "@/components/constructe/nav/MiniMenu.vue";
 import BackTop from "@/components/constructe/nav/BackTop.vue";
+import MiniMenu from "@/components/constructe/nav/MiniMenu.vue";
 import NavPanel from "@/components/constructe/nav/NavPanel.vue";
+import { provide, ref } from "vue";
 
 //主页导航
 //true：显示导航菜单面板
@@ -36,7 +36,7 @@ function closeMenuPanel() {
     }
 }
 
-provide('animEnd', {animEnd, setAnimEnd});
+provide('animEnd', { animEnd, setAnimEnd });
 provide('closeMenuPanel', closeMenuPanel);
-provide('showMenuPane', {showMenuPane, setShowMenuPane});
+provide('showMenuPane', { showMenuPane, setShowMenuPane });
 </script>

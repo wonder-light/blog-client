@@ -35,13 +35,13 @@
 
 <!-- 仓库卡片 -->
 <script setup>
-import moment from "moment";
-import Card from "@/components/common/Card.vue";
 import { openWebPage, randomNumber } from "@/assets/js/api";
+import Card from "@/components/common/Card.vue";
+import moment from "moment";
 
 defineProps({
     //存储库
-    repository: {type: Object, default: null},
+    repository: { type: Object, default: null },
 });
 
 //卡片颜色

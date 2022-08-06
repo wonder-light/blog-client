@@ -1,8 +1,8 @@
-import { useCounterStore } from "@/stores/counter";
 import axios from "@/assets/js/axios";
 import env from "@/assets/js/env";
-import "moment/dist/locale/zh-cn";
+import { useCounterStore } from "@/stores/counter";
 import moment from "moment";
+import "moment/dist/locale/zh-cn";
 import { ref } from "vue";
 
 //地方语言
@@ -16,15 +16,15 @@ export function updateLanguage(newValue, oldValue) {
     moment.locale(newValue);
     //设置element-ui的语言
     let modules = newValue === 'en'
-        ? import.meta.glob('element-plus/es/locale/lang/en')
-        : import.meta.glob('element-plus/es/locale/lang/zh-cn');
+                  ? import.meta.glob('element-plus/es/locale/lang/en')
+                  : import.meta.glob('element-plus/es/locale/lang/zh-cn');
     let promise = Object.values(modules)[0];
     promise().then(module => locale.value = module.default);
 }
 
 //设置状态配置
 export function setStoreConfig() {
-//数据持久化
+    //数据持久化
     const instance = useCounterStore();
     // 1. 获取保存的数据，先判断有无，无则用先前的
     const old = localStorage.getItem('counter-store');
@@ -38,7 +38,7 @@ export function setStoreConfig() {
     }
     // 2. 订阅保存数据
     instance.$subscribe((_, state) => {
-        localStorage.setItem('counter-store', JSON.stringify({...state}));
+        localStorage.setItem('counter-store', JSON.stringify({ ...state }));
     });
 }
 
@@ -298,14 +298,14 @@ export function verifyLink(link) {
     
     //正则表达式对象
     let verify = new RegExp("^((https|http|ftp|rtsp|mms)?://)"
-        + "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" // ftp的user@
-        + "(([0-9]{1,3}.){3}[0-9]{1,3}" // IP形式的URL- 199.194.52.184
-        + "|" // 允许IP和DOMAIN（域名）
-        + "([0-9a-z_!~*'()-]+.)*" // 域名- www.
-        + "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]." // 二级域名
-        + "[a-z]{2,6})" // first level domain- .com or .museum
-        + "(:[0-9]{1,4})?" // 端口- :80
-        + "((/?)|" // a slash isn't required if there is no file name
-        + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$");
+                            + "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" // ftp的user@
+                            + "(([0-9]{1,3}.){3}[0-9]{1,3}" // IP形式的URL- 199.194.52.184
+                            + "|" // 允许IP和DOMAIN（域名）
+                            + "([0-9a-z_!~*'()-]+.)*" // 域名- www.
+                            + "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]." // 二级域名
+                            + "[a-z]{2,6})" // first level domain- .com or .museum
+                            + "(:[0-9]{1,4})?" // 端口- :80
+                            + "((/?)|" // a slash isn't required if there is no file name
+                            + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$");
     return (link && link.length > 0 && verify.test(link));
 }

@@ -22,23 +22,23 @@
 import { getCurrentInstance, ref } from "vue";
 
 const props = defineProps({
-    id: {type: [String, Number], default: 0},
+    id: { type: [String, Number], default: 0 },
 });
 
-const {proxy} = getCurrentInstance();
+const { proxy } = getCurrentInstance();
 //上一篇
 const last = ref(null);
 //下一篇
 const next = ref(null);
 
 //获取next和last文章
-await proxy.axios.get(`/article/${props.id}/ln`).then(response => {
+await proxy.axios.get(`/article/${ props.id }/ln`).then(response => {
     last.value = response.data.last;
     next.value = response.data.next;
 });
 
 //跳转文章
 function skipView(id) {
-    proxy.$router.push(`/article/${id}`);
+    proxy.$router.push(`/article/${ id }`);
 }
 </script>

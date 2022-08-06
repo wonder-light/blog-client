@@ -22,23 +22,23 @@
 
 <!-- 评论组件 -->
 <script setup>
-import CommentEditor from "@/components/details/comment/CommentEditor.vue";
-import CommentUser from "@/components/details/comment/CommentUser.vue";
-import CommentInfo from "@/components/details/comment/CommentInfo.vue";
-import { computed, inject, ref } from "vue";
 import { getId, openWebPage } from "@/assets/js/api";
+import CommentEditor from "@/components/details/comment/CommentEditor.vue";
+import CommentInfo from "@/components/details/comment/CommentInfo.vue";
+import CommentUser from "@/components/details/comment/CommentUser.vue";
+import { computed, inject, ref } from "vue";
 
 const props = defineProps({
     //评论
-    comment: {type: Object, default: null},
+    comment: { type: Object, default: null },
     //父评论
-    parent: {type: Object, default: null},
+    parent: { type: Object, default: null },
 });
 
 //加载评论
 const loadComment = inject('loadComment');
 //激活的编辑器ID
-const {areaId} = inject('areaId');
+const { areaId } = inject('areaId');
 //提交评论
 const submitComment = inject('submitComment');
 
@@ -47,7 +47,7 @@ const IdHandle = ref(getId());
 //当前页
 const page = ref(1);
 //分页的绑定对象
-const v_bind = {'pager-count': 5, 'hide-on-single-page': true, 'layout': "prev, pager, next", 'small': true};
+const v_bind = { 'pager-count': 5, 'hide-on-single-page': true, 'layout': "prev, pager, next", 'small': true };
 //显示子评论
 const showChild = computed(() => props.comment.children.length > 0);
 //更多评论

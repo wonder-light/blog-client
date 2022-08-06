@@ -6,8 +6,8 @@
 
 <!-- SVG组件 -->
 <script setup>
-import { computed } from "vue";
 import svgSet from "/image/svg-set.svg";
+import { computed } from "vue";
 
 const props = defineProps({
     svgId: String,

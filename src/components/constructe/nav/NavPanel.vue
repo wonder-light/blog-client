@@ -30,12 +30,12 @@
 
 <!-- 导航面板，包括 背景面板 和 菜单面板-->
 <script setup>
-import MenuNav from "@/components/constructe/nav/menu/MenuNav.vue";
 import MenuCom from "@/components/constructe/nav/menu/MenuCom.vue";
 import MenuMana from "@/components/constructe/nav/menu/MenuMana.vue";
+import MenuNav from "@/components/constructe/nav/menu/MenuNav.vue";
 import { inject } from "vue";
 
-const {showMenuPane, setShowMenuPane} = inject('showMenuPane');
-const {setAnimEnd} = inject('animEnd');
+const { showMenuPane, setShowMenuPane } = inject('showMenuPane');
+const { setAnimEnd } = inject('animEnd');
 const closeMenuPanel = inject('closeMenuPanel');
 </script>

@@ -1,9 +1,9 @@
-import '../../interface';
+import '@/assets/css/global.scss';
+import { setStoreConfig, setUser } from "@/assets/js/api";
+import axios from "@/assets/js/axios";
 
 import env from "@/assets/js/env";
-import '@/assets/css/global.scss';
-import axios from "@/assets/js/axios";
-import { setStoreConfig, setUser } from "@/assets/js/api";
+import '../../interface';
 
 
 //配置插件
@@ -14,14 +14,14 @@ export default {
         app.config.globalProperties.env = env;
         app.config.globalProperties.axios = axios;
         app.config.globalProperties.$http = axios;
-    
+        
         setStoreConfig();
-    
+        
         if (env.isDev) {
             //设置此项为 true 可以在浏览器开发工具的“性能/时间线”页中启用对组件初始化、编译、渲染和修补的性能表现追踪
             app.config.performance = true;
         }
-    
+        
         window.onmessage = receiveMessage;
     }
 };
@@ -33,7 +33,7 @@ function errorCaptured(err, instance, info) {
         if (env.isDev) {
             console.log('网络连接错误', err, instance, info);
         }
-        instance.$router.push({name: 'error'});
+        instance.$router.push({ name: 'error' });
     }
 }
 

@@ -16,17 +16,17 @@ import WarehouseCard from "@/components/details/warehouse/WarehouseCard.vue";
 import { getCurrentInstance } from "vue";
 
 let props = defineProps({
-    name: {type: String, default: 'GitHub'},
-    repository: {type: [Object, null], required: true},
-    method: {type: String, default: 'get'},
-    baseUrl: {type: String, default: 'https://api.github.com'},
-    api: {type: String, default: '/users/wonder-light/repos'},
-    params: {type: Object, default: () => ({})},
+    name: { type: String, default: 'GitHub' },
+    repository: { type: [Object, null], required: true },
+    method: { type: String, default: 'get' },
+    baseUrl: { type: String, default: 'https://api.github.com' },
+    api: { type: String, default: '/users/wonder-light/repos' },
+    params: { type: Object, default: () => ({}) },
     //更新数据的方法
-    update: {type: Function, required: true},
+    update: { type: Function, required: true },
 });
 
-const {proxy} = getCurrentInstance();
+const { proxy } = getCurrentInstance();
 
 if (!props.repository) {
     await getRepository();
@@ -36,7 +36,7 @@ if (!props.repository) {
 async function getRepository() {
     let loop = true;
     let currentPage = 1;
-    let params = Object.assign({per_page: 100}, props.params);
+    let params = Object.assign({ per_page: 100 }, props.params);
     while (loop) {
         params.page = currentPage;
         await proxy.axios({
@@ -44,7 +44,7 @@ async function getRepository() {
             baseURL: props.baseUrl,
             url: props.api,
             timeout: 3000,
-            headers: {'accept': 'application/vnd.github.v3+json'},
+            headers: { 'accept': 'application/vnd.github.v3+json' },
             params,
         }).then(response => {
             if (response.data instanceof Array && response.data.length > 0) {

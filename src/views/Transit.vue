@@ -6,7 +6,7 @@
 <script setup>
 import { getCurrentInstance } from "vue";
 
-const {proxy} = getCurrentInstance();
+const { proxy } = getCurrentInstance();
 
 let path = proxy.$route.query.path;
 

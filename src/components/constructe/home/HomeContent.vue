@@ -9,12 +9,12 @@
 
 <!-- 首页默认显示的内容 -->
 <script setup>
-import { storeToRefs } from "pinia/dist/pinia";
-import { useCounterStore } from "@/stores/counter";
 import ArticleCard from "@/components/details/article/ArticleCard.vue";
+import { useCounterStore } from "@/stores/counter";
+import { storeToRefs } from "pinia/dist/pinia";
 
 const store = useCounterStore();
-const {recommendArticles} = storeToRefs(store);
+const { recommendArticles } = storeToRefs(store);
 
 if (!recommendArticles.value) {
     await store.updateRecommendArticles();

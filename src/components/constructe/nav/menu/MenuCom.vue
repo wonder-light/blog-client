@@ -48,15 +48,15 @@
 
 <!-- 菜单组成部分 -->
 <script setup>
-import { inject } from "vue";
-import { storeToRefs } from "pinia/dist/pinia";
-import { useCounterStore } from "@/stores/counter";
 import { openWebPage } from "@/assets/js/api";
+import { useCounterStore } from "@/stores/counter";
+import { storeToRefs } from "pinia/dist/pinia";
+import { inject } from "vue";
 
 const store = useCounterStore();
-const {types} = storeToRefs(store);
+const { types } = storeToRefs(store);
 
-const {animEnd} = inject('animEnd');
+const { animEnd } = inject('animEnd');
 const closeMenuPanel = inject('closeMenuPanel');
 
 //更新分类

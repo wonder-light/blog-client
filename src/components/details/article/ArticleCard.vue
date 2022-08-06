@@ -23,14 +23,14 @@
 </template>
 
 <script setup>
-import moment from "moment";
-import Card from "@/components/common/Card.vue";
-import { getCurrentInstance, ref } from "vue";
 import { randomColor } from "@/assets/js/api";
+import Card from "@/components/common/Card.vue";
+import moment from "moment";
+import { getCurrentInstance, ref } from "vue";
 
 const props = defineProps({
     //文章
-    article: {type: Object, default: null},
+    article: { type: Object, default: null },
 });
 
 const proxy = getCurrentInstance().proxy;
@@ -54,7 +54,7 @@ function errorClass() {
 //跳转到对应的文章
 function skipToView() {
     if (props.article != null) {
-        proxy.$router.push(`/article/${props.article.id}`);
+        proxy.$router.push(`/article/${ props.article.id }`);
     }
 }
 </script>
