@@ -7,14 +7,14 @@ const router = createRouter({
             //首页
             path: '/',
             name: 'home',
-            component: () => import('@/views/Home.vue'),
+            component: () => import('@/views/home/Home.vue'),
             meta: { title: '念的小世界' },
             children: [
                 {
                     //仓库
                     path: 'warehouse',
                     name: 'warehouse',
-                    component: () => import('@/views/Warehouse.vue'),
+                    component: () => import('@/views/warehouse/Warehouse.vue'),
                     meta: { title: '仓库' }
                 },
                 {
@@ -71,7 +71,7 @@ const router = createRouter({
                     //留言板
                     path: 'guestbook',
                     name: 'guestbook',
-                    component: () => import('../views/GuestBook.vue'),
+                    component: () => import('../views/guest/GuestBook.vue'),
                     meta: { title: '留言板' },
                 },
             ]
@@ -102,7 +102,7 @@ const router = createRouter({
     },
 });
 
-
+//添加一个在任何导航之前执行的导航保护。返回删除已注册保护的函数。
 router.beforeEach((to) => {
     let title = [];
     for (let route of to.matched) {

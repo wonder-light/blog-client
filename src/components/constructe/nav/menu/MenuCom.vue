@@ -1,8 +1,8 @@
 <template>
   <div class="ml-4 text-gray-400">
     <p class="text-left text-lg leading-loose">组成</p>
-    <el-menu :default-active="$route.path" active-text-color="#9ca3af" class="menu-style" menu-trigger="click" text-color="#9ca3af" unique-opened>
-      <el-sub-menu index="1">
+    <el-menu :default-active="$route.path" active-text-color="#9ca3af" class="menu-style" menu-trigger="click" text-color="#9ca3af">
+      <el-sub-menu v-if="true" index="1">
         <template #title>
           <SvgImg svg-id="classify"/>
           <p>分类</p>
@@ -34,7 +34,7 @@
           <p>哔哩哔哩</p>
         </el-menu-item>
         <el-menu-item index="3-1" @click="skip('https://gitHub.com/wonder-light')">
-          <SvgImg svg-id="gitHub"/>
+          <SvgImg svg-id="github"/>
           <p>GitHub</p>
         </el-menu-item>
         <el-menu-item index="3-1" @click="skip('https://gitee.com/wonder-light')">
@@ -49,20 +49,17 @@
 <!-- 菜单组成部分 -->
 <script setup>
 import { openWebPage } from "@/assets/js/api";
-import { useCounterStore } from "@/stores/counter";
-import { storeToRefs } from "pinia/dist/pinia";
 import { inject } from "vue";
 
 const store = useCounterStore();
 const { types } = storeToRefs(store);
-
-const { animEnd } = inject('animEnd');
-const closeMenuPanel = inject('closeMenuPanel');
-
 //更新分类
 if (!types.value) {
     await store.updateTypes();
 }
+
+const animEnd = inject('animEnd');
+const closeMenuPanel = inject('closeMenuPanel');
 
 //跳转网页
 function skip(url, target = '_blank') {

@@ -309,3 +309,37 @@ export function verifyLink(link) {
                             + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$");
     return (link && link.length > 0 && verify.test(link));
 }
+
+//全局唯一标识符
+export function uuid() {
+    let temp_url = URL.createObjectURL(new Blob());
+    let uid = temp_url.toString(); // blob:https://xxx.com/b250d159-e1b6-4a87-9002-885d90033be3
+    URL.revokeObjectURL(temp_url);
+    return uid.substring(uid.lastIndexOf("/") + 1);
+}
+
+//全局唯一标识符
+export function guid() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
+//16进制字符串转base64字符串
+export function hexToBase64(str) {
+    return btoa(String.fromCharCode.apply(null,
+        str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" "))
+    );
+}
+
+//base64字符串转16进制字符串
+export function base64ToHex(str) {
+    let hex = []
+    for (let i = 0, bin = atob(str.replace(/[ \r\n]+$/, "")); i < bin.length; ++i) {
+        let tmp = bin.charCodeAt(i).toString(16);
+        if (tmp.length === 1) tmp = "0" + tmp;
+        hex[hex.length] = tmp;
+    }
+    return hex.join(" ");
+}

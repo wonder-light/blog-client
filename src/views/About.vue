@@ -5,7 +5,7 @@
       <el-image :src="article.cover" alt="" class="mb-8 image-min-200" fit="cover"/>
       <div class="tinymce-content" v-html="article.content"/>
     </el-card>
-    <CommentArea :close-comment="article.closeComment" :root-number="article.commentCount" :target-id="article.id"/>
+    <CommentArea v-if="false" :close-comment="true" :root-number="0" :target-id="article.id"/>
   </div>
 </template>
 

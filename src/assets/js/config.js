@@ -33,7 +33,8 @@ function errorCaptured(err, instance, info) {
         if (env.isDev) {
             console.log('网络连接错误', err, instance, info);
         }
-        instance.$router.push({ name: 'error' });
+        //跳转404页面
+        //instance.$router.push({ name: 'error' });
     }
 }
 

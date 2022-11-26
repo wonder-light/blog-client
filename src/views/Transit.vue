@@ -1,5 +1,5 @@
 <template>
-  <div class="page-load" style="background: #33333300"></div>
+  <div></div>
 </template>
 
 <!-- 中转路由 -->

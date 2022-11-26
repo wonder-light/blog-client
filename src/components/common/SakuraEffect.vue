@@ -1,15 +1,48 @@
 <template>
-  <canvas :id="sakuraId" class="fixed top-0 left-0 -z-10"/>
+  <div class="fixed inset-0 -z-40">
+    <!-- 背景图片切换 -->
+    <transition enter-active-class="animate__animated animate__fadeIn" leave-active-class="animate__animated animate__fadeOut" mode="in-out">
+      <el-image v-if="showItem" :src="image.item_1" class="inset-0" fit="cover" style="position: absolute!important;"/>
+      <el-image v-else :src="image.item_2" class="inset-0" fit="cover" style="position: absolute!important;"/>
+    </transition>
+  </div>
+  <canvas :id="sakuraId" class="fixed top-0 left-0 z-20 pointer-events-none"/>
 </template>
 
 <!-- 背景特效：樱花跑飘落 -->
 <script setup>
 import { getId } from "@/assets/js/api";
-import { onMounted, ref } from "vue";
-
+import { computed, onMounted, ref } from "vue";
+//图像列表
+const imgList = ref([
+    "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-5c8ba350-827c-4df5-bf3c-d7683c79f8bf/b4f98397-5205-4c7a-a467-1805e6b62eb9.jpg",
+    "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-5c8ba350-827c-4df5-bf3c-d7683c79f8bf/cebc6652-7389-4d0d-8ec3-d366c6806833.jpg",
+    "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-5c8ba350-827c-4df5-bf3c-d7683c79f8bf/23f2f4d1-0c80-42a6-8a2a-4b760b2b4a61.jpg",
+    "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-5c8ba350-827c-4df5-bf3c-d7683c79f8bf/10d91fc5-a6c2-4d41-8e33-ad8f447a7c4a.jpg",
+]);
+//图片索引
+let imgIndex = -2;
+//显示第一个图片
+const showItem = ref(true);
 //背景特效：樱花跑飘落 Id
-let sakuraId = ref(getId());
+const sakuraId = ref(getId());
+//图片项目
+const image = computed(() => {
+    if (showItem.value) {
+        imgIndex += 2;
+        if (imgIndex >= imgList.value.length) {
+            imgIndex = 0;
+        }
+    }
+    let next = imgIndex + 1 >= imgList.value.length ? 0 : imgIndex + 1;
+    return {
+        item_1: imgList.value[imgIndex],
+        item_2: imgList.value[next],
+    };
+});
 
+//切换图片
+setInterval(() => showItem.value = !showItem.value, 5000);
 
 onMounted(sakuraEffect);
 

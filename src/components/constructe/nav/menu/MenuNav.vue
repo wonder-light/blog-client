@@ -1,7 +1,7 @@
 <template>
   <div class="ml-4 text-gray-400">
     <p class="text-left text-lg leading-loose">导航</p>
-    <el-menu :default-active="$route.path" active-text-color="#9ca3af" class="menu-style" menu-trigger="click" text-color="#9ca3af" unique-opened>
+    <el-menu :default-active="$route.path" active-text-color="#9ca3af" class="menu-style" menu-trigger="click" text-color="#9ca3af">
       <el-menu-item index="/" @click="skip('/')">
         <SvgImg svg-id="home-page"/>
         <p>首页</p>
@@ -49,7 +49,7 @@ import { inject } from "vue";
 import { useRouter } from "vue-router";
 
 let router = useRouter();
-const { animEnd } = inject('animEnd');
+const animEnd = inject('animEnd');
 const closeMenuPanel = inject('closeMenuPanel');
 
 function skip(url) {

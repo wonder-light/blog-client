@@ -1,8 +1,8 @@
 <template>
-  <header class="w-full h-screen relative flex flex-col justify-center items-center bg-cover home-background">
-    <div>
-      <h1 class="text-4xl text-white leading-loose">随风飞扬</h1>
-      <p class="text-xl text-white leading-normal">心之所向，素履以往；生如逆旅，一苇以航</p>
+  <header class="w-full h-screen relative flex flex-col justify-center items-center">
+    <div class="animate-text-flashing">
+      <h1 class="text-5xl leading-loose">随风飞扬</h1>
+      <p class="text-3xl leading-normal">心之所向，素履以往；生如逆旅，一苇以航</p>
     </div>
     <SvgImg class="absolute bottom-2.5 w-7 h-7 text-white/80 animate-bounce cursor-pointer" svg-id="arrow-down" @click="scrollToContent"/>
   </header>
@@ -15,6 +15,7 @@ let AnimationFrameId = 0;
 let speed = 0.1;
 let top = 0;
 
+//屏幕滚动帧调用
 function scroll() {
     if (top >= window.innerHeight) {
         window.cancelAnimationFrame(AnimationFrameId);

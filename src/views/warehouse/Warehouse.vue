@@ -1,6 +1,7 @@
 <template>
   <div class="w-full">
-    <el-image :src="env.serverUrl + '/files/image/background/4955.jpg'" alt="仓库背景图片" class="mb-8" fit="cover"/>
+    <el-image alt="仓库背景图片" class="mb-8" fit="cover"
+              src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-5c8ba350-827c-4df5-bf3c-d7683c79f8bf/f6bd80ff-c8c1-4529-bcb8-816124a8aedd.jpg"/>
     <Suspense v-for="item in set" :key="item.api">
       <WarehouseSet v-bind="item"/>
       <template #fallback>

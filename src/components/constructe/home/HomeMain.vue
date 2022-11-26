@@ -1,5 +1,5 @@
 <template>
-  <main class="mr-83 m-lg:mr-auto">
+  <main class="m-lg:mr-auto">
     <RouterView v-slot="{Component}">
       <Transition mode="out-in">
         <KeepAlive>

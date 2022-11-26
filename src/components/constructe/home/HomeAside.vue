@@ -1,5 +1,5 @@
 <template>
-  <aside class="w-75 absolute top-0 right-0 m-lg:w-auto m-lg:static m-lg:mt-20">
+  <aside class="w-75 relative top-0 right-0 m-lg:w-auto m-lg:static m-lg:mt-20">
     <el-card class="mb-8" shadow="hover">
       <Weather/>
     </el-card>

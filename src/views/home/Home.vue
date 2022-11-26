@@ -1,11 +1,13 @@
 <template>
   <HomeNav/>
   <HomeHeader/>
-  <div class="relative m-auto mt-8 content-width">
-    <HomeMain/>
-    <HomeAside/>
+  <div class="w-full bg-white inline-block text-center">
+    <div class="relative mt-8 m-auto content-width flex justify-between">
+      <HomeMain class="flex-grow mr-8"/>
+      <HomeAside/>
+    </div>
+    <HomeFooter/>
   </div>
-  <HomeFooter/>
 </template>
 
 <!-- 首页 -->

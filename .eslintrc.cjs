@@ -39,5 +39,10 @@ module.exports = {
         parser: "@babel/eslint-parser",
         sourceType: "module",
         requireConfigFile: false,
+        babelOptions: {
+            parserOpts: {
+                plugins: ["jsx"]
+            }
+        }
     },
 };

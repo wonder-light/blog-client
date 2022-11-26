@@ -1,3 +1,4 @@
+/*https://zhuanlan.zhihu.com/p/385204652*/
 @import "animate.css";
 
 @tailwind base;
@@ -154,21 +155,6 @@
         }
     }
 
-    .mini-menu {
-        @apply cursor-pointer fixed flex content-center uppercase text-white;
-        border: 1px solid hsla(0, 0%, 100%, .6);
-        border-radius: 3px;
-        font-size: 12px;
-        top: 20px;
-        left: 20px;
-        padding: 10px;
-        z-index: 15;
-
-        &:hover {
-            @apply opacity-70;
-        }
-    }
-
     .image-min-200 {
         img {
             min-height: 200px;
@@ -177,7 +163,7 @@
 
     .text-gradient { /*文字渐变*/
         @apply inline-block text-transparent;
-        background: linear-gradient(0.25turn, #c21500, #fb6333, #ffc500);
+        background: linear-gradient(0.25turn, #c21500, #33a8fb, #51ff00);
         -webkit-background-clip: text;
     }
 
@@ -307,17 +293,7 @@
         grid-gap: 30px;
     }
 
-    .home-background {
-        background: url("https://blogserver.nianian.cn/files/image/background/background_14.jpg") no-repeat center;
-    }
-
-    .avatar-background {
-        background: url("https://blogserver.nianian.cn/files/image/background/H191af1ed5f7c4574ac314da7f8983af8f.jpg") no-repeat center;
-    }
-
     .menu-style {
-        @apply m-auto;
-
         .el-menu-item, .el-sub-menu__title {
             @apply pr-0 h-10;
 
@@ -328,15 +304,6 @@
             p {
                 font-size: 15px;
             }
-        }
-    }
-
-    .avatar-image {
-        @apply mt-8;
-        --el-avatar-size: 80px !important;
-
-        img {
-            @apply w-full;
         }
     }
 
