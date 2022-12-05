@@ -7,7 +7,9 @@
     "private": true,
     "scripts": {
         "test": "echo \"No test specified\" && exit 0",
-        "dev:ssr": "quasar dev -m ssr"
+        "dev:ssr": "quasar dev -m ssr",
+        "build:ssr": "quasar build -m ssr",
+        "build:ssr:debug": "quasar build -m ssr --debug"
     },
     "dependencies": {
         "@amap/amap-jsapi-loader": "^1.0.1",
@@ -15,9 +17,7 @@
         "axios": "^0.21.1",
         "echarts": "^5.4.0",
         "jsencrypt": "^3.3.1",
-        "moment": "^2.29.4",
-        "node-jsencrypt": "^1.0.0",
-        "pinia": "^2.0.11",
+        "pinia": "^2.0.27",
         "quasar": "^2.6.0",
         "vue": "^3.0.0",
         "vue-router": "^4.0.0"

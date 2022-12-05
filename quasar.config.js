@@ -8,7 +8,6 @@
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
-const path = require('path');
 const { configure } = require('quasar/wrappers');
 
 
@@ -48,8 +47,8 @@ module.exports = configure(function (ctx) {
         // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
         build: {
             target: {
-                browser: ['es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1'],
-                node: 'node16'
+                browser: ['es2022', 'edge90', 'firefox90', 'chrome90', 'safari15'],
+                node: 'node18'
             },
             
             vueRouterMode: 'hash', // available values: 'hash', 'history'
@@ -62,13 +61,13 @@ module.exports = configure(function (ctx) {
             // publicPath: '/',
             // analyze: true,
             env: {
-                API: ctx.dev ? 'https://localhost:7169' : 'https://api.nianian.cn',
+                API: (ctx.dev || ctx.debug) ? 'https://localhost:7169' : 'https://api.nianian.cn',
                 KEY: '7f96a4e63d822b7647be210436f2bdf3',
                 A_MAP_KEY: '7f96a4e63d822b7647be210436f2bdf3',
             },
             // rawDefine: {}
             // ignorePublicFolder: true,
-            minify: ctx.dev ? false : 'esbuild', //boolean | 'terser' | 'esbuild';
+            minify: (ctx.dev || ctx.debug) ? false : 'esbuild', //boolean | 'terser' | 'esbuild';
             polyfillModulePreload: !ctx.dev,
             // distDir
             //alias
@@ -83,7 +82,7 @@ module.exports = configure(function (ctx) {
                 ['@vitejs/plugin-vue-jsx', /*{ ..options.. }*/]
             ],
             
-            sourcemap: ctx.dev
+            sourcemap: (ctx.dev || ctx.debug)
         },
         
         // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
@@ -144,8 +143,8 @@ module.exports = configure(function (ctx) {
             // manualStoreHydration: true,
             // manualPostHydrationTrigger: true,
             
-            prodPort: 3000, // The default port that the production server should use
-                            // (gets superseded if process.env.PORT is specified at runtime)
+            prodPort: (ctx.dev || ctx.debug) ? 3000 : 443, // The default port that the production server should use
+            // (gets superseded if process.env.PORT is specified at runtime)
             
             middlewares: [
                 'render' // keep this as last one

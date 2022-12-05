@@ -40,7 +40,7 @@
 
 <script lang="jsx" setup>
 import { storeToRefs } from 'pinia'
-import { QExpansionItem, QItem, QList } from 'quasar'
+import { QAvatar, QExpansionItem, QImg, QItem, QList, QSeparator, QTooltip } from 'quasar'
 import { useStore } from 'stores/example-store'
 import { computed, inject, ref } from 'vue'
 

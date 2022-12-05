@@ -73,7 +73,7 @@ export default {
 <script setup>
 import { storeToRefs } from 'pinia'
 import { useMeta } from 'quasar'
-import { inject, nextTick, onMounted } from 'vue'
+import { inject, onMounted } from 'vue'
 
 const { blogCount } = storeToRefs(useStore());
 

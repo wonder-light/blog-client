@@ -1,10 +1,9 @@
 import { uid } from 'quasar'
 import { base64ToHex, hexToBase64 } from './api'
 
+
 /** @type {import('jsencrypt').default} */
-const JSEncrypt = process.env.CLIENT
-                  ? (await import('jsencrypt')).default
-                  : (await import('node-jsencrypt')).default;
+const JSEncrypt = Object.values(import.meta.globEager('jsencrypt'))[0].default;
 
 
 const public_Key = '-----BEGIN PUBLIC KEY-----' +

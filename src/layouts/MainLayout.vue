@@ -131,7 +131,7 @@ useMeta({
         twitterImage: { property: 'twitter:image', content: data.image },
         
         //微信图片显示问题
-        referrer: { name: 'referrer', content: 'never' },
+        referrer: { name: 'referrer', content: 'origin' /* no-referrer, never */ },
     },
     
     // <body> attributes

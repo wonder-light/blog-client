@@ -3,19 +3,19 @@
     <q-card-section class="tw-text-center">
       <h1 class="tw-leading-normal tw-text-white" style="word-break: break-word">{{ items.name }}</h1>
     </q-card-section>
-    <q-card-section>
+    <q-card-section class="tw-pb-2">
       <div class="tw-text-stone-300">
-        <span class="star">
-          <svg-icon class="tw-w-4 tw-h-4" name="star"/>
-          <span>{{ items.stargazers_count + ' star / ' }}</span>
+        <span class="tw-inline-flex tw-items-center">
+          <svg-icon class="tw-w-4 tw-h-4 tw-stroke-0 tw-mr-1" name="star"/>
+          <span class="tw-mr-1">{{ items.stargazers_count + ' star / ' }}</span>
         </span>
-        <span class="star">
-          <svg-icon class="tw-w-4 tw-h-4" name="fork"/>
-          <span>{{ items.forks_count + ' fork / ' }}</span>
+        <span class="tw-inline-flex tw-items-center">
+          <svg-icon class="tw-w-4 tw-h-4 tw-stroke-0 tw-mr-1" name="fork"/>
+          <span class="tw-mr-1">{{ items.forks_count + ' fork / ' }}</span>
         </span>
-        <span class="star">
-          <svg-icon class="tw-w-4 tw-h-4" name="views"/>
-          <span>{{ items.watchers_count + ' watch' }}</span>
+        <span class="tw-inline-flex tw-items-center">
+          <svg-icon class="tw-w-4 tw-h-4 tw-stroke-0 tw-mr-1" name="views"/>
+          <span class="tw-mr-1">{{ items.watchers_count + ' watch' }}</span>
         </span>
       </div>
     </q-card-section>
