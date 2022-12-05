@@ -1,36 +1,27 @@
 <template>
-  <RouterView v-slot="{Component}">
-    <template v-if="Component">
-      <!-- 为'加载状态'与'显示状态'提供过渡动画 -->
-      <Transition enter-active-class="animate__animated animate__fadeIn" leave-active-class="animate__animated animate__fadeOut" mode="in-out">
-        <KeepAlive>
-          <Suspense>
-            <!-- 主要内容 -->
-            <!-- Component为undefined时Suspense组件的工作方式会变得不正常 -->
-            <template #default>
-              <div id="home">
-                <component :is="Component"></component>
-              </div>
-            </template>
-            <!-- 加载中状态 -->
-            <template #fallback>
-              <LoadPage full/>
-            </template>
-          </Suspense>
-        </KeepAlive>
-      </Transition>
-    </template>
-    <template v-else>
-      <LoadPage full/>
-    </template>
-  </RouterView>
-  <SakuraEffect/>
-  <el-config-provider :locale="locale"/>
+  <router-view v-slot="{ Component }">
+    <keep-alive>
+      <component :is="Component"></component>
+    </keep-alive>
+  </router-view>
 </template>
 
-<script setup>
-import { locale } from "@/assets/js/api";
-import SakuraEffect from "@/components/common/SakuraEffect.vue";
-import { RouterView } from 'vue-router';
-//
+<script>
+import { Loading } from 'quasar'
+import { useStore } from 'stores/example-store'
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+    name: 'App',
+    preFetch() {
+        const store = useStore();
+    },
+    beforeCreate() {
+        Loading.setDefaults({
+            spinnerSize: 64,
+            customClass: 'tw-bg-indigo-400',
+            message: '加载中'
+        });
+    }
+})
 </script>

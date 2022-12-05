@@ -1,51 +1,27 @@
-# blog-client
+# blog (blog)
 
-This template should help get you started developing with Vue 3 in Vite.
+个人博客
 
-## Recommended IDE Setup
+## Install the dependencies
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and
-disable Vetur)
-
-+ [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
+```bash
+yarn
+# or
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Start the app in development mode (hot-code reloading, error reporting, etc.)
 
-```sh
-npm run dev
+```bash
+quasar dev
 ```
 
-### Compile and Minify for Production
+### Build the app for production
 
-```sh
-npm run build
+```bash
+quasar build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+### Customize the configuration
 
-```sh
-npm run test:unit
-```
-
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
-
-```sh
-npm run build
-npm run test:e2e # or `npm run test:e2e:ci` for headless testing
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).

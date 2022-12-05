@@ -1,17 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8"/>
-  <title>念的小世界</title>
-  <meta content="念，3209752489@qq.com" name="author">
-  <meta content="念的小世界 日常 个人博客 技术分享" name="keywords"/>
-  <meta content="这是吾辈的世界，描绘着属于吾辈的故事" name="description"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <link href="/image/avatar.png" rel="icon"/>
-  <script async referrerpolicy="origin" src="https://cdn.tiny.cloud/1/0rg8ipfhm9nk9qq03xdelf9fx8hckrbb2ewnn0q4h85o5jyw/tinymce/6/tinymce.min.js"></script>
+  <!--title><%= productName %></title>
+  <meta content="<%= productDescription %>" name="description"-->
+  <meta charset="utf-8">
+  <meta content="telephone=no" name="format-detection">
+  <meta content="no" name="msapplication-tap-highlight">
+  <meta content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width<% if (ctx.mode.cordova || ctx.mode.capacitor) { %>, viewport-fit=cover<% } %>"
+        name="viewport">
+  
+  <link href="/icons/favicon-128x128.png" rel="icon" sizes="128x128" type="image/png">
+  <link href="/icons/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png">
+  <link href="/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png">
+  <link href="/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png">
+  <link href="/favicon.png" rel="icon" type="image/png">
 </head>
 <body>
-  <div id="app"></div>
-  <script src="./src/main.js" type="module"></script>
+  <!-- quasar:entry-point -->
 </body>
 </html>

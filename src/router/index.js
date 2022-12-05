@@ -1,118 +1,37 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { route } from 'quasar/wrappers'
+import { createMemoryHistory, createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
+import routes from './routes'
 
-const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
-    routes: [
-        {
-            //首页
-            path: '/',
-            name: 'home',
-            component: () => import('@/views/home/Home.vue'),
-            meta: { title: '念的小世界' },
-            children: [
-                {
-                    //仓库
-                    path: 'warehouse',
-                    name: 'warehouse',
-                    component: () => import('@/views/warehouse/Warehouse.vue'),
-                    meta: { title: '仓库' }
-                },
-                {
-                    //相册
-                    path: 'album',
-                    name: 'album',
-                    component: () => import('@/views/album/Album.vue'),
-                    meta: { title: '相册' },
-                    children: [
-                        {
-                            path: ':id',
-                            name: 'albumView',
-                            component: () => import('../views/album/AlbumView.vue'),
-                            props: (route) => {
-                                let albumId = Number(route.params.id);
-                                if (isNaN(albumId)) {
-                                    albumId = 0;
-                                }
-                                return { albumId };
-                            },
-                        },
-                    ]
-                },
-                {
-                    //文章
-                    path: 'article',
-                    name: 'article',
-                    component: () => import('../views/article/Article.vue'),
-                    meta: { title: '文章' },
-                    children: [
-                        {
-                            //文章视图
-                            path: ':id',
-                            name: 'articleView',
-                            component: () => import('../views/article/ArticleView.vue'),
-                        },
-                    ]
-                },
-                {
-                    //归档
-                    path: 'archive',
-                    name: 'archive',
-                    component: () => import('../views/Archive.vue'),
-                    meta: { title: '归档' },
-                },
-                {
-                    //关于我
-                    path: 'about',
-                    name: 'about',
-                    component: () => import('../views/About.vue'),
-                    meta: { title: '关于我' },
-                },
-                {
-                    //留言板
-                    path: 'guestbook',
-                    name: 'guestbook',
-                    component: () => import('../views/guest/GuestBook.vue'),
-                    meta: { title: '留言板' },
-                },
-            ]
+/*
+ * If not building with SSR mode, you can
+ * directly export the Router instantiation;
+ *
+ * The function below can be async too; either use
+ * async/await or return a Promise which resolves
+ * with the Router instance.
+ */
+
+export default route(function (/* { store, ssrContext } */) {
+    const createHistory = process.env.SERVER
+                          ? createMemoryHistory
+                          : (process.env.VUE_ROUTER_MODE === 'history' ? createWebHistory : createWebHashHistory)
+    
+    const router = createRouter({
+        scrollBehavior: (to, from, savedPosition) => {
+            //浏览器 前进、后退，savedPosition有效。否则无效
+            return savedPosition || { left: 0, top: 0 }
         },
-        {
-            //中转路由
-            path: '/transit',
-            name: 'transit',
-            component: () => import('../views/Transit.vue'),
-        },
-        {
-            //错误页面
-            path: '/:error*',
-            name: 'error',
-            component: () => import("@/views/error/404.vue"),
-            meta: { title: '出错啦' },
-        }
-    ],
-    //路由滚动
-    scrollBehavior(to, from, savedPosition) {
-        //浏览器 前进、后退，savedPosition有效。否则无效
-        if (savedPosition) {
-            return savedPosition;
-        }
-        else {
-            return { top: 0 };
-        }
-    },
-});
-
-//添加一个在任何导航之前执行的导航保护。返回删除已注册保护的函数。
-router.beforeEach((to) => {
-    let title = [];
-    for (let route of to.matched) {
-        if (route.meta.title) {
-            title.push(route.meta.title);
-        }
-    }
-    title = title.join(' | ');
-    document.title = title;
-    return true;
-});
-
-export default router;
+        routes,
+        
+        // Leave this as is and make changes in quasar.conf.js instead!
+        // quasar.conf.js -> build -> vueRouterMode
+        // quasar.conf.js -> build -> publicPath
+        history: createHistory(process.env.VUE_ROUTER_BASE)
+    })
+    
+    router.beforeEach((to, from) => {
+        return true;
+    })
+    
+    return router;
+})
