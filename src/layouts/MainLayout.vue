@@ -80,7 +80,7 @@ import Sakura from 'components/common/Sakura.vue'
 import HomeAside from 'components/HomeAside.vue'
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
-import { computed, inject, onUpdated, ref, watch } from 'vue'
+import { computed, inject, onMounted, onUpdated, ref, watch } from 'vue'
 import { Loading, useMeta } from 'quasar'
 
 const store = useStore();
@@ -89,14 +89,14 @@ const blogger = inject('blogger');
 const route = useRoute();
 const leftDrawerOpen = ref(false);
 const matched = computed(() => route.matched[route.matched.length - 1].path);
-
-const data = {
+/** 网页的meta数据 */
+const metaData = {
     title: `${ blogger }的小世界`,
     description: '天之涯，地之角，知交半零落，一壶浊酒尽余欢，今宵别梦寒。',
     url: `${ process.env.APP_URL }`,
     image: `${ process.env.APP_URL }favicon.png`,
 };
-
+/** 监听路由变化 */
 watch(() => route.path, (newValue, oldValue) => {
     //刷新时(oldValue !== undefined)不更新，页面前进后退时更新句子
     store.updateSentence();
@@ -105,30 +105,30 @@ watch(() => route.path, (newValue, oldValue) => {
 // 需要在 setup()中调用
 useMeta({
     // 设置页面 title
-    title: data.title,
+    title: metaData.title,
     // 可选的；设置最终的 title 为“Index Page - My Website”,
     // optional; sets final title as "Index Page - My Website", useful for multiple level meta
     titleTemplate: title => title,
     
     // meta tags
     meta: {
-        title: { name: 'title', content: data.title },
+        title: { name: 'title', content: metaData.title },
         author: { name: 'author', content: `${ blogger }` },
-        description: { name: 'description', content: data.description },
+        description: { name: 'description', content: metaData.description },
         keywords: { name: 'keywords', content: `${ blogger }|博客|个人博客` },
-        url: { name: 'url', content: data.url },
-        image: { name: 'image', content: data.image },
+        url: { name: 'url', content: metaData.url },
+        image: { name: 'image', content: metaData.image },
         // note: for Open Graph type metadata you will need to use SSR, to ensure page is rendered by the server
-        ogTitle: { property: 'og:title', content: data.title, },
+        ogTitle: { property: 'og:title', content: metaData.title, },
         ogType: { property: 'og:type', content: `website` },
-        ogUrl: { property: 'og:url', content: data.url },
-        ogDescription: { property: 'og:description', content: data.description },
-        ogImage: { property: 'og:image', content: data.image },
-        twitterTitle: { property: 'twitter:title', content: data.title, },
-        twitterDescription: { property: 'twitter:description', content: data.description },
+        ogUrl: { property: 'og:url', content: metaData.url },
+        ogDescription: { property: 'og:description', content: metaData.description },
+        ogImage: { property: 'og:image', content: metaData.image },
+        twitterTitle: { property: 'twitter:title', content: metaData.title, },
+        twitterDescription: { property: 'twitter:description', content: metaData.description },
         twitterCard: { property: 'twitter:card', content: `summary_large_image` },
-        twitterUrl: { property: 'twitter:url', content: data.url },
-        twitterImage: { property: 'twitter:image', content: data.image },
+        twitterUrl: { property: 'twitter:url', content: metaData.url },
+        twitterImage: { property: 'twitter:image', content: metaData.image },
         
         //微信图片显示问题
         referrer: { name: 'referrer', content: 'origin' /* no-referrer, never */ },
@@ -138,6 +138,60 @@ useMeta({
     bodyAttr: {
         'action-scope': '', // 生成 <body action-scope>
     },
+    
+    script: {
+        L2Dwidget: { src: 'https://l2dwidget.js.org/lib/L2Dwidget.min.js', type: 'text/javascript' },
+    }
+})
+
+onMounted(() => {
+    /** 使用 live2d-widget */
+    //import('live2d-widget').then(({ L2Dwidget }) => {
+        L2Dwidget.init({
+            model: {
+                //https://unpkg.com/live2d-widget-model-haru@1.0.5/01/assets/haru01.model.json
+                //jsonPath: "https://unpkg.com/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json",
+                //jsonPath: 'packages/live2d-widget-model-hibiki/assets/hibiki.model.json', //主文件路径
+                jsonPath: 'node_modules/live2d-widget-model-shizuku/assets/shizuku.model.json', //主文件路径
+                scale: 0.8,//模型与canvas的缩放
+            },
+            display: {
+                superSample: 2, // 超采样等级
+                position: 'right', //显示位置：左或右
+                width: 180,// canvas的长度
+                //height: 360,//canvas的高度
+                hOffset: 50,//canvas水平偏移
+                vOffset: -0,//canvas垂直偏移
+            },
+        
+            //pluginRootPath: '/live2d/',//插件在站点上的根目录(相对路径)
+            //pluginJsPath: 'assets/libs/',//脚本文件相对与插件根目录路径
+            //pluginModelPath: 'live2d-widget-model-hijiki/assets/',//模型文件相对与插件根目录路径
+            tagMode: false,//标签模式, 是否仅替换 live2d tag标签而非插入到所有页面中
+            debug: false,//调试, 是否在控制台输出日志
+            name: {
+                canvas: 'MId'//自定义cavas标签的id（可不需要）
+            },
+            react: {//透明度条件
+                opacityDefault: 0.8,//默认透明度
+                opacityOnHover: 1//鼠标移上透明度
+            },
+            dev: {
+                border: false,//在canvas周围显示边界
+            },
+            mobile: {
+                show: true,//是否在移动设备上显示
+                scale: 0.5,//移动设备上的缩放
+                motion: true, // 移动设备是否开启重力感应
+            },
+            log: false,
+            dialog: {
+                enable: true,//显示人物对话框
+                hitokoto: true,//使用一言API
+                script: { 'tap body': '哎呀！别碰我！', 'tap face': '人家是在认真写博客哦--前端妹子', },
+            },
+        })
+    //})
 })
 
 Loading.hide();
