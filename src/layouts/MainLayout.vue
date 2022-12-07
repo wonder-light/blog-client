@@ -35,7 +35,7 @@
     </q-drawer>
     
     <q-page-container>
-      <q-page-scroller :offset="[40, 60]" :scroll-offset="150" position="bottom-right">
+      <q-page-scroller :offset="[20, 120]" :scroll-offset="150" position="bottom-right">
         <svg-icon class="tw-cursor-pointer tw-w-10 tw-h-10 tw-rounded-full hover:tw-bg-gray-200" name="backTop"/>
       </q-page-scroller>
       <div class="tw-max-w-6xl tw-mx-auto">
@@ -79,9 +79,10 @@ export default {
 import Sakura from 'components/common/Sakura.vue'
 import HomeAside from 'components/HomeAside.vue'
 import { storeToRefs } from 'pinia'
+import { randNumber } from 'src/api/api'
 import { useRoute } from 'vue-router'
 import { computed, inject, onMounted, onUpdated, ref, watch } from 'vue'
-import { Loading, useMeta } from 'quasar'
+import { Loading, useMeta, Platform } from 'quasar'
 
 const store = useStore();
 const { sentence, routes } = storeToRefs(store);
@@ -140,58 +141,23 @@ useMeta({
     },
     
     script: {
-        L2Dwidget: { src: 'https://l2dwidget.js.org/lib/L2Dwidget.min.js', type: 'text/javascript' },
+        //L2Dwidget: { src: 'https://l2dwidget.js.org/lib/L2Dwidget.min.js', type: 'text/javascript'},
+        //L2Dwidget0: { src: 'https://l2dwidget.js.org/lib/L2Dwidget.0.min.js', type: 'text/javascript'},
+        L2Dwidget: { src: `${ process.env.VUE_ROUTER_BASE }live2d/lib/L2Dwidget.min.js`, type: 'text/javascript' },
+        L2Dwidget0: { src: `${ process.env.VUE_ROUTER_BASE }live2d/lib/L2Dwidget.0.min.js`, type: 'text/javascript' },
     }
 })
 
+Loading.hide();
+onUpdated(() => Loading.hide());
+
 onMounted(() => {
-    /** 使用 live2d-widget */
-    //import('live2d-widget').then(({ L2Dwidget }) => {
-        L2Dwidget.init({
-            model: {
-                //https://unpkg.com/live2d-widget-model-haru@1.0.5/01/assets/haru01.model.json
-                //jsonPath: "https://unpkg.com/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json",
-                //jsonPath: 'packages/live2d-widget-model-hibiki/assets/hibiki.model.json', //主文件路径
-                jsonPath: 'node_modules/live2d-widget-model-shizuku/assets/shizuku.model.json', //主文件路径
-                scale: 0.8,//模型与canvas的缩放
-            },
-            display: {
-                superSample: 2, // 超采样等级
-                position: 'right', //显示位置：左或右
-                width: 180,// canvas的长度
-                //height: 360,//canvas的高度
-                hOffset: 50,//canvas水平偏移
-                vOffset: -0,//canvas垂直偏移
-            },
-        
-            //pluginRootPath: '/live2d/',//插件在站点上的根目录(相对路径)
-            //pluginJsPath: 'assets/libs/',//脚本文件相对与插件根目录路径
-            //pluginModelPath: 'live2d-widget-model-hijiki/assets/',//模型文件相对与插件根目录路径
-            tagMode: false,//标签模式, 是否仅替换 live2d tag标签而非插入到所有页面中
-            debug: false,//调试, 是否在控制台输出日志
-            name: {
-                canvas: 'MId'//自定义cavas标签的id（可不需要）
-            },
-            react: {//透明度条件
-                opacityDefault: 0.8,//默认透明度
-                opacityOnHover: 1//鼠标移上透明度
-            },
-            dev: {
-                border: false,//在canvas周围显示边界
-            },
-            mobile: {
-                show: true,//是否在移动设备上显示
-                scale: 0.5,//移动设备上的缩放
-                motion: true, // 移动设备是否开启重力感应
-            },
-            log: false,
-            dialog: {
-                enable: true,//显示人物对话框
-                hitokoto: true,//使用一言API
-                script: { 'tap body': '哎呀！别碰我！', 'tap face': '人家是在认真写博客哦--前端妹子', },
-            },
-        })
-    //})
+    function f() {
+        if (L2Dwidget) initLive2d();
+        else setTimeout(f, 50);
+    }
+    
+    f();
 })
 
 Loading.hide();
@@ -223,5 +189,168 @@ function scrollToContent() {
     if (speed < 4) speed = 4;
     //正常情况下每秒调用60次
     AnimationFrameId = window.requestAnimationFrame(scroll);
+}
+
+//设置live2d
+function initLive2d() {
+    const dialogBody = [
+        '哎呀！别碰我！',
+        "不要动手动脚的！快把手拿开~~",
+        "真…真的是不知羞耻！",
+        "Hentai！",
+        "再摸的话我可要报警了！⌇●﹏●⌇",
+        "110吗，这里有个变态一直在摸我(ó﹏ò｡)"
+    ];
+    const dialogFace = [
+        '人家是在认真写博客哦--前端妹子',
+        "是…是不小心碰到了吧",
+        "萝莉控是什么呀",
+        "你看到我的小熊了吗",
+        "再摸的话我可要报警了！⌇●﹏●⌇",
+        "110吗，这里有个变态一直在摸我(ó﹏ò｡)"
+    ];
+    /** @type {HTMLElement} */
+    let container;
+    /** @type {HTMLElement} */
+    let dialog;
+    /** @type {HTMLElement} */
+    let canvas;
+    L2Dwidget.on("create-container", /** @param element {HTMLElement} */(element) => container = element)
+             .on("create-dialog", /** @param element {HTMLElement} */(element) => {
+                 element.style.userSelect = 'none';
+                 dialog = element.getElementsByClassName('live2d-widget-dialog')[0]
+             })
+             .on("create-canvas", /** @param element {HTMLElement} */(element) => {
+                 //设置可以接收鼠标指定事件为
+                 element.style['pointer-events'] = 'auto';
+                 canvas = element;
+             })
+             .on("tap", dragLive2D)
+             .on("tapbody", () => showDialog(dialogBody))
+             .on("tapface", () => showDialog(dialogFace))
+             .init({
+                 model: {
+                     //https://unpkg.com/live2d-widget-model-haru@1.0.5/01/assets/haru01.model.json
+                     //https://unpkg.com/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json
+                     jsonPath: '/live2d/model/live2d-widget-model-haru/01/assets/haru01.model.json', //主文件路径
+                     scale: 1,//模型与canvas的缩放
+                 },
+                 display: {
+                     superSample: 1, // 超采样等级
+                     position: 'right', //显示位置：左或右
+                     width: 220,// canvas的长度
+                     //height: 360,//canvas的高度
+                     hOffset: 50,//canvas水平偏移
+                     vOffset: 0,//canvas垂直偏移
+                 },
+        
+                 tagMode: false,//标签模式, 是否仅替换 live2d tag标签而非插入到所有页面中
+                 debug: false,//调试, 是否在控制台输出日志
+                 react: {//透明度条件
+                     opacityDefault: 0.8,//默认透明度
+                     opacityOnHover: 1//鼠标移上透明度
+                 },
+                 dev: {
+                     border: false,//在canvas周围显示边界
+                 },
+                 mobile: {
+                     show: true,//是否在移动设备上显示
+                     scale: 1,//移动设备上的缩放
+                     motion: true, // 移动设备是否开启重力感应
+                 },
+                 dialog: {
+                     enable: true,//显示人物对话框
+                     //hitokoto: true,//使用一言API
+                     script: {
+                         // 每空闲 10 秒钟，显示一条一言
+                         'every idle 10s': '$hitokoto$',
+                         'tap body': '哎呀！别碰我！',
+                         'tap face': '人家是在认真写博客哦--前端妹子',
+                
+                     },
+                 },
+             })
+    
+    /**
+     * 显示对话
+     * @param dialogs {Array<string>}
+     */
+    function showDialog(dialogs = []) {
+        const init = dialog.innerText;
+        const text = dialogs[randNumber(0, dialogs.length)];
+        setTimeout(() => {
+            if (text && text !== init) {
+                dialog.innerText = text;
+            }
+        }, 4);
+    }
+    
+    /**
+     * @param event {MouseEvent}
+     */
+    function dragLive2D(event) {
+        //拖动的不是画布则返回
+        if (event.target !== canvas) return;
+        const target = document.documentElement;
+        const initClientX = event.clientX;
+        const originRight = document.documentElement.offsetWidth - container.offsetWidth; // 最大 right 值
+        const initOffsetX = originRight - container.offsetLeft; //初始 right 的值
+        //移动端拖拽
+        if (Platform.is.mobile) {
+            target.addEventListener('touchmove', touchmove, { passive: false });
+            target.addEventListener('touchend', touchend, { passive: false });
+            
+            /**
+             * 拖动（手指在触摸屏上移动）
+             * @param e {TouchEvent}
+             */
+            function touchmove(e) {
+                move(e.targetTouches[0]);
+                e.preventDefault();
+            }
+            
+            /** 触摸结束（手指从触摸屏上移开） */
+            function touchend() {
+                target.removeEventListener('touchmove', touchmove);
+                target.removeEventListener('touchend', touchend);
+            }
+        }
+        else { //PC端拖拽
+            //定时器句柄
+            const time = setTimeout(hover, 150);
+            //鼠标松开事件
+            target.addEventListener('mouseup', up);
+            
+            /** 鼠标按住 */
+            function hover() {
+                target.addEventListener('mousemove', move);
+                //防止拖动过程中页面滚动
+                target.style['user-select'] = 'none';
+            }
+            
+            /** 鼠标左键松开 */
+            function up() {
+                clearTimeout(time);
+                target.style['user-select'] = null;
+                target.removeEventListener('mousemove', move);
+                target.removeEventListener('mouseup', up);
+            }
+        }
+        
+        /**
+         * 鼠标移动
+         * @param e {MouseEvent|Touch}
+         */
+        function move(e) {
+            //只在水平面上移动
+            let offset = (initClientX - e.clientX) + initOffsetX;
+            offset = offset < 2  //允许的误差范围
+                     ? 0
+                     : originRight - offset < 2  //允许的误差范围
+                       ? originRight
+                       : offset;
+            container.style.right = offset + 'px';
+        }
+    }
 }
 </script>
