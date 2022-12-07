@@ -22,6 +22,16 @@ export default defineComponent({
             customClass: 'tw-bg-indigo-400',
             message: '加载中'
         });
+        if (process.env.CLIENT && !process.env.DEV) {
+            // 参考 https://github.com/theajack/disable-devtool/blob/master/README.cn.md
+            import('disable-devtool').then(/*** @param DisableDevtool {IDisableDevtool}*/({ default: DisableDevtool }) => {
+                DisableDevtool({
+                    disableMenu: true,
+                    interval: 100,
+                    clearLog: true
+                });
+            })
+        }
     }
 })
 </script>

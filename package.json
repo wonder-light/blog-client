@@ -15,6 +15,7 @@
         "@amap/amap-jsapi-loader": "^1.0.1",
         "@quasar/extras": "^1.0.0",
         "axios": "^0.21.1",
+        "disable-devtool": "^0.3.1",
         "echarts": "^5.4.0",
         "jsencrypt": "^3.3.1",
         "pinia": "^2.0.27",
