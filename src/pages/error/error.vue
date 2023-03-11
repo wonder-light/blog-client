@@ -1,13 +1,6 @@
 <template>
-  <div class="tw-fixed tw-inset-0 tw-p-4 tw-bg-blue-500 tw-text-white tw-text-center tw-flex tw-justify-center tw-items-center">
-    <div>
-      <div style="font-size: 30vh">
-        404
-      </div>
-      <div class="tw-text-6xl tw-leading-5 tw-opacity-40">
-        页面未找到
-      </div>
-    </div>
+  <div class="tw-fixed tw-inset-0 tw-w-full tw-h-screen tw-flex tw-content-center tw-justify-center">
+    <img :src="url" alt="404"/>
   </div>
 </template>
 
@@ -17,13 +10,15 @@
 import { useMeta } from 'quasar'
 import { inject } from 'vue'
 
+const props = defineProps({ code: [Number, String] })
 const blogger = inject('blogger');
+const url = `/image/${ props.code ?? 404 }.svg`;
 
 const data = {
     title: `404页面不存在`,
     description: '天之涯，地之角，知交半零落，一壶浊酒尽余欢，今宵别梦寒。',
     url: `${ process.env.APP_URL }`,
-    image: `${ process.env.APP_URL }favicon.png`,
+    image: `${ process.env.APP_URL }/favicon.png`,
 };
 
 useMeta({

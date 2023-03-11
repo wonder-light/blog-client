@@ -50,11 +50,27 @@ const routes = [
             },
         ],
     },
-    // Always leave this as last one,
-    // but you can also remove it
+    {
+        path: '/403',
+        props: { code: 403 },
+        component: () => import('pages/error/error.vue')
+    },
+    {
+        path: '/404',
+        props: { code: 404 },
+        component: () => import('pages/error/error.vue')
+    },
+    {
+        path: '/500',
+        props: { code: 500 },
+        component: () => import('pages/error/error.vue')
+    },
     {
         path: '/:catchAll(.*)*',
-        component: () => import('pages/ErrorNotFound.vue')
+        name: 'error',
+        redirect: '/400',
+        props: { code: 404 },
+        component: () => import('pages/error/error.vue')
     }
 ]
 

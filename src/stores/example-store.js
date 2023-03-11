@@ -1,4 +1,4 @@
-import { axios } from "boot/axios";
+import { axios } from 'boot/axios';
 import { defineStore } from 'pinia';
 
 export const useStore = defineStore({
@@ -7,12 +7,21 @@ export const useStore = defineStore({
         //句子
         sentence: '',
         //路由值
-        routes: {
+        routeData: {
             '/': {
                 name: '随风飞扬',
-                cover: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-5c8ba350-827c-4df5-bf3c-d7683c79f8bf/b4f98397-5205-4c7a-a467-1805e6b62eb9.jpg'
+                cover: 'http://api.nianian.cn/media/get_media/9d619cc5-b6f4-46b6-8fc8-38dfdd40054c'
             },
-            '/storage': { name: '仓库' },
+            '/storage': {
+                name: '仓库',
+                imgList:[
+                    'http://api.nianian.cn/media/get_media/722f8b69-304f-4781-bf0d-3995756a5610',
+                    'http://api.nianian.cn/media/get_media/ddd47f6a-9c1a-483f-83d4-29d9e6b98080',
+                    'http://api.nianian.cn/media/get_media/5c7196a8-a8be-47d9-9fc6-a1aafe32e356',
+                    'http://api.nianian.cn/media/get_media/d2ade549-0803-47dc-84a7-f42851e23b9a',
+                    'http://api.nianian.cn/media/get_media/7703e881-60d2-4e22-898f-98540f4d1e37',
+                ]
+            },
             '/album': { name: '相册' },
             '/album/:id': {},
             '/archive': { name: '归档' },
@@ -52,6 +61,14 @@ export const useStore = defineStore({
         //相册
         getAlbum: state => function (albumId = 0) {
             return state.albums.find(item => item.id === albumId);
+        },
+        
+        // 获取对应路由的数据
+        getRouterData: state => function (route = '/') {
+            const data = state.routeData[route]
+            !data.name && (data.name = '随风飞扬')
+            !data.cover && (data.cover = 'http://api.nianian.cn/media/get_media/9d619cc5-b6f4-46b6-8fc8-38dfdd40054c')
+            return data
         }
     },
     actions: {
@@ -123,7 +140,7 @@ export const useStore = defineStore({
          * @return {Promise<void>}
          */
         async updateArticle(id = '', sketchy = false, pre_next = true, inclCateg = true, inclTag = true) {
-            const url = `/blog/article/get/${ id }?sketchy=${ sketchy }&pre_next=${ pre_next }&inclCateg=${ inclCateg }&inclTag=${ inclTag }`;
+            const url = `/blog/article/get/${ id }?sketchy=${ sketchy }&preNext=${ pre_next }&inclCateg=${ inclCateg }&inclTag=${ inclTag }`;
             await axios.get(url).then(({ data }) => {
                 this.articles[id] = data;
             })

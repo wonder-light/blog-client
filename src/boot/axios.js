@@ -11,7 +11,8 @@ import { authorization } from 'src/api/encrypt'
 // for each client)
 
 axios.defaults.baseURL = process.env.API;
-axios.defaults.timeout = 3000;
+axios.defaults.timeout = 5000;
+axios.defaults.proxy = false;
 //axios.defaults.responseType = 'json';
 if (process.env.SERVER) {
     //node https请求时self signed certificate in certificate chain错误
@@ -48,6 +49,5 @@ function request(config) {
     
     //config.headers.Sign = signEncrypt();
     config.headers.Authorization = authorization();
-    //console.log('http 请求 拦截器', config);
     return config;
 }

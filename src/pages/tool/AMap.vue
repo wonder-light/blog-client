@@ -60,9 +60,7 @@ onMounted(async () => {
             m.addControl(geolocation);
             geolocation.getCurrentPosition(onComplete, onError);
         });
-    }).catch(e => {
-        console.log(e);
-    });
+    }).catch(e => {});
 });
 
 onUnmounted(() => map.value?.destroy());

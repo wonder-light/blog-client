@@ -135,7 +135,6 @@ onMounted(async () => {
     //图表
     const echarts = await Promise.all([echarts_core(), components(), charts(), features(), CanvasRenderer()])
                                  .then(([echarts, components, charts, features, CanvasRenderer]) => {
-                                     //console.log(echarts, components, charts, features, CanvasRenderer)
                                      echarts.use([
                                          ...components,
                                          ...charts,

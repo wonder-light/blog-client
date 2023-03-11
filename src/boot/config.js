@@ -1,4 +1,4 @@
-import SvgIcon from "components/common/SvgIcon.vue";
+import SvgIcon from 'components/common/SvgIcon.vue';
 import { boot } from 'quasar/wrappers'
 
 
@@ -50,7 +50,7 @@ function errorCaptured(err, instance, info) {
             console.log('网络连接错误', err, instance, info);
         }
         //跳转404页面
-        //instance.$router.push({ name: 'error' });
+        instance.$router.push({ name: 'error' });
     }
 }
 
@@ -62,7 +62,7 @@ function warnCaptured(err, instance, info) {
 }
 
 
-//接收从'https://blogadmin.nianian.cn'发送过来的数据
+//接收从'https://admin.nianian.cn'发送过来的数据
 function receiveMessage(event) {
     const origin = process.env.DEV ? 'http://localhost' : 'https://blogadmin.nianian.cn';
     if (event.origin !== origin) return;

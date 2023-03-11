@@ -55,13 +55,7 @@ const { github, gitee } = storeToRefs(store);
 
 
 const slide = ref(0);
-const images = [
-    'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-5c8ba350-827c-4df5-bf3c-d7683c79f8bf/93bac937-9b1e-40b7-b7e3-dcc5a916b07e.jpg',
-    'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-5c8ba350-827c-4df5-bf3c-d7683c79f8bf/c8878118-f543-4d3d-aef8-59db944a6d41.jpg',
-    'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-5c8ba350-827c-4df5-bf3c-d7683c79f8bf/88ee9390-37a9-49bf-aa06-be368d32ba31.jpg',
-    'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-5c8ba350-827c-4df5-bf3c-d7683c79f8bf/23f2f4d1-0c80-42a6-8a2a-4b760b2b4a61.jpg',
-    'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-5c8ba350-827c-4df5-bf3c-d7683c79f8bf/d6e68958-7e43-47e9-9607-feaee65ea01c.jpg'
-];
+const images = store.getRouterData('/storage').imgList
 
 useMeta({
     titleTemplate: title => `仓库|${ title }`,

@@ -47,11 +47,11 @@ module.exports = configure(function (ctx) {
         // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
         build: {
             target: {
-                browser: ['es2022', 'edge90', 'firefox90', 'chrome90', 'safari15'],
-                node: 'node18'
+                browser: [ 'es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1' ],
+                node: 'node16'
             },
             
-            vueRouterMode: 'hash', // available values: 'hash', 'history'
+            vueRouterMode: 'history', // available values: 'hash', 'history'
             // vueRouterBase,
             // vueDevtools,
             // vueOptionsAPI: false,
@@ -143,7 +143,7 @@ module.exports = configure(function (ctx) {
             // manualStoreHydration: true,
             // manualPostHydrationTrigger: true,
             
-            prodPort: (ctx.dev || ctx.debug) ? 3000 : 443, // The default port that the production server should use
+            prodPort: (ctx.dev || ctx.debug) ? 3000 : 6078, // The default port that the production server should use
             // (gets superseded if process.env.PORT is specified at runtime)
             
             middlewares: [

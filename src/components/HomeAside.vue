@@ -3,8 +3,7 @@
     <div class="tw-h-auto tw-w-full">
       <!-- 头像、说明 -->
       <div class="tw-w-full tw-relative tw-h-75 tw-mb-5 tw-bg-cover">
-        <q-img alt="背景图" class="tw-w-full tw-h-full" fit="cover" loading="lazy"
-               src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-5c8ba350-827c-4df5-bf3c-d7683c79f8bf/6b82bc17-a73f-4ced-a2c3-8157e167b5f3.jpg"/>
+        <q-img alt="背景图" class="tw-w-full tw-h-full" fit="cover" loading="lazy" src="http://api.nianian.cn/media/get_media/98807cf0-089c-4412-afbb-597f5057d83e"/>
         <div class="tw-absolute tw-inset-0 tw-text-center">
           <q-avatar alt="头像" class="tw-h-20 tw-w-20 tw-mt-8 tw-rounded-full">
             <img :src="avatar" alt="头像" loading="lazy">

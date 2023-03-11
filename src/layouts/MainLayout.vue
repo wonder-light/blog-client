@@ -5,7 +5,7 @@
     
     <q-header class="tw-border-0 tw-w-full tw-h-screen tw-bg-white" elevated>
       <div class="tw-w-full tw-h-full">
-        <q-img :src="routes[matched].cover || routes['/'].cover" alt="首页背景图" class="tw-h-full tw-w-full" fit="cover" loading="eager" spinner-color="white">
+        <q-img :src="routeData.cover" alt="首页背景图" class="tw-h-full tw-w-full" fit="cover" loading="eager" spinner-color="white">
           <template v-slot:error>
             <div class="tw-inset-0 tw-flex tw-justify-center tw-items-center" style="background: rgba(255,255,255,0)">
             </div>
@@ -13,7 +13,7 @@
         </q-img>
         <div class="tw-absolute tw-inset-0 tw-flex tw-justify-center tw-items-center">
           <div class="tw-animate-text-flashing tw-text-center">
-            <h1 class="tw-text-5xl tw-font-sans tw-leading-normal">{{ routes[matched].name }}</h1>
+            <h1 class="tw-text-5xl tw-font-sans tw-leading-normal">{{ routeData.name }}</h1>
             <p class="tw-text-2xl tw-leading-loose">{{ sentence }}</p>
           </div>
           <svg-icon class="tw-absolute tw-bottom-2.5 tw-w-7 tw-h-7 tw-text-white/80 tw-animate-bounce tw-cursor-pointer" name="arrow-down"
@@ -85,11 +85,13 @@ import { computed, inject, onMounted, onUpdated, ref, watch } from 'vue'
 import { Loading, useMeta, Platform } from 'quasar'
 
 const store = useStore();
-const { sentence, routes } = storeToRefs(store);
+const { sentence } = storeToRefs(store);
 const blogger = inject('blogger');
 const route = useRoute();
 const leftDrawerOpen = ref(false);
-const matched = computed(() => route.matched[route.matched.length - 1].path);
+//每页的数据：背景与标题
+const routeData = computed(() => store.getRouterData(route.matched.at(-1)?.path))
+
 /** 网页的meta数据 */
 const metaData = {
     title: `${ blogger }的小世界`,
@@ -132,7 +134,7 @@ useMeta({
         twitterImage: { property: 'twitter:image', content: metaData.image },
         
         //微信图片显示问题
-        referrer: { name: 'referrer', content: 'origin' /* no-referrer, never */ },
+        referrer: { name: 'referrer', content: 'no-referrer' /* no-referrer, never */ },
     },
     
     // <body> attributes
@@ -148,20 +150,18 @@ useMeta({
     }
 })
 
-Loading.hide();
 onUpdated(() => Loading.hide());
 
 onMounted(() => {
     function f() {
         if (L2Dwidget) initLive2d();
         else setTimeout(f, 50);
+        Loading.hide()
     }
     
     f();
 })
 
-Loading.hide();
-onUpdated(() => Loading.hide());
 
 //滚动到内容视图
 function scrollToContent() {
@@ -195,19 +195,19 @@ function scrollToContent() {
 function initLive2d() {
     const dialogBody = [
         '哎呀！别碰我！',
-        "不要动手动脚的！快把手拿开~~",
-        "真…真的是不知羞耻！",
-        "Hentai！",
-        "再摸的话我可要报警了！⌇●﹏●⌇",
-        "110吗，这里有个变态一直在摸我(ó﹏ò｡)"
+        '不要动手动脚的！快把手拿开~~',
+        '真…真的是不知羞耻！',
+        'Hentai！',
+        '再摸的话我可要报警了！⌇●﹏●⌇',
+        '110吗，这里有个变态一直在摸我(ó﹏ò｡)'
     ];
     const dialogFace = [
         '人家是在认真写博客哦--前端妹子',
-        "是…是不小心碰到了吧",
-        "萝莉控是什么呀",
-        "你看到我的小熊了吗",
-        "再摸的话我可要报警了！⌇●﹏●⌇",
-        "110吗，这里有个变态一直在摸我(ó﹏ò｡)"
+        '是…是不小心碰到了吧',
+        '萝莉控是什么呀',
+        '你看到我的小熊了吗',
+        '再摸的话我可要报警了！⌇●﹏●⌇',
+        '110吗，这里有个变态一直在摸我(ó﹏ò｡)'
     ];
     /** @type {HTMLElement} */
     let container;
@@ -215,19 +215,19 @@ function initLive2d() {
     let dialog;
     /** @type {HTMLElement} */
     let canvas;
-    L2Dwidget.on("create-container", /** @param element {HTMLElement} */(element) => container = element)
-             .on("create-dialog", /** @param element {HTMLElement} */(element) => {
+    L2Dwidget.on('create-container', /** @param element {HTMLElement} */(element) => container = element)
+             .on('create-dialog', /** @param element {HTMLElement} */(element) => {
                  element.style.userSelect = 'none';
                  dialog = element.getElementsByClassName('live2d-widget-dialog')[0]
              })
-             .on("create-canvas", /** @param element {HTMLElement} */(element) => {
+             .on('create-canvas', /** @param element {HTMLElement} */(element) => {
                  //设置可以接收鼠标指定事件为
                  element.style['pointer-events'] = 'auto';
                  canvas = element;
              })
-             .on("tap", dragLive2D)
-             .on("tapbody", () => showDialog(dialogBody))
-             .on("tapface", () => showDialog(dialogFace))
+             .on('tap', dragLive2D)
+             .on('tapbody', () => showDialog(dialogBody))
+             .on('tapface', () => showDialog(dialogFace))
              .init({
                  model: {
                      //https://unpkg.com/live2d-widget-model-haru@1.0.5/01/assets/haru01.model.json

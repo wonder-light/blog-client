@@ -13,15 +13,15 @@
     </q-card-section>
     <q-card-section class="tw-py-2 tw-flex tw-text-gray-400">
       <span class="tw-mr-2">{{ article.author }}</span>
-      <span class="tw-mr-2">{{ date.formatDate(article.updateTime, 'YYYY-MM-DD HH:MM') }}</span>
-      <span class="tw-mr-2">{{ '发表于' + article.updateAddress }}</span>
+      <span class="tw-mr-2">{{ date.formatDate(article.createTime, 'YYYY-MM-DD HH:MM') }}</span>
+      <!--span class="tw-mr-2">{{ '发表于' + article.updateAddress }}</span-->
     </q-card-section>
     <q-card-section>
       <q-img :src="article.cover" loading="eager"/>
     </q-card-section>
     <q-separator class="tw-mx-4"/>
     <q-card-section class="tw-py-12">
-      <div id="article_content" class="tw-text-left" v-html='article.content.replace(/data-src=("[^"]*")/g, "src=$1")'/>
+      <div id="article_content" class="tw-text-left rich_media_content js_underline_content autoTypeSetting24psection" v-html='article.content.replace(/data-src=("[^"]*")/g, "src=$1")'/>
     </q-card-section>
     <q-card-section class="tw-flex tw-h-48">
       <!-- 上下篇 -->

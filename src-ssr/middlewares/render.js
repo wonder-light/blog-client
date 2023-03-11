@@ -32,16 +32,16 @@ export default ssrMiddleware(({ app, resolve, render, serve }) => {
                 
                 // Should reach here only if no "catch-all" route
                 // is defined in /src/routes
-                res.status(404).send('404 | Page Not Found')
+                res.redirect(resolve.urlPath('404'))
+                //res.status(404).send('404 | Page Not Found')
             }
-            else if (process.env.DEV) {
-                // well, we treat any other code as error;
-                // if we're in dev mode, then we can use Quasar CLI
-                // to display a nice error page that contains the stack
-                // and other useful information
+            else if (err.code === 403) {
+                // hmm, Vue Router could not find the requested route
                 
-                // serve.error is available on dev only
-                serve.error({ err, req, res })
+                // Should reach here only if no "catch-all" route
+                // is defined in /src/routes
+                //res.status(403).send('404 | Page Not Found')
+                res.redirect(resolve.urlPath('403'))
             }
             else {
                 // we're in production, so we should have another method
@@ -51,8 +51,9 @@ export default ssrMiddleware(({ app, resolve, render, serve }) => {
                 
                 // Render Error Page on production or
                 // create a route (/src/routes) for an error page and redirect to it
-                res.status(500).send('500 | Internal Server Error')
+                //res.status(500).send('500 | Internal Server Error')
                 // console.error(err.stack)
+                res.redirect(resolve.urlPath('500'))
             }
         })
     })

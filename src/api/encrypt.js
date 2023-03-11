@@ -174,10 +174,9 @@ export function decrypt(privateKey, data) {
  * 签名加密 - RSA
  * @param Role 角色权限
  * @param publicKey 公钥 ：加密
- * @param privateKey 私钥 ：签名
  * @returns {*} 加密后的字符 - base64
  */
-export function signEncrypt(Role = '', publicKey = public_Key, privateKey = private_Key) {
+export function signEncrypt(Role = '', publicKey = public_Key) {
     //https://github.com/travist/jsencrypt
     let timestamp = (new Date()).getTime();
     let nonce = uid();
