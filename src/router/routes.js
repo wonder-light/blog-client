@@ -68,7 +68,6 @@ const routes = [
     {
         path: '/:catchAll(.*)*',
         name: 'error',
-        redirect: '/400',
         props: { code: 404 },
         component: () => import('pages/error/error.vue')
     }

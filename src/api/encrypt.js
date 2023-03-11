@@ -207,8 +207,7 @@ export function authorization() {
     let nonce = uid();
     
     let data = [timestamp, nonce].sort().join('');
-    let params = [`nonce@${ nonce }`, `timestamp@${ timestamp }`, `signature@${ sign(data) }`].join('&');
-    
+    let params = [`nonce@${ nonce }`, `timestamp@${ timestamp }`, `signature@${ sign(data) }`].join('&')
     return btoa(params);
 }
 

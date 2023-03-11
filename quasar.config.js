@@ -61,7 +61,7 @@ module.exports = configure(function (ctx) {
             // publicPath: '/',
             // analyze: true,
             env: {
-                API: (ctx.dev || ctx.debug) ? 'https://localhost:7169' : 'https://api.nianian.cn',
+                API: (ctx.dev || ctx.debug) ? 'https://localhost:7169' : 'http://api.nianian.cn',
                 KEY: '7f96a4e63d822b7647be210436f2bdf3',
                 A_MAP_KEY: '7f96a4e63d822b7647be210436f2bdf3',
             },
