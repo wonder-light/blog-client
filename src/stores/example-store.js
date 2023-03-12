@@ -14,7 +14,7 @@ export const useStore = defineStore({
             },
             '/storage': {
                 name: '仓库',
-                imgList:[
+                imgList: [
                     'http://api.nianian.cn/media/get_media/722f8b69-304f-4781-bf0d-3995756a5610',
                     'http://api.nianian.cn/media/get_media/ddd47f6a-9c1a-483f-83d4-29d9e6b98080',
                     'http://api.nianian.cn/media/get_media/5c7196a8-a8be-47d9-9fc6-a1aafe32e356',

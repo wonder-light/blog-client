@@ -57,8 +57,8 @@ export default {
         if (!art?.article) {
             return myStore.updateArticle(id).then(() => {
                 let key = currentRoute.matched[currentRoute.matched.length - 1].path;
-                myStore.routes[key] = myStore.routes[key] || {};
-                myStore.routes[key].name = myStore.articles[id].item?.title || '文章标题';
+                myStore.routeData[key] = myStore.routeData[key] || {};
+                myStore.routeData[key].name = myStore.articles[id].item?.title;
                 //myStore.routes[key].cover = myStore.articles[id].item?.cover;
             })
         }

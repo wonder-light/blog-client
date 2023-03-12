@@ -39,9 +39,10 @@ export default {
             arr.push(myStore.updateAlbum(id))
         }
         return Promise.all(arr).then(() => {
-            let key = currentRoute.matched[currentRoute.matched.length - 1].path;
-            myStore.routes[key] = myStore.routes[key] || {};
-            myStore.routes[key].name = myStore.images[id].album?.name || '全部图片';
+            console.log('images ', myStore.routeData)
+            let key = currentRoute.matched.at(-1).path;
+            myStore.routeData[key] = myStore.routeData[key] || {};
+            myStore.routeData[key].name = myStore.images[id].album?.name || '全部图片';
             //myStore.routes[key].cover = myStore.images[id].album?.cover;
         })
     }
