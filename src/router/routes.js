@@ -51,21 +51,6 @@ const routes = [
         ],
     },
     {
-        path: '/403',
-        props: { code: 403 },
-        component: () => import('pages/error/error.vue')
-    },
-    {
-        path: '/404',
-        props: { code: 404 },
-        component: () => import('pages/error/error.vue')
-    },
-    {
-        path: '/500',
-        props: { code: 500 },
-        component: () => import('pages/error/error.vue')
-    },
-    {
         path: '/:catchAll(.*)*',
         name: 'error',
         props: { code: 404 },

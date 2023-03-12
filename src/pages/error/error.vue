@@ -1,6 +1,6 @@
 <template>
-  <div class="tw-fixed tw-inset-0 tw-w-full tw-h-screen tw-flex tw-content-center tw-justify-center">
-    <img :src="url" alt="404"/>
+  <div class="tw-fixed tw-inset-0 tw-flex tw-content-center tw-justify-center">
+    <img :src="url" alt="404" style="width: 70%"/>
   </div>
 </template>
 
