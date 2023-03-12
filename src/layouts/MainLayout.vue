@@ -38,7 +38,7 @@
       <q-page-scroller :offset="[20, 120]" :scroll-offset="150" position="bottom-right">
         <svg-icon class="tw-cursor-pointer tw-w-10 tw-h-10 tw-rounded-full hover:tw-bg-gray-200" name="backTop"/>
       </q-page-scroller>
-      <div class="tw-max-w-6xl tw-mx-auto">
+      <div class="tw-max-w-7xl tw-px-16 tw-mx-auto">
         <router-view/>
         <div class="tw-py-8"></div>
       </div>
