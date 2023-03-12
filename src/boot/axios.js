@@ -11,7 +11,6 @@ import { authorization } from 'src/api/encrypt'
 // for each client)
 
 axios.defaults.baseURL = process.env.API;
-axios.defaults.timeout = 5000;
 axios.defaults.proxy = false;
 //axios.defaults.responseType = 'json';
 if (process.env.SERVER) {

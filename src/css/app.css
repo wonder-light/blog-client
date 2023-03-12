@@ -45,6 +45,10 @@
         background: #c730f299;
     }
 
+    * {
+        user-select: none;
+    }
+
     body {
         @apply tw-font-mono tw-m-0 tw-p-0 tw-text-center tw-antialiased;
         font-size: 15px;
@@ -102,6 +106,9 @@
     }
 }
 
+.q-page-sticky--shrink{
+    @apply tw-z-50;
+}
 
 /* Variables */
 /* Mixins */
