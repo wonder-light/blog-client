@@ -89,7 +89,7 @@ useMeta({
     },
     link: {
         //微信文章需要用到的样式集
-        material: { rel: 'stylesheet', href: 'https://res.wx.qq.com/mmbizappmsg/zh_CN/htmledition/js/assets/tencent_portfolio_light.lb4ict1vce5897ad.css' }
+        material: { rel: 'stylesheet', href: '/css/tencent_portfolio_light.lf17n15ibdcedd26.css' }
     }
 });
 
