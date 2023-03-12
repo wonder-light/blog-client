@@ -42,19 +42,26 @@ export default boot(async ({ app, router }) => {
     }
 })
 
-//用于为应用内传递的未捕获的错误指定一个全局处理函数
+/**
+ * 用于为应用内传递的未捕获的错误指定一个全局处理函数
+ * @param {Error} err
+ * @param {Component} instance
+ * @param {string} info
+ */
 function errorCaptured(err, instance, info) {
-    //网络连接错误
-    if (err.code === 'ERR_NETWORK') {
-        if (process.env.DEV) {
-            console.log('网络连接错误', err, instance, info);
-        }
-        //跳转404页面
-        instance.$router.push({ name: 'error' });
+    if (process.env.DEV) {
+        console.log('网络错误', err, instance, info);
     }
+    //跳转404页面
+    //instance.$router.push({ name: 'error' });
 }
 
-//警告处理器将接受警告信息作为其第一个参数，来源组件实例为第二个参数，以及组件追踪字符串作为第三个参数
+/**
+ * 警告处理器将接受警告信息作为其第一个参数，来源组件实例为第二个参数，以及组件追踪字符串作为第三个参数
+ * @param {Error} err
+ * @param {Component} instance
+ * @param {string} info
+ */
 function warnCaptured(err, instance, info) {
     if (process.env.DEV) {
         console.log(err, instance, info);

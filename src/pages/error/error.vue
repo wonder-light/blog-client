@@ -1,6 +1,6 @@
 <template>
   <div class="tw-fixed tw-inset-0 tw-flex tw-content-center tw-justify-center">
-    <img :src="url" alt="404" style="width: 70%"/>
+    <img alt="404" src="/image/404.svg" style="width: 70%"/>
   </div>
 </template>
 
@@ -10,9 +10,7 @@
 import { useMeta } from 'quasar'
 import { inject } from 'vue'
 
-const props = defineProps({ code: [Number, String] })
 const blogger = inject('blogger');
-const url = `/image/${ props.code ?? 404 }.svg`;
 
 const data = {
     title: `404页面不存在`,
