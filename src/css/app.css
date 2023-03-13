@@ -61,6 +61,10 @@
     svg {
         @apply tw-inline-block tw-stroke-2 tw-stroke-current tw-fill-current;
     }
+
+    .tw-break-words{
+        word-break: break-word;
+    }
 }
 
 @layer utilities {

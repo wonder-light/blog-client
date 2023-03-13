@@ -3,7 +3,7 @@
     <q-img class="tw-w-80" src="/image/empty.png"/>
   </div>
   <q-infinite-scroll v-else :offset="100" class="tw-pt-8" @load="onLoad">
-    <q-timeline :layout="layout" color="secondary">
+    <q-timeline layout="loose" color="secondary">
       <q-timeline-entry v-for="(item, I) in groups" :side="I % 2 === 0 ? 'left' : 'right'">
         <div v-if="item.heading" class="tw-text-4xl">
           <span v-if="item.type === 'Y'" class="tw-bg-clip-text tw-text-transparent tw-bg-gradient-to-r tw-from-red-500 tw-via-blue-500 tw-to-green-500">
@@ -50,7 +50,6 @@ import { computed } from 'vue'
 const store = useStore();
 const $q = useQuasar()
 const { upArticle } = storeToRefs(store);
-const layout = computed(() => $q.screen.lt.sm ? 'dense' : ($q.screen.lt.md ? 'comfortable' : 'loose'));
 const groups = computed(() => {
     let target = {};
     for (let item of upArticle.value.items) {

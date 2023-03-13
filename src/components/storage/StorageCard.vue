@@ -1,7 +1,7 @@
 <template>
   <q-card :style="{'background-color': color}" class="tw-w-full tw-text-center tw-px-7">
     <q-card-section class="tw-text-center">
-      <h1 class="tw-leading-normal tw-text-white" style="word-break: break-word">{{ items.name }}</h1>
+      <h1 class="tw-leading-normal tw-text-white tw-break-words">{{ items.name }}</h1>
     </q-card-section>
     <q-card-section class="tw-pb-2">
       <div class="tw-text-stone-300">
@@ -21,7 +21,7 @@
     </q-card-section>
     <q-card-section>
       <div class="tw-py-2">
-        <p class="tw-leading-normal tw-text-base tw-text-stone-100">
+        <p class="tw-leading-normal tw-text-base tw-text-stone-100 tw-break-words">
           {{ items.description ?? '暂无介绍' }}
         </p>
       </div>
@@ -44,7 +44,7 @@
 <!-- 仓库卡片 -->
 <script setup>
 import { date, openURL } from 'quasar'
-import { randNumber } from "src/api/api";
+import { randNumber } from 'src/api/api';
 
 defineProps({
     //存储库

@@ -5,7 +5,7 @@
     </div>
     <q-infinite-scroll v-else :offset="100" class="tw-mt-12" @load="onLoad">
       <Waterfall v-slot="{ item }" :items="items" class="tw-w-full">
-        <q-img :src="`${process.env.API}/media/image/get_image/${item.id}`" class="tw-w-full" fit="cover" loading="lazy">
+        <q-img :src="item.url" class="tw-w-full" fit="cover" loading="lazy">
           <template v-slot:loading>
             <q-spinner class="tw-w-8 tw-h-8" color="primary"/>
           </template>
@@ -39,11 +39,10 @@ export default {
             arr.push(myStore.updateAlbum(id))
         }
         return Promise.all(arr).then(() => {
-            console.log('images ', myStore.routeData)
             let key = currentRoute.matched.at(-1).path;
             myStore.routeData[key] = myStore.routeData[key] || {};
             myStore.routeData[key].name = myStore.images[id].album?.name || '全部图片';
-            //myStore.routes[key].cover = myStore.images[id].album?.cover;
+            myStore.routeData[key].cover = myStore.images[id].album?.cover;
         })
     }
 }

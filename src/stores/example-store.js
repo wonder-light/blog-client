@@ -81,10 +81,10 @@ export const useStore = defineStore({
         setData(target, data, offset) {
             
             target.totalCount = data.totalCount;
+            if (!target.items) target.items = [];
             for (let i = 0; i < data.itemCount; i++) {
                 if (data.items[i]) target.items[offset + i] = data.items[i];
             }
-            if (!target.items) target.items = [];
             target.itemCount = target.items.length;
         },
         /**
