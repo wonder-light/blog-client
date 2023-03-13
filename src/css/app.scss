@@ -6,14 +6,6 @@
 @tailwind utilities;
 
 @layer base {
-    [theme='light'] {
-        --theme: light;
-    }
-
-    [theme='dark'] {
-        --theme: dark;
-    }
-
     :root {
         --comment-padding-width: 60px;
         --avatar-size: 40px;
@@ -39,10 +31,10 @@
     ::-webkit-scrollbar-thumb {
         @apply tw-rounded-xl;
         background: #0edeee99;
-    }
 
-    ::-webkit-scrollbar-thumb:window-inactive {
-        background: #c730f299;
+        &:window-inactive {
+            background: #c730f299;
+        }
     }
 
     * {
@@ -62,7 +54,7 @@
         @apply tw-inline-block tw-stroke-2 tw-stroke-current tw-fill-current;
     }
 
-    .tw-break-words{
+    .tw-break-words {
         word-break: break-word;
     }
 }
@@ -87,6 +79,10 @@
             height: 0;
         }
     }
+
+    .title-font {
+        @apply tw-text-3xl tw-font-bold tw-text-gray-600 dark:tw-text-gray-100;
+    }
 }
 
 @layer components {
@@ -110,7 +106,7 @@
     }
 }
 
-.q-page-sticky--shrink{
+.q-page-sticky--shrink {
     @apply tw-z-50;
 }
 

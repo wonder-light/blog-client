@@ -9,7 +9,7 @@
         <ArticleCard :article="item"/>
       </Waterfall>
       <div v-if="recArticle.totalCount > 6" class="tw-pt-8">
-        <q-btn color="grey-4" glossy label="查看更多" ripple rounded text-color="deep-purple-4" to="/article" unelevated/>
+        <q-btn class="tw-text-purple-400" glossy label="查看更多" ripple rounded to="/article" unelevated/>
       </div>
     </div>
     <div class="tw-mt-4">
@@ -21,7 +21,7 @@
         <AlbumCard :album="item"/>
       </Waterfall>
       <div v-if="albums.totalCount > 6" class="tw-pt-8">
-        <q-btn color="grey-4" glossy label="查看更多" ripple rounded text-color="deep-purple-4" unelevated/>
+        <q-btn class="tw-text-purple-400" glossy label="查看更多" ripple rounded to="/album" unelevated/>
       </div>
     </div>
   </div>

@@ -1,5 +1,7 @@
 import SvgIcon from 'components/common/SvgIcon.vue';
+import { Dark, LocalStorage } from 'quasar'
 import { boot } from 'quasar/wrappers'
+import { computed, ref } from 'vue'
 
 
 /**
@@ -28,9 +30,12 @@ export default boot(async ({ app, router }) => {
     //捕获
     app.config.warnHandler = warnCaptured;
     app.config.errorHandler = errorCaptured;
+    //ref
+    app.config.unwrapInjectedRef = true;
     //注入
     app.provide('blogger', '百叶');
     app.provide('avatar', '/image/avatar.png');
+    configTheme(app);
     
     if (process.env.DEV) {
         //设置此项为 true 可以在浏览器开发工具的“性能/时间线”页中启用对组件初始化、编译、渲染和修补的性能表现追踪
@@ -76,4 +81,22 @@ function receiveMessage(event) {
     if (event.data.key === process.env.KEY) {
         //setUser(event.data.user);
     }
+}
+
+function configTheme(app) {
+    const themeRef = ref('')
+    const theme = computed({
+        get: () => themeRef.value,
+        set: v => {
+            if (themeRef.value === v) return
+            LocalStorage.set('theme', themeRef.value = v)
+            Dark.set(v === 'dark')
+            if (process.env.CLIENT) {
+                const list = document.documentElement.classList
+                v === 'dark' ? list.add('tw-dark') : list.remove('tw-dark')
+            }
+        }
+    })
+    theme.value = LocalStorage.getItem('theme') ?? 'light'
+    app.provide('theme', theme)
 }

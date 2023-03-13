@@ -22,7 +22,6 @@ export default defineComponent({
             delay: 0,
             spinner: CustomLoading,
             spinnerSize: 64,
-            customClass: 'tw-bg-indigo-400',
         })
         if (process.env.CLIENT && !process.env.DEV) {
             // 参考 https://github.com/theajack/disable-devtool/blob/master/README.cn.md

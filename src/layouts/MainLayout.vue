@@ -5,10 +5,9 @@
     
     <q-header class="tw-border-0 tw-w-full tw-h-screen tw-bg-white" elevated>
       <div class="tw-w-full tw-h-full">
-        <q-img :src="routeData.cover" alt="首页背景图" class="tw-h-full tw-w-full" fit="cover" loading="eager" spinner-color="white">
+        <q-img :placeholder-src="routeData.cover" alt="首页背景图" class="tw-h-full tw-w-full" fit="cover" loading="eager" spinner-color="white">
           <template v-slot:error>
-            <div class="tw-inset-0 tw-flex tw-justify-center tw-items-center" style="background: rgba(255,255,255,0)">
-            </div>
+            <div class="tw-inset-0 tw-flex tw-justify-center tw-items-center tw-bg-white tw-bg-opacity-0"/>
           </template>
         </q-img>
         <div class="tw-absolute tw-inset-0 tw-flex tw-justify-center tw-items-center">

@@ -11,5 +11,5 @@ const props = defineProps({
     icon: { type: Boolean, default: false },
 });
 
-const src = computed(() => props.icon ? name : `svguse:/image/svg-set.svg#${ props.name }`);
+const src = computed(() => props.icon ? props.name : `svguse:/image/svg-set.svg#${ props.name }`);
 </script>

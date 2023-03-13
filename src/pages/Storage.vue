@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
     <q-carousel v-model="slide" animated arrows autoplay class="tw-my-8 tw-h-auto" infinite navigation>
-      <q-carousel-slide v-for="(img, i) in images" :name="i">
+      <q-carousel-slide class="tw-p-0" v-for="(img, i) in images" :name="i">
         <q-img :ratio="5/3" :src="img" loading="lazy"/>
       </q-carousel-slide>
     </q-carousel>

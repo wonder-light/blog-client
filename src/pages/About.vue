@@ -6,7 +6,7 @@
           <img :src="avatar" alt="头像" loading="eager">
         </q-avatar>
         <div class="tw-text-base tw-mt-8 tw-leading-8">
-          <div class="tw-text-3xl tw-font-bold tw-leading-loose tw-text-gray-600">{{ blogger }}</div>
+          <div class="tw-leading-loose title-font">{{ blogger }}</div>
           <div class="tw-italic">因为不可能，所以才值得相信。</div>
           <div class="tw-italic">当你重新踏上旅途之后，一定要记得旅途本身的意义。</div>
           <div class="tw-italic">生命本没有意义，你要能给它什么意义，它就有什么意义。</div>
@@ -28,7 +28,7 @@
       </div>
     </q-card-section>
     <q-card-section class="tw-py-10">
-      <div class="tw-text-3xl tw-mb-12 tw-font-bold tw-text-gray-600">
+      <div class="tw-mb-12 title-font">
         <q-icon name="build"/>
         图表
       </div>
@@ -39,7 +39,7 @@
       </div>
     </q-card-section>
     <q-card-section>
-      <div class="tw-text-3xl tw-mb-12 tw-font-bold tw-text-gray-600">
+      <div class="tw-mb-12 title-font">
         <q-icon name="build"/>
         我的技能
       </div>

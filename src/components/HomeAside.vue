@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-relative tw-w-full tw-h-full tw-grid tw-content-between tw-bg-white tw-overflow-y-auto scrollbar-hidden">
+  <div class="tw-relative tw-w-full tw-h-full tw-grid tw-content-between tw-overflow-y-auto scrollbar-hidden">
     <div class="tw-h-auto tw-w-full">
       <!-- 头像、说明 -->
       <div class="tw-w-full tw-relative tw-h-75 tw-mb-5 tw-bg-cover">
@@ -12,7 +12,7 @@
           <p class="tw-text-white tw-my-2.5">路曼曼其修远兮</p>
           <p class="tw-text-white tw-my-2.5">吾将上下而求索</p>
         </div>
-        <div class="tw-absolute tw-inset-x-0 tw-bottom-0 tw-h-8 tw-bg-gradient-to-t tw-from-white"/>
+        <div class="tw-absolute tw-inset-x-0 tw-bottom-0 tw-h-8 tw-bg-gradient-to-t tw-from-white dark:tw-from-black"/>
       </div>
       <div class="tw-ml-4 tw-text-gray-400">
         <p class="tw-text-left tw-text-lg tw-leading-loose">导航</p>
@@ -24,14 +24,19 @@
         <MenuPanelDown/>
       </div>
     </div>
-    <div class="tw-sticky tw-inset-x-0 tw-bottom-0 tw-flex tw-py-2 tw-bg-white tw-items-center tw-justify-evenly">
-      <div class="tw-px-1">
-        <svg-icon class="tw-h-4 tw-w-4 tw-transition-all tw-cursor-pointer tw-text-gray-400 hover:tw-text-sky-400" name="search">
-        </svg-icon>
-        <q-tooltip self="top middle" transition-hide="scale" transition-show="scale">
-          搜索
-        </q-tooltip>
-      </div>
+    <div class="tw-sticky tw-inset-x-0 tw-bottom-0 tw-flex tw-py-2 tw-items-center tw-justify-evenly">
+      <q-list>
+        <div v-if="false" class="tw-px-1">
+          <svg-icon class="tw-h-4 tw-w-4 tw-transition-all tw-cursor-pointer tw-text-gray-400 hover:tw-text-sky-400" name="search">
+          </svg-icon>
+          <q-tooltip self="top middle" transition-hide="scale" transition-show="scale">
+            搜索
+          </q-tooltip>
+        </div>
+        <q-no-ssr>
+          <q-toggle v-model="theme" checked-icon="dark_mode" class="tw-px-1" color="green" dense false-value="light" true-value="dark" unchecked-icon="light_mode"/>
+        </q-no-ssr>
+      </q-list>
     </div>
   </div>
 </template>
@@ -46,7 +51,8 @@ import { computed, inject, ref } from 'vue'
 const { categories } = storeToRefs(useStore());
 const blogger = inject('blogger');
 const avatar = inject('avatar');
-
+//主题模式
+const theme = inject('theme');
 //分类
 const items = categories.value.items
                         .slice(0, 6)
@@ -55,7 +61,7 @@ const items = categories.value.items
 if (categories.value.totalCount > 6) {
     items.push({ name: '更多', svg: 'more', url: '/categories' });
 }
-
+//组成菜单
 const MenuItemsDown = ref([
     {
         name: '分类', svg: 'classify', url: '', child: items
