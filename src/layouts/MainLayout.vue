@@ -232,7 +232,7 @@ function initLive2d() {
                      //https://unpkg.com/live2d-widget-model-haru@1.0.5/01/assets/haru01.model.json
                      //https://unpkg.com/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json
                      jsonPath: '/live2d/model/live2d-widget-model-haru/01/assets/haru01.model.json', //主文件路径
-                     scale: 1,//模型与canvas的缩放
+                     scale: 0.8,//模型与canvas的缩放
                  },
                  display: {
                      superSample: 1, // 超采样等级
@@ -240,7 +240,7 @@ function initLive2d() {
                      width: 220,// canvas的长度
                      //height: 360,//canvas的高度
                      hOffset: 50,//canvas水平偏移
-                     vOffset: 0,//canvas垂直偏移
+                     vOffset: Platform.is.mobile ? -65 : -10,//canvas垂直偏移
                  },
         
                  tagMode: false,//标签模式, 是否仅替换 live2d tag标签而非插入到所有页面中
@@ -254,7 +254,7 @@ function initLive2d() {
                  },
                  mobile: {
                      show: true,//是否在移动设备上显示
-                     scale: 1,//移动设备上的缩放
+                     scale: 0.55,//移动设备上的缩放
                      motion: true, // 移动设备是否开启重力感应
                  },
                  dialog: {
