@@ -24,8 +24,8 @@
         <MenuPanelDown/>
       </div>
     </div>
-    <div class="tw-sticky tw-inset-x-0 tw-bottom-0 tw-flex tw-py-2 tw-items-center tw-justify-evenly">
-      <q-list>
+    <div class="tw-sticky tw-inset-x-0 tw-bottom-0 tw-bg-slate-100 dark:tw-bg-slate-800">
+      <q-list class="tw-flex tw-py-2 tw-items-center tw-justify-evenly">
         <div v-if="false" class="tw-px-1">
           <svg-icon class="tw-h-4 tw-w-4 tw-transition-all tw-cursor-pointer tw-text-gray-400 hover:tw-text-sky-400" name="search">
           </svg-icon>
@@ -34,7 +34,7 @@
           </q-tooltip>
         </div>
         <q-no-ssr>
-          <q-toggle v-model="theme" checked-icon="dark_mode" class="tw-px-1" color="green" dense false-value="light" true-value="dark" unchecked-icon="light_mode"/>
+          <q-toggle v-model="theme" checked-icon="dark_mode" class="tw-px-1" color="cyan-6" dense false-value="light" style="--q-track:#f59e0b" true-value="dark" unchecked-icon="light_mode"/>
         </q-no-ssr>
       </q-list>
     </div>
@@ -44,7 +44,7 @@
 
 <script lang="jsx" setup>
 import { storeToRefs } from 'pinia'
-import { QAvatar, QExpansionItem, QImg, QItem, QList, QSeparator, QTooltip } from 'quasar'
+import { QAvatar, QExpansionItem, QImg, QItem, QList, QNoSsr, QSeparator, QToggle, QTooltip } from 'quasar'
 import { useStore } from 'stores/example-store'
 import { computed, inject, ref } from 'vue'
 

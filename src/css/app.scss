@@ -196,6 +196,17 @@
     @apply tw-z-50;
 }
 
+.q-toggle {
+    --q-track: initial;
+
+    .q-toggle__inner--falsy {
+        color: var(--q-track);
+
+        .q-toggle__track {
+            opacity: .54;
+        }
+    }
+}
 
 @keyframes rotate {
     from {
