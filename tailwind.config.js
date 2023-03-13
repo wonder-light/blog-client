@@ -22,6 +22,10 @@ module.exports = {
                     '50%': { color: '#ff72cd' },
                     '75%': { color: '#948aff' },
                 }
+            },
+            rotate: {
+                '30': '30deg',
+                '60': '60deg',
             }
         },
     },
